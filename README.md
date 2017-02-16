@@ -81,3 +81,8 @@ Une fois sur la carte, chaque élément possède deux états :
 * Condition d'évolution : aucune
 * Consommation courante : aucune
 * production courante :  Une quantité d'énergie (jusqu'à un seuil)
+
+## Remerciements et sources
+
+* Elana18 sur [DeviantArt](http://deviantart.com) pour les sprites (http://elana18.deviantart.com/art/Paper-Sim-City-Starter-Pack-126481815 et http://elana18.deviantart.com/art/Paper-Sim-City-Pack-2-156173184)
+
