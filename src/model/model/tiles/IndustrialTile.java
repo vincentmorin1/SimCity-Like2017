@@ -55,9 +55,14 @@ public class IndustrialTile extends BuildableTile {
     public final static int DEFAULT_PRODUCTION_CAPACITY = 70;
     
     /**
+     * Default value of {@link PowerPlantTile2#getProductionCapacity()}
+     */
+    public final static int DEFAULT_PRODUCTION = 20;
+    
+    /**
      * Default value of {@link ResidentialTile#getInhabitantsCapacity()}
      */
-    public final static int DEFAULT_INHABITANTS_CAPACITY = 40;
+    public final static int DEFAULT_WORKERS_CAPACITY = 40;
 
 
     // Implementation
@@ -81,6 +86,11 @@ public class IndustrialTile extends BuildableTile {
     protected final int productionCapacity;
 
     /**
+     * Number of workers
+     */
+    protected int workers;
+    
+    /**
      * Evolution state
      */
     protected boolean isDestroyed;
@@ -91,7 +101,7 @@ public class IndustrialTile extends BuildableTile {
      *            - {@link #getProductionCapacity()}
      */
     public IndustrialTile(int productionCapacity) {
-        super(IndustrialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION, DEFAULT_INHABITANTS_CAPACITY);     
+        super(IndustrialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION, DEFAULT_WORKERS_CAPACITY);     
         this.maxNeededEnergy = IndustrialTile.DEFAULT_MAX_NEEDED_ENERGY;
         this.productionCapacity = productionCapacity;
         this.production = 0;
@@ -154,45 +164,57 @@ public class IndustrialTile extends BuildableTile {
 
     @Override
     public boolean isDestroyed() {
-        return this.isDestroyed;
+        return this.state == ConstructionState.DESTROYED;
     }
 
     // Change
     @Override
     public void disassemble(CityResources res) {
-        if (!this.isDestroyed) {
-            res.decreaseEnergyProduction(this.productionCapacity);
-            this.isDestroyed = true;
+        if (this.state == ConstructionState.BUILT) {
+            res.decreaseProductsCapacity(this.productionCapacity);
+            super.disassemble(res);
         }
     }
 
     @Override
+    public void evolve(CityResources res) {
+        super.evolve(res);
+
+        if (this.state == ConstructionState.BUILT) {
+            res.increaseProductsCapacity(DEFAULT_PRODUCTION_CAPACITY);
+            this.update(res);
+        }
+    }
+    
+    @Override
     public void update(CityResources res) {
-        if (!this.isDestroyed) {
-            // Double production
+
+        if (this.state == ConstructionState.BUILT) {
         	
-        	final int busyPercentage = production * 100 / this.productionCapacity; // Integer division
-        	final int neededEnergy = Math.max(1, busyPercentage * this.maxNeededEnergy / 100); // Integer division
-            final int extraProduction = Math.min(IndustrialTile.EXTRA_MONEY_PRODUCTION, this.productionCapacity - this.production);
-            final int inhabitants = getInhabitantsCapacity();
-            this.production = this.production + extraProduction;
-            res.increaseEnergyProduction(extraProduction);
+        	final int neededEnergy =  this.maxNeededEnergy; 
+           
+        	// Si l'on a assez d'énergie
             if (res.getUnconsumedEnergy() >= neededEnergy) {
             	res.consumeEnergy(neededEnergy);
             	this.isEnergyMissing = false;
+            	this.production = IndustrialTile.DEFAULT_PRODUCTION;
             }
+            // Sinon la production est diminuée de manière linéaire
             else {
             	final int consumedEnergy = res.getUnconsumedEnergy();
             	res.consumeEnergy(consumedEnergy);
             	this.isEnergyMissing = true;
-            	// More energy units are missing, more inhabitants leave
-            	final int missingEnergyPercentage = 100 - consumedEnergy * 100 / neededEnergy; // Integer
-                                                                                           // division
-            	final int leavingInhabitants = Math.min(this.production, missingEnergyPercentage * inhabitants / 100); // Integer
-                                                                                                                              // division
-
-            	res.decreasePopulation(leavingInhabitants);
+            	final int missingEnergyPercentage = 100 - consumedEnergy * 100 / neededEnergy; // Integer division
+            	this.production = (100 - missingEnergyPercentage) * IndustrialTile.DEFAULT_PRODUCTION / 100; // Integer division
             }
+            
+            this.workers = Math.min(res.getUnworkingPopulation(), this.inhabitantsCapacity);
+            res.hireWorkers(this.workers);
+            
+            // La production dépend linéairement du nombre de travailleurs
+            this.production = this.production * (this.workers*100 / DEFAULT_WORKERS_CAPACITY) / 100; // Integer division
+            res.storeProducts(this.production);
+            
         }
     }
 }
