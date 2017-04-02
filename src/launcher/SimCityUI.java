@@ -114,7 +114,7 @@ public final class SimCityUI extends JFrame {
         menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menu.setContentPane(new Panneau());
         menu.setVisible(true);
-        
+        //il reste à lier les boutons avec les actions correspondantes
         menu.getContentPane().add(new JButton("Jouer"), BorderLayout.CENTER);
         menu.getContentPane().add(new JButton("Paramètres"), BorderLayout.CENTER);
         menu.getContentPane().add(new JButton("Aide"), BorderLayout.CENTER);
