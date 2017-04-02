@@ -65,7 +65,12 @@ public class UKTexts extends LocalizedTexts {
     public String getUnconsumedEnergyLabel() {
         return "Unconsumed energy";
     }
-
+    
+    @Override
+    public String getUnconsumedMoneyLabel() {
+    	return "Unconsumed money";
+    }
+    
     @Override
     public String getStoredProductsLabel() {
         return "Stored products";

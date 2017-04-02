@@ -57,6 +57,18 @@ public class CityResources {
      * {@link #getEnergyProduction()}
      */
     private int energyProduction;
+    
+    //Implementation (Commerce)
+    /**
+     * {@link #getMoneyProduction()}
+     */
+    private int moneyProduction;
+    
+    /**
+     * {@link #getUnconsumedEnergy()}
+     */
+    private int unconsumedMoney;
+
 
     // Implementation (Population)
     /**
@@ -127,8 +139,8 @@ public class CityResources {
      * @return Is {@value o} equals to this?
      */
     public boolean equals(CityResources o) {
-        return this == o || super.equals(o) && o.currency == this.currency && o.vat == this.vat && o.unconsumedEnergy == this.unconsumedEnergy && o.energyProduction == this.energyProduction
-                && o.unworkingPopulation == this.unworkingPopulation && o.population == this.population && o.populationCapacity == this.populationCapacity && o.productsCount == this.productsCount
+        return this == o || super.equals(o) && o.currency == this.currency && o.vat == this.vat && o.unconsumedEnergy == this.unconsumedEnergy && o.energyProduction == this.energyProduction && o.moneyProduction == this.moneyProduction
+                && o.unconsumedMoney == this.unconsumedMoney && o.unworkingPopulation == this.unworkingPopulation && o.population == this.population && o.populationCapacity == this.populationCapacity && o.productsCount == this.productsCount
                 && o.productsCapacity == this.productsCapacity;
     }
 
@@ -140,6 +152,8 @@ public class CityResources {
         result = result * 17 + this.vat;
         result = result * 17 + this.unconsumedEnergy;
         result = result * 17 + this.energyProduction;
+        result = result * 17 + this.moneyProduction;
+        result = result * 17 + this.unconsumedMoney;
         result = result * 17 + this.unworkingPopulation;
         result = result * 17 + this.population;
         result = result * 17 + this.populationCapacity;
@@ -186,6 +200,29 @@ public class CityResources {
     public int getEnergyProduction() {
         return this.energyProduction;
     }
+    
+    // Access (Money)
+    /**
+     * @return Monthly production of money units.
+     */
+    public int getMoneyProduction() {
+    	return this.moneyProduction;
+    }
+    
+    /**
+     * @return Number of consumed money units.
+     */
+    public int getConsumedMoney() {
+        return this.moneyProduction - this.unconsumedMoney;
+    }
+    
+    /**
+     * @return Number of available money units.
+     */
+    public int getUnconsumedMoney() {
+        return this.unconsumedMoney;
+    }
+
 
     // Access (Population)
     /**
@@ -268,6 +305,7 @@ public class CityResources {
     }
 
     // Change (Energy)
+    
     /***
      * Increase {@link #getConsumedEnergy()} by {@value amount}.
      *
@@ -301,6 +339,42 @@ public class CityResources {
 
         this.energyProduction = this.energyProduction + amount;
         this.unconsumedEnergy = this.unconsumedEnergy + amount;
+    }
+    
+    // Change (Commerce)
+    /**
+     * Increase {@link #getConsumedMoney()} by {@value amount}
+     * 
+     * @param amount
+     */
+    public void consumeMoney (int amount) {
+    	assert 0 <= amount && amount <= this.getUnconsumedMoney();
+    	
+    	this.unconsumedMoney = this.unconsumedMoney - amount;
+    }
+    
+    /**
+     * Decrease {@link #getMoneyProduction()} by {@value amount}.
+     *
+     * @param amount
+     */
+    public void decreaseMoneyProduction(int amount) {
+        assert amount >= 0;
+
+        this.moneyProduction = Math.max(0, this.moneyProduction - amount);
+        this.unconsumedMoney = Math.min(this.unconsumedMoney, this.moneyProduction);
+    }
+    
+    /**
+     * Increase {@link #getMoneyProduction()} by {@value amount}.
+     *
+     * @param amount
+     */
+    public void increaseMoneyProduction(int amount) {
+        assert amount >= 0;
+
+        this.moneyProduction = this.moneyProduction + amount;
+        this.unconsumedMoney = this.unconsumedMoney + amount;
     }
 
     // Change (Population)
@@ -416,6 +490,7 @@ public class CityResources {
     public void resetEphemerals() {
         this.unworkingPopulation = this.population;
         this.unconsumedEnergy = this.energyProduction;
+        this.unconsumedMoney = this.moneyProduction;
     }
 
 }

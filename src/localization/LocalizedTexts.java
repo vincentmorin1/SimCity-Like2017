@@ -72,6 +72,11 @@ public abstract class LocalizedTexts {
      * @return No-consumed energy label.
      */
     public abstract String getUnconsumedEnergyLabel();
+    
+    /**
+     * @return No-consumed money label
+     */
+    public abstract String getUnconsumedMoneyLabel();
 
     /**
      * @return Stored products label.

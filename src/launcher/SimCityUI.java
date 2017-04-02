@@ -25,10 +25,13 @@
 package launcher;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.ActionListener;
 import java.util.Scanner;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -102,7 +105,21 @@ public final class SimCityUI extends JFrame {
         super("SimCityTélécom");
         // Choix de la langue
         final LocalizedTexts texts = new UKTexts();
-
+        //Crétion du menu
+        
+        JFrame menu = new JFrame();        
+        menu.setTitle("Menu");
+        menu.setSize(1260,725);
+        menu.setLocationRelativeTo(null);
+        menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        menu.setContentPane(new Panneau());
+        menu.setVisible(true);
+        
+        menu.getContentPane().add(new JButton("Jouer"), BorderLayout.CENTER);
+        menu.getContentPane().add(new JButton("Param�tres"), BorderLayout.CENTER);
+        menu.getContentPane().add(new JButton("Aide"), BorderLayout.CENTER);
+        menu.getContentPane().add(new JButton("Quitter"), BorderLayout.CENTER);
+        
         // Création du monde
         GameBoard monde = new GameBoard(hauteur, largeur, texts);
 

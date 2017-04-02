@@ -59,14 +59,7 @@ public class ResidentialTile extends BuildableTile {
     public final static int DEFAULT_INHABITANTS_CAPACITY = 40;
 
     // Implementation
-    /**
-     * {@link #getInhabitantsCapacity()}
-     */
-    private final int inhabitantsCapacity;
-
-    /**
-     * Maximum number of newcomers for each update.
-     */
+    
     private final int maxJoiningInhabitants;
 
     /**
@@ -84,30 +77,18 @@ public class ResidentialTile extends BuildableTile {
      * @param capacity
      *            - {@link #getInhabitantsCapacity()}
      */
-    public ResidentialTile(int capacity) {
-        super(ResidentialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION);
+    public ResidentialTile() {
+        super(ResidentialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION,ResidentialTile.DEFAULT_INHABITANTS_CAPACITY);
 
-        this.inhabitantsCapacity = capacity;
         this.maxNeededEnergy = ResidentialTile.DEFAULT_MAX_NEEDED_ENERGY;
         this.maxJoiningInhabitants = ResidentialTile.DEFAULT_MAX_JOINING_INHABITANTS;
         this.maxLeavingInhabitants = ResidentialTile.DEFAULT_MAX_LEAVING_INHABITANTS;
     }
 
-    /**
-     * Create with default settings.
-     */
-    public ResidentialTile() {
-        this(ResidentialTile.DEFAULT_INHABITANTS_CAPACITY);
-    }
+    
 
     // Access
-    /**
-     * @return Maximum number of inhabitants.
-     */
-    public final int getInhabitantsCapacity() {
-        return this.inhabitantsCapacity;
-    }
-
+    
     /**
      * @return Maximum number of energy units to consume. This maximum is
      *         consumed if the residence is full.
@@ -119,7 +100,6 @@ public class ResidentialTile extends BuildableTile {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = result * 17 + this.inhabitantsCapacity;
         result = result * 17 + this.maxJoiningInhabitants;
         result = result * 17 + this.maxLeavingInhabitants;
         result = result * 17 + this.maxNeededEnergy;
@@ -137,7 +117,7 @@ public class ResidentialTile extends BuildableTile {
      * @return Is {@value o} equals to this?
      */
     public boolean equals(ResidentialTile o) {
-        return this == o || super.equals(o) && o.inhabitantsCapacity == this.inhabitantsCapacity && o.maxJoiningInhabitants == this.maxJoiningInhabitants
+        return this == o || super.equals(o) &&  o.maxJoiningInhabitants == this.maxJoiningInhabitants
                 && o.maxLeavingInhabitants == this.maxLeavingInhabitants && o.maxNeededEnergy == this.maxNeededEnergy;
     }
 
@@ -215,9 +195,9 @@ public class ResidentialTile extends BuildableTile {
     private int getInhabitants(CityResources res) {
         assert res.getPopulationCapacity() != 0;
 
-        final int caapcityPercentage = this.inhabitantsCapacity * 100 / res.getPopulationCapacity(); // Integer
+        final int capacityPercentage = this.inhabitantsCapacity * 100 / res.getPopulationCapacity(); // Integer
                                                                                                      // division
-        return res.getPopulation() * caapcityPercentage / 100; // Integer
+        return res.getPopulation() * capacityPercentage / 100; // Integer
                                                                // division
     }
 

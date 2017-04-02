@@ -32,7 +32,15 @@ import model.CityResources;
 public abstract class BuildableTile extends Tile implements Evolvable, Destroyable {
 
     // Implementation
+	/**
+     * {@link #getInhabitantsCapacity()}
+     */
+    protected final int inhabitantsCapacity;
+
     /**
+     * Maximum number of newcomers for each update.
+     */
+	/**
      * {@link #getEvolutionEnergyConsumption()}
      */
     private final int evolutionEnergyConsumption;
@@ -54,15 +62,27 @@ public abstract class BuildableTile extends Tile implements Evolvable, Destroyab
      * @param evolutionEnergyConsumption
      *            - {@link #getEvolutionEnergyConsumption()}
      */
-    public BuildableTile(int evolutionEnergyConsumption) {
+    public BuildableTile(int evolutionEnergyConsumption, int capacity) {
         assert evolutionEnergyConsumption >= 0;
 
         this.evolutionEnergyConsumption = evolutionEnergyConsumption;
         this.state = ConstructionState.UNDER_CONSTRUCTION;
         this.isEnergyMissing = false;
+        this.inhabitantsCapacity = capacity;
     }
 
     // Access
+    /**
+     * @return Maximum number of inhabitants.
+     */
+    public final int getInhabitantsCapacity() {
+        return this.inhabitantsCapacity;
+    }
+
+    /**
+     * @return Maximum number of energy units to consume. This maximum is
+     *         consumed if the residence is full.
+     */
     /**
      * @return Consumed energy during an evolution.
      */
@@ -80,6 +100,7 @@ public abstract class BuildableTile extends Tile implements Evolvable, Destroyab
     @Override
     public int hashCode() {
         int result = 1;
+        result = result * 17 + this.inhabitantsCapacity;
         result = result * 17 + evolutionEnergyConsumption;
         result = result * 17 + state.hashCode();
         return result;
