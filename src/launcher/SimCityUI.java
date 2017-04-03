@@ -29,6 +29,7 @@ import java.awt.Button;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Scanner;
 
@@ -48,7 +49,7 @@ import ui.PropertiesView;
 import ui.RefreshView;
 import ui.GameBoardView;
 
-public final class SimCityUI extends JFrame {
+public final class SimCityUI extends JFrame implements ActionListener{
 
     // Constants
     private final static long serialVersionUID = 1L;
@@ -56,7 +57,16 @@ public final class SimCityUI extends JFrame {
     private final static int DEFAULT_HEIGHT = 10;
 
     private final static int DEFAULT_WIDTH = 20;
-
+    
+    private JFrame menu = new JFrame();
+    private JButton button;
+    private JButton button2;
+    private JButton button3;
+    private JButton button4;
+    
+    private int hauteur ;
+    private int largeur ;
+    
     // Entry point
     /**
      * Run without arguments or with two arguments:
@@ -68,7 +78,7 @@ public final class SimCityUI extends JFrame {
     public static void main(String[] args) {
         final int height;
         final int width;
-
+        
         if (args.length == 2) {
             final Scanner hSc = new Scanner(args[0]);
             final Scanner wSc = new Scanner(args[1]);
@@ -106,80 +116,101 @@ public final class SimCityUI extends JFrame {
     // Creation
     public SimCityUI(int hauteur, int largeur) {
         super("SimCityTélécom");
+        
+        this.hauteur = hauteur;
+        this.largeur = largeur;
         // Choix de la langue
         final LocalizedTexts texts = new UKTexts();
+        
+        
         //Crétion du menu
-        JButton button;
-        JFrame menu = new JFrame();        
-        menu.setTitle("Menu");
-        menu.setSize(1260,725);
-        menu.setLocationRelativeTo(null);
-        menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menu.setContentPane(new Panneau());
-        menu.setVisible(true);
-        menu.setLayout(new GridBagLayout());
+        this.setTitle("Menu");
+        this.setSize(1260,725);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setContentPane(new Panneau());
+        this.setVisible(true);
+        this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         
         button = new JButton("Jouer");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 0;
-        menu.add(button, c);
+        button.addActionListener(this);
+        this.add(button, c);
         
-        button = new JButton("Param�tres");
+        button2 = new JButton("Param�tres");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 1;
-        menu.add(button, c);
+        button2.addActionListener(this);
+        this.add(button2, c);
         
-        button = new JButton("Aide");
+        button3 = new JButton("Aide");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 2;
-        menu.add(button, c);
+        button3.addActionListener(this);
+        this.add(button3, c);
         
-        button = new JButton("Quitter");
+        button4 = new JButton("Quitter");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 3;
-        menu.add(button, c);
+        button4.addActionListener(this);
+        this.add(button4, c);
         
-        // Création du monde
-        GameBoard monde = new GameBoard(hauteur, largeur, texts);
-
-        // Création de la vue du monde, placée au centre de la fenêtre
-        GameBoardView vm = new GameBoardView(monde);
-        monde.addObserver(vm);
-        this.add(vm, BorderLayout.CENTER);
-
-        // Création de la palette des éléments de jeu, placée à gauche
-        ToolsView ve = new ToolsView(monde);
-        monde.addObserver(ve);
-        this.add(ve, BorderLayout.WEST);
-
-        // Création du panneau d'informations
-        PropertiesView vi = new PropertiesView(monde, texts);
-        monde.addObserver(vi);
-
-        // Création du panneau de rafraichissement
-        RefreshView rv = new RefreshView(monde);
-        JPanel right = new JPanel();
-        right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
-        right.add(vi);
-        right.add(Box.createVerticalGlue());
-        right.add(rv);
-        this.add(right, BorderLayout.EAST);
-
-        // Création du panneau de message
-        MessagesView mv = new MessagesView();
-        monde.addObserver(mv);
-        this.add(mv, BorderLayout.SOUTH);
-
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.pack();
-
-        this.setResizable(false);
-        this.setVisible(true);
     }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		final LocalizedTexts texts = new UKTexts();
+		if (source == button) {
+			// Création du monde
+			this.dispose();
+			JFrame jeu = new JFrame();
+			jeu.setTitle("TNCYTY");
+			GameBoard monde = new GameBoard(hauteur, largeur, texts);
+
+	        // Création de la vue du monde, placée au centre de la fenêtre
+	        GameBoardView vm = new GameBoardView(monde);
+	        monde.addObserver(vm);
+	        jeu.add(vm, BorderLayout.CENTER);
+
+	        // Création de la palette des éléments de jeu, placée à gauche
+	        ToolsView ve = new ToolsView(monde);
+	        monde.addObserver(ve);
+	        jeu.add(ve, BorderLayout.WEST);
+
+	        // Création du panneau d'informations
+	        PropertiesView vi = new PropertiesView(monde, texts);
+	        monde.addObserver(vi);
+
+	        // Création du panneau de rafraichissement
+	        RefreshView rv = new RefreshView(monde);
+	        JPanel right = new JPanel();
+	        right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
+	        right.add(vi);
+	        right.add(Box.createVerticalGlue());
+	        right.add(rv);
+	        jeu.add(right, BorderLayout.EAST);
+
+	        // Création du panneau de message
+	        MessagesView mv = new MessagesView();
+	        monde.addObserver(mv);
+	        jeu.add(mv, BorderLayout.SOUTH);
+
+	        jeu.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	        jeu.pack();
+
+	        jeu.setResizable(false);
+	        jeu.setVisible(true);
+		} else if (source == button2){
+			//� finir
+		}
+		
+	}
 
 }
