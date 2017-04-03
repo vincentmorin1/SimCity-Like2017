@@ -25,7 +25,10 @@
 package launcher;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.util.Scanner;
 
@@ -99,14 +102,14 @@ public final class SimCityUI extends JFrame {
         // graphiques
         SwingUtilities.invokeLater(() -> new SimCityUI(height, width));
     }
-
+    
     // Creation
     public SimCityUI(int hauteur, int largeur) {
         super("SimCityT√©l√©com");
         // Choix de la langue
         final LocalizedTexts texts = new UKTexts();
         //Cr√©tion du menu
-        
+        JButton button;
         JFrame menu = new JFrame();        
         menu.setTitle("Menu");
         menu.setSize(1260,725);
@@ -114,11 +117,32 @@ public final class SimCityUI extends JFrame {
         menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menu.setContentPane(new Panneau());
         menu.setVisible(true);
-        //il reste ‡ lier les boutons avec les actions correspondantes
-        menu.getContentPane().add(new JButton("Jouer"), BorderLayout.CENTER);
-        menu.getContentPane().add(new JButton("ParamËtres"), BorderLayout.CENTER);
-        menu.getContentPane().add(new JButton("Aide"), BorderLayout.CENTER);
-        menu.getContentPane().add(new JButton("Quitter"), BorderLayout.CENTER);
+        menu.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        
+        button = new JButton("Jouer");
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 1;
+        c.gridy = 0;
+        menu.add(button, c);
+        
+        button = new JButton("ParamËtres");
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 1;
+        c.gridy = 1;
+        menu.add(button, c);
+        
+        button = new JButton("Aide");
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 1;
+        c.gridy = 2;
+        menu.add(button, c);
+        
+        button = new JButton("Quitter");
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 1;
+        c.gridy = 3;
+        menu.add(button, c);
         
         // Cr√©ation du monde
         GameBoard monde = new GameBoard(hauteur, largeur, texts);
