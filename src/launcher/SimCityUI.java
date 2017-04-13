@@ -27,6 +27,7 @@ package launcher;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -54,9 +55,9 @@ public final class SimCityUI extends JFrame implements ActionListener{
     // Constants
     private final static long serialVersionUID = 1L;
 
-    private final static int DEFAULT_HEIGHT = 10;
+    private final static int DEFAULT_HEIGHT = 1000;
 
-    private final static int DEFAULT_WIDTH = 20;
+    private final static int DEFAULT_WIDTH = 750;
     
     private JFrame menu = new JFrame();
     private JButton button;
@@ -125,7 +126,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
         
         //Crétion du menu
         this.setTitle("Menu");
-        this.setSize(1260,725);
+        this.setSize(new Dimension(DEFAULT_HEIGHT, DEFAULT_WIDTH));
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(new Panneau());
@@ -172,6 +173,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
 			this.dispose();
 			JFrame jeu = new JFrame();
 			jeu.setTitle("TNCYTY");
+			jeu.setLocationRelativeTo(null);
 			GameBoard monde = new GameBoard(hauteur, largeur, texts);
 
 	        // Création de la vue du monde, placée au centre de la fenêtre
@@ -201,14 +203,17 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        MessagesView mv = new MessagesView();
 	        monde.addObserver(mv);
 	        jeu.add(mv, BorderLayout.SOUTH);
-
+	     
 	        jeu.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	        
 	        jeu.pack();
-
-	        jeu.setResizable(false);
+	        jeu.setResizable(true);
 	        jeu.setVisible(true);
 		} else if (source == button2){
 			//� finir
+		}
+		else if (source == button4) {
+			this.dispose();
 		}
 		
 	}
