@@ -39,6 +39,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import localization.FRTexts;
 import localization.LocalizedTexts;
 import localization.UKTexts;
 import model.GameBoard;
@@ -47,6 +48,11 @@ import ui.MessagesView;
 import ui.PropertiesView;
 import ui.RefreshView;
 import ui.GameBoardView;
+
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.net.URL;
+
 
 public final class SimCityUI extends JFrame implements ActionListener{
 
@@ -62,6 +68,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
     private JButton button2;
     private JButton button3;
     private JButton button4;
+    private JButton button5;
     
     private int hauteur ;
     private int largeur ;
@@ -110,6 +117,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
         // Pour que ce soit le thread graphique qui construise les composants
         // graphiques
         SwingUtilities.invokeLater(() -> new SimCityUI(height, width));
+        
     }
     
     // Creation
@@ -120,8 +128,9 @@ public final class SimCityUI extends JFrame implements ActionListener{
         this.largeur = largeur;
         // Choix de la langue
         final LocalizedTexts texts = new UKTexts();
-        
-        
+        URL url = SimCityUI.class.getResource("/resources/Music.wav");
+		AudioClip ac = Applet.newAudioClip(url);
+		ac.loop();
         //Crétion du menu
         this.setTitle("Menu");
         this.setSize(1260,725);
@@ -139,78 +148,158 @@ public final class SimCityUI extends JFrame implements ActionListener{
         button.addActionListener(this);
         this.add(button, c);
         
-        button2 = new JButton("Param�tres");
+        button2 = new JButton("Langue UK");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 1;
         button2.addActionListener(this);
         this.add(button2, c);
         
-        button3 = new JButton("Aide");
+        button3 = new JButton("Tutoriel");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 2;
         button3.addActionListener(this);
         this.add(button3, c);
-        
-        button4 = new JButton("Quitter");
+                
+        button4 = new JButton("Son OUI");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 3;
         button4.addActionListener(this);
         this.add(button4, c);
         
+        button5 = new JButton("Quitter");
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 1;
+        c.gridy = 4;
+        button5.addActionListener(this);
+        this.add(button5, c);
     }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
-		final LocalizedTexts texts = new UKTexts();
+		
+		URL url = SimCityUI.class.getResource("/resources/Music.wav");
+		AudioClip ac = Applet.newAudioClip(url);
+		
+		
 		if (source == button) {
-			// Création du monde
-			this.dispose();
-			JFrame jeu = new JFrame();
-			jeu.setTitle("TNCYTY");
-			GameBoard monde = new GameBoard(hauteur, largeur, texts);
+			if (button4.getText() == "Son OUI") {
+				ac.loop();
+			}
+			else {
+				ac.stop();
+			}
+			if (button2.getText() == "Langue UK") {
+				final LocalizedTexts texts = new UKTexts();
+				// Création du monde
+				
+				this.dispose();
+				JFrame jeu = new JFrame();
+				
+				jeu.setTitle("TNCYTY");
+				GameBoard monde = new GameBoard(hauteur, largeur, texts);
+		        // Création de la vue du monde, placée au centre de la fenêtre
+		        GameBoardView vm = new GameBoardView(monde);
+		        monde.addObserver(vm);
+		        jeu.add(vm, BorderLayout.CENTER);
 
-	        // Création de la vue du monde, placée au centre de la fenêtre
-	        GameBoardView vm = new GameBoardView(monde);
-	        monde.addObserver(vm);
-	        jeu.add(vm, BorderLayout.CENTER);
+		        // Création de la palette des éléments de jeu, placée �  gauche
+		        ToolsView ve = new ToolsView(monde);
+		        monde.addObserver(ve);
+		        jeu.add(ve, BorderLayout.WEST);
+		        // Création du panneau d'informations
+		        PropertiesView vi = new PropertiesView(monde, texts);
+		        monde.addObserver(vi);
+		        // Création du panneau de rafraichissement
+		        RefreshView rv = new RefreshView(monde);
+		        JPanel right = new JPanel();
+		        right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
+		        right.add(vi);
+		        right.add(Box.createVerticalGlue());
+		        right.add(rv);
+		        jeu.add(right, BorderLayout.EAST);
+			        // Création du panneau de message
+		        MessagesView mv = new MessagesView();
+		        monde.addObserver(mv);
+		        jeu.add(mv, BorderLayout.SOUTH);
+		        jeu.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		        jeu.pack();
 
-	        // Création de la palette des éléments de jeu, placée �  gauche
-	        ToolsView ve = new ToolsView(monde);
-	        monde.addObserver(ve);
-	        jeu.add(ve, BorderLayout.WEST);
+		        jeu.setResizable(true);
+		        jeu.setVisible(true);
+				
+			}
+			else {
+				final LocalizedTexts texts = new FRTexts();
+				// Création du monde
+				
+				this.dispose();
+				JFrame jeu = new JFrame();
+				
+				jeu.setTitle("TNCYTY");
+				GameBoard monde = new GameBoard(hauteur, largeur, texts);
+		        // Création de la vue du monde, placée au centre de la fenêtre
+		        GameBoardView vm = new GameBoardView(monde);
+		        monde.addObserver(vm);
+		        jeu.add(vm, BorderLayout.CENTER);
 
-	        // Création du panneau d'informations
-	        PropertiesView vi = new PropertiesView(monde, texts);
-	        monde.addObserver(vi);
+		        // Création de la palette des éléments de jeu, placée �  gauche
+		        ToolsView ve = new ToolsView(monde);
+		        monde.addObserver(ve);
+		        jeu.add(ve, BorderLayout.WEST);
+		        // Création du panneau d'informations
+		        PropertiesView vi = new PropertiesView(monde, texts);
+		        monde.addObserver(vi);
+		        // Création du panneau de rafraichissement
+		        RefreshView rv = new RefreshView(monde);
+		        JPanel right = new JPanel();
+		        right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
+		        right.add(vi);
+		        right.add(Box.createVerticalGlue());
+		        right.add(rv);
+		        jeu.add(right, BorderLayout.EAST);
+			        // Création du panneau de message
+		        MessagesView mv = new MessagesView();
+		        monde.addObserver(mv);
+		        jeu.add(mv, BorderLayout.SOUTH);
+		        jeu.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		        jeu.pack();
 
-	        // Création du panneau de rafraichissement
-	        RefreshView rv = new RefreshView(monde);
-	        JPanel right = new JPanel();
-	        right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
-	        right.add(vi);
-	        right.add(Box.createVerticalGlue());
-	        right.add(rv);
-	        jeu.add(right, BorderLayout.EAST);
+		        jeu.setResizable(true);
+		        jeu.setVisible(true);
+				}
 
-	        // Création du panneau de message
-	        MessagesView mv = new MessagesView();
-	        monde.addObserver(mv);
-	        jeu.add(mv, BorderLayout.SOUTH);
-
-	        jeu.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-	        jeu.pack();
-
-	        jeu.setResizable(true);
-	        jeu.setVisible(true);
+			
+			
 		} else if (source == button2){
-			//� finir
+			if (button2.getText() == "Langue UK") {
+				button2.setText("Langue FR");
+			}
+			else {
+				button2.setText("Langue UK");
+			}
+		}
+		else if (source == button3) {
+			//cr�er un tutoriel
 		}
 		else if (source == button4) {
+			if (button4.getText() == "Son OUI") {
+				ac.stop();
+				button4.setText("Son NON");
+				
+			}
+			else {
+				button4.setText("Son OUI");
+				ac.loop();
+			}
+		}
+		else if (source == button5) {
+			ac.stop();
 			this.dispose();
+			
 		}
 		
 	}
