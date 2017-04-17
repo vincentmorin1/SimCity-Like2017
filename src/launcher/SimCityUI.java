@@ -130,7 +130,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
         final LocalizedTexts texts = new UKTexts();
         URL url = SimCityUI.class.getResource("/resources/Music.wav");
 		AudioClip ac = Applet.newAudioClip(url);
-		ac.loop();
+		
         //CrÃ©tion du menu
         this.setTitle("Menu");
         this.setSize(1260,725);
@@ -285,19 +285,13 @@ public final class SimCityUI extends JFrame implements ActionListener{
 		else if (source == button3) {
 			//créer un tutoriel
 		}
-		else if (source == button4) {
-			if (button4.getText() == "Son OUI") {
-				ac.stop();
-				button4.setText("Son NON");
-				
-			}
-			else {
-				button4.setText("Son OUI");
-				ac.loop();
-			}
+		else if (source == button4 && button4.getText() == "Son OUI") {
+			button4.setText("Son NON");
+		}
+		else if (source == button4 && button4.getText() == "Son NON") {
+			button4.setText("Son OUI");
 		}
 		else if (source == button5) {
-			ac.stop();
 			this.dispose();
 			
 		}
