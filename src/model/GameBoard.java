@@ -44,9 +44,6 @@ import model.tiles.RoadTile;
 import model.tiles.Tile;
 import model.tools.BulldozerTool;
 import model.tools.CommercialZoneDelimiterTool;
-// Add when implemented
-//import model.tools.CommercialZoneDelimiterTool;
-//import model.tools.IndustrialZoneDelimiterTool;
 import model.tools.PowerPlantConstructionTool;
 import model.tools.ResidentialZoneDelimiterTool;
 import model.tools.RoadConstructionTool;
@@ -137,7 +134,7 @@ public class GameBoard extends Observable {
             }
         }
         this.tiles[height/2][0] = new RoadTile();
-        		
+
         this.selectedTile = this.getTile(GameBoard.DEFAULT_SELECTED_LOCATION.getRow(), GameBoard.DEFAULT_SELECTED_LOCATION.getColumn());
 
         this.tools = new ArrayList<>();
@@ -183,7 +180,6 @@ public class GameBoard extends Observable {
      */
     public GameBoard(int length, LocalizedTexts texts) {
         this(length, length, texts);
-        
     }
 
     // Access
@@ -219,7 +215,6 @@ public class GameBoard extends Observable {
         assert row >= 0 && row < this.getHeight() && column >= 0 && column < this.getWidth() : "Ligne/Colonne incorrecte";
         return this.tiles[row][column];
     }
- 
 
     // Access (Tool)
     /**
@@ -253,10 +248,11 @@ public class GameBoard extends Observable {
     public int getCurrency() {
         return this.resources.getCurrency();
     }
-    	
+
     public CityResources getCityResources(){
     	return this.resources;
     }
+
     public int getUnworkingPopulation() {
         return this.resources.getUnworkingPopulation();
     }

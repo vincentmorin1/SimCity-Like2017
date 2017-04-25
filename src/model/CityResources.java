@@ -100,8 +100,8 @@ public class CityResources {
      * {@link #getProductsCapacity()}
      */
     private int productsCapacity;
-    
-    private RoadConnection roadConnection;
+
+ 	private RoadConnection roadConnection;
 
     
     public void setRoadConnection(Tile[][] tiles){
@@ -112,7 +112,7 @@ public class CityResources {
     public RoadConnection getRoadConnection(){
     	return roadConnection;
     }
-    
+
     // Creation
     /**
      *
@@ -212,10 +212,6 @@ public class CityResources {
         return this.energyProduction - this.unconsumedEnergy;
     }
 
-    /**
-     * @return true if linked by road.
-     */
-    
     /**
      * @return Number of available energy units.
      */
@@ -495,7 +491,7 @@ public class CityResources {
      *
      * @param amount
      */
-    public void decreaseProductsCapacity(int amount) {    	
+    public void decreaseProductsCapacity(int amount) {
         assert 0 <= amount && amount <= this.getProductsCapacity();
 
         this.productsCapacity = this.productsCapacity - amount;

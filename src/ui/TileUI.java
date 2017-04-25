@@ -78,7 +78,7 @@ public class TileUI extends JLabel {
         } else {
             this.setToolTipText(this.model.getTexts().getToolCannotAffectMsg());
         }
-        
+
         ImageIcon ii = IconFactory.getInstance().getTileIcon(elt,this.model.getCityResources().getRoadConnection());
         this.setIcon(ii);
     }

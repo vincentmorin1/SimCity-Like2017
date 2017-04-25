@@ -128,80 +128,6 @@ public final class SimCityUI extends JFrame implements ActionListener{
         this.largeur = largeur;
         // Choix de la langue
         final LocalizedTexts texts = new UKTexts();
-<<<<<<< HEAD:sencity/src/launcher/SimCityUI.java
-
-        // Création du monde
-        GameBoard monde = new GameBoard(hauteur, largeur, texts);
-
-        // Création de la vue du monde, placée au centre de la fenêtre
-        GameBoardView vm = new GameBoardView(monde);
-        monde.addObserver(vm);
-        this.add(vm, BorderLayout.CENTER);
-        // Création de la palette des éléments de jeu, placée à gauche
-        ToolsView ve = new ToolsView(monde);
-        monde.addObserver(ve);
-        this.add(ve, BorderLayout.WEST);
-
-        // Création du panneau d'informations
-        PropertiesView vi = new PropertiesView(monde, texts);
-        monde.addObserver(vi);
-
-        // Création du panneau de rafraichissement
-        RefreshView rv = new RefreshView(monde);
-        JPanel right = new JPanel();
-        right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
-        right.add(vi);
-        right.add(Box.createVerticalGlue());
-        right.add(rv);
-        this.add(right, BorderLayout.EAST);
-
-        // Création du panneau de message
-        MessagesView mv = new MessagesView();
-        monde.addObserver(mv);
-        this.add(mv, BorderLayout.SOUTH);
-
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.pack();
-
-        this.setResizable(false);
-||||||| merged common ancestors
-
-        // Création du monde
-        GameBoard monde = new GameBoard(hauteur, largeur, texts);
-
-        // Création de la vue du monde, placée au centre de la fenêtre
-        GameBoardView vm = new GameBoardView(monde);
-        monde.addObserver(vm);
-        this.add(vm, BorderLayout.CENTER);
-
-        // Création de la palette des éléments de jeu, placée à gauche
-        ToolsView ve = new ToolsView(monde);
-        monde.addObserver(ve);
-        this.add(ve, BorderLayout.WEST);
-
-        // Création du panneau d'informations
-        PropertiesView vi = new PropertiesView(monde, texts);
-        monde.addObserver(vi);
-
-        // Création du panneau de rafraichissement
-        RefreshView rv = new RefreshView(monde);
-        JPanel right = new JPanel();
-        right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
-        right.add(vi);
-        right.add(Box.createVerticalGlue());
-        right.add(rv);
-        this.add(right, BorderLayout.EAST);
-
-        // Création du panneau de message
-        MessagesView mv = new MessagesView();
-        monde.addObserver(mv);
-        this.add(mv, BorderLayout.SOUTH);
-
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.pack();
-
-        this.setResizable(false);
-=======
         URL url = SimCityUI.class.getResource("/resources/Music.wav");
 		AudioClip ac = Applet.newAudioClip(url);
 		
@@ -211,7 +137,6 @@ public final class SimCityUI extends JFrame implements ActionListener{
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(new Panneau());
->>>>>>> bc4e41419fd8071dce0f2f1b2a92e3182ea908a5:src/launcher/SimCityUI.java
         this.setVisible(true);
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
