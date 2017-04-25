@@ -42,7 +42,13 @@ public class CommercialTile extends BuildableTile {
      * Extra money produces for each new update. In the limit of the capacity
      * {@link #getProductionCapacity()}.
      */
-    private final static int EXTRA_MONEY_PRODUCTION = 15;
+    public final static int DEFAULT_MONEY_PRODUCTION = 15;
+
+    /**
+     * Products consumption for each new update. In the limit of what is available
+     * {@link #getProductionCapacity()}.
+     */
+    public final static int DEFAULT_CONSUMPTION_CAPACITY = 10;
 
     /**
      * Default value of {@link CommercialTile#getMaxNeededEnergy()}
@@ -50,14 +56,9 @@ public class CommercialTile extends BuildableTile {
     public final static int DEFAULT_MAX_NEEDED_ENERGY = 30;
 
     /**
-     * Default value of {@link PowerPlantTile2#getProductionCapacity()}
-     */
-    public final static int DEFAULT_PRODUCTION_CAPACITY = 70;
-    
-    /**
      * Default value of {@link ResidentialTile#getInhabitantsCapacity()}
      */
-    public final static int DEFAULT_INHABITANTS_CAPACITY = 40;
+    public final static int DEFAULT_WORKERS_CAPACITY = 40;
 
 
     // Implementation
@@ -73,13 +74,22 @@ public class CommercialTile extends BuildableTile {
     /**
      * {@link #getProduction()}
      */
-    protected int production;
-
+    protected int moneyProduction;
+    
     /**
      * {@link #getProductionCapacity()}
      */
     protected final int productionCapacity;
 
+    /**
+     * Consumption of products
+     */
+    protected int productsConsumption;
+    /**
+     * Number of workers
+     */
+    protected int workers;
+    
     /**
      * Evolution state
      */
@@ -91,10 +101,12 @@ public class CommercialTile extends BuildableTile {
      *            - {@link #getProductionCapacity()}
      */
     public CommercialTile(int productionCapacity) {
-        super(CommercialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION, DEFAULT_INHABITANTS_CAPACITY);     
+        super(CommercialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION, DEFAULT_WORKERS_CAPACITY);     
         this.maxNeededEnergy = CommercialTile.DEFAULT_MAX_NEEDED_ENERGY;
-        this.productionCapacity = productionCapacity;
-        this.production = 0;
+        this.workers = 0;
+        this.productsConsumption = 0;
+        this.moneyProduction = 0;
+        this.productionCapacity = CommercialTile.DEFAULT_CONSUMPTION_CAPACITY;
         this.isDestroyed = false;        
     }
 
@@ -102,7 +114,7 @@ public class CommercialTile extends BuildableTile {
      * Create with default settings.
      */
     public CommercialTile() {
-        this(CommercialTile.DEFAULT_PRODUCTION_CAPACITY);
+        this(CommercialTile.DEFAULT_CONSUMPTION_CAPACITY);
     }
 
     // Access
@@ -118,7 +130,7 @@ public class CommercialTile extends BuildableTile {
      * @return Current production.
      */
     public int getProduction() {
-        return this.production;
+        return this.moneyProduction;
     }
 
     /**
@@ -132,7 +144,7 @@ public class CommercialTile extends BuildableTile {
     public int hashCode() {
         int result = super.hashCode();
         result = result * 17 + this.maxNeededEnergy;
-        result = result * 17 + this.production;
+        result = result * 17 + this.moneyProduction;
         result = result * 17 + this.productionCapacity;
         result = result * 17 + Boolean.hashCode(this.isDestroyed);
         return result;
@@ -148,8 +160,8 @@ public class CommercialTile extends BuildableTile {
      * @param o
      * @return Is {@value o} equals to this?
      */
-    public boolean equals(CommercialTile o) {
-    	 return this == o || o.production == this.production && o.productionCapacity == this.productionCapacity && o.isDestroyed == this.isDestroyed && o.maxNeededEnergy == this.maxNeededEnergy;
+    public boolean equals(CommercialTile o) { // A compléter!!
+    	 return this == o || o.workers == this.workers && o.moneyProduction == this.moneyProduction && o.productionCapacity == this.productionCapacity && o.isDestroyed == this.isDestroyed && o.maxNeededEnergy == this.maxNeededEnergy;
     }
 
     @Override
@@ -161,38 +173,57 @@ public class CommercialTile extends BuildableTile {
     @Override
     public void disassemble(CityResources res) {
         if (!this.isDestroyed) {
-            res.decreaseEnergyProduction(this.productionCapacity);
+            super.disassemble(res);
             this.isDestroyed = true;
         }
     }
 
     @Override
+    public void evolve(CityResources res) {
+        super.evolve(res);
+
+        if (this.state == ConstructionState.BUILT) {
+            this.update(res);
+        }
+    }
+    
+    @Override
     public void update(CityResources res) {
-        if (!this.isDestroyed) {
-            // Double production
+
+        if (this.state == ConstructionState.BUILT && this.getLinked()) {
         	
-        	final int busyPercentage = production * 100 / this.productionCapacity; // Integer division
-        	final int neededEnergy = Math.max(1, busyPercentage * this.maxNeededEnergy / 100); // Integer division
-            final int extraProduction = Math.min(CommercialTile.EXTRA_MONEY_PRODUCTION, this.productionCapacity - this.production);
-            final int inhabitants = getInhabitantsCapacity();
-            this.production = this.production + extraProduction;
-            res.increaseEnergyProduction(extraProduction);
+        	final int neededEnergy =  this.maxNeededEnergy; 
+        	int energyPercentage;
+        	
+        	// Si l'on a assez d'énergie
             if (res.getUnconsumedEnergy() >= neededEnergy) {
             	res.consumeEnergy(neededEnergy);
             	this.isEnergyMissing = false;
+            	energyPercentage = 100;
             }
+            // Sinon la production est diminuée de manière linéaire
             else {
             	final int consumedEnergy = res.getUnconsumedEnergy();
             	res.consumeEnergy(consumedEnergy);
             	this.isEnergyMissing = true;
-            	// More energy units are missing, more inhabitants leave
-            	final int missingEnergyPercentage = 100 - consumedEnergy * 100 / neededEnergy; // Integer
-                                                                                           // division
-            	final int leavingInhabitants = Math.min(this.production, missingEnergyPercentage * inhabitants / 100); // Integer
-                                                                                                                              // division
-
-            	res.decreasePopulation(leavingInhabitants);
+            	energyPercentage = consumedEnergy * 100 / neededEnergy; // Integer division
             }
+            
+
+	        this.workers = Math.min(res.getUnworkingPopulation(), this.inhabitantsCapacity); 
+	        final int workersPercentage = (this.workers*100 / CommercialTile.DEFAULT_WORKERS_CAPACITY);
+	  
+	        res.hireWorkers(this.workers);
+	
+	        final int productsAvailable = res.getProductsCount();
+	        final int productsPercentage = Math.min(100, productsAvailable * 100 / CommercialTile.DEFAULT_CONSUMPTION_CAPACITY); 
+	        
+	        this.moneyProduction = productsPercentage * workersPercentage * energyPercentage * CommercialTile.DEFAULT_MONEY_PRODUCTION  / (100 * 100 * 100); // Integer division
+	        this.productsConsumption = productsPercentage * workersPercentage * energyPercentage * CommercialTile.DEFAULT_CONSUMPTION_CAPACITY / (100 * 100 * 100);
+	        
+	        res.consumeProducts(this.productsConsumption);
+	        res.increaseMoneyProduction(this.moneyProduction);
+            
         }
     }
 }

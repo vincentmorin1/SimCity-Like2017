@@ -37,7 +37,7 @@ public class UKTexts extends LocalizedTexts {
 
     @Override
     public String getCurrencyMsg() {
-        return "{0} £";
+        return "Â£ {0}";
     }
 
     @Override

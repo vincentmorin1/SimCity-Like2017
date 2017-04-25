@@ -37,9 +37,6 @@ public abstract class BuildableTile extends Tile implements Evolvable, Destroyab
      */
     protected final int inhabitantsCapacity;
 
-    /**
-     * Maximum number of newcomers for each update.
-     */
 	/**
      * {@link #getEvolutionEnergyConsumption()}
      */
@@ -55,6 +52,12 @@ public abstract class BuildableTile extends Tile implements Evolvable, Destroyab
      */
     protected ConstructionState state;
 
+    /**
+     * {@link #getLinked()} 
+     */
+    protected boolean linked;
+
+    
     // Creation
     /**
      * Create a tile under construction.
@@ -69,8 +72,25 @@ public abstract class BuildableTile extends Tile implements Evolvable, Destroyab
         this.state = ConstructionState.UNDER_CONSTRUCTION;
         this.isEnergyMissing = false;
         this.inhabitantsCapacity = capacity;
+        this.linked = false; 
     }
 
+    /**
+     *  @return true if linked by road.
+     */
+    public boolean getLinked(){
+    	return this.linked;
+    }
+    
+    /**
+     * Change la valeur de linked
+     * @param b
+     */
+    public void setLinked(boolean b){
+    	
+    	this.linked = b;
+    }
+    
     // Access
     /**
      * @return Maximum number of inhabitants.
@@ -124,7 +144,7 @@ public abstract class BuildableTile extends Tile implements Evolvable, Destroyab
     /**
      * @return Is energy missing in order to evolve or to update?
      */
-    public final boolean isEnergyMissing() {
+    public final boolean getIsEnergyMissing() {
         return this.isEnergyMissing;
     }
 
@@ -142,6 +162,7 @@ public abstract class BuildableTile extends Tile implements Evolvable, Destroyab
 
                 res.consumeEnergy(this.evolutionEnergyConsumption);
                 this.state = ConstructionState.BUILT;
+                
             } else {
                 this.isEnergyMissing = true;
             }

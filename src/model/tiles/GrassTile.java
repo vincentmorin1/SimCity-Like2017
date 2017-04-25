@@ -70,5 +70,11 @@ public final class GrassTile extends Tile {
     public void update(CityResources res) {
         // Do nothings.
     }
+    
+    // Change
+    @Override
+    public void setLinked(boolean b) {
+        // Do nothings.
+    }
 
 }

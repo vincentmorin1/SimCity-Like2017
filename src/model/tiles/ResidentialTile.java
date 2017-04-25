@@ -72,6 +72,11 @@ public class ResidentialTile extends BuildableTile {
      */
     private final int maxNeededEnergy;
 
+    /**
+     * Evolution state
+     */
+    protected boolean isDestroyed;
+
     // Creation
     /**
      * @param capacity
@@ -83,9 +88,9 @@ public class ResidentialTile extends BuildableTile {
         this.maxNeededEnergy = ResidentialTile.DEFAULT_MAX_NEEDED_ENERGY;
         this.maxJoiningInhabitants = ResidentialTile.DEFAULT_MAX_JOINING_INHABITANTS;
         this.maxLeavingInhabitants = ResidentialTile.DEFAULT_MAX_LEAVING_INHABITANTS;
+        this.isDestroyed = false;
     }
 
-    
 
     // Access
     
@@ -123,16 +128,16 @@ public class ResidentialTile extends BuildableTile {
 
     @Override
     public boolean isDestroyed() {
-        return this.state == ConstructionState.DESTROYED;
+        return this.isDestroyed;
     }
 
     // Change
     @Override
     public void disassemble(CityResources res) {
-        if (this.state == ConstructionState.BUILT) {
+        if (!this.isDestroyed) {
             res.decreasePopulationCapacity(this.inhabitantsCapacity);
-
             super.disassemble(res);
+            this.isDestroyed = true;
         }
     }
 
@@ -149,14 +154,14 @@ public class ResidentialTile extends BuildableTile {
 
     @Override
     public void update(CityResources res) {
-        if (this.state == ConstructionState.BUILT) {
+        if (this.state == ConstructionState.BUILT && this.getLinked()) {
             final int inhabitants = this.getInhabitants(res);
 
             final int busyPercentage = inhabitants * 100 / this.inhabitantsCapacity; // Integer
                                                                                      // division
             final int neededEnergy = Math.max(1, busyPercentage * this.maxNeededEnergy / 100); // Integer
                                                                                                // division
-
+            
             if (res.getUnconsumedEnergy() >= neededEnergy) {
                 res.consumeEnergy(neededEnergy);
                 this.isEnergyMissing = false;

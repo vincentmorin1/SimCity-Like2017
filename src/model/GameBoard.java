@@ -40,6 +40,7 @@ import model.event.Event;
 import model.event.EventFactory;
 import model.tiles.Evolvable;
 import model.tiles.GrassTile;
+import model.tiles.RoadTile;
 import model.tiles.Tile;
 import model.tools.BulldozerTool;
 import model.tools.CommercialZoneDelimiterTool;
@@ -48,6 +49,7 @@ import model.tools.CommercialZoneDelimiterTool;
 //import model.tools.IndustrialZoneDelimiterTool;
 import model.tools.PowerPlantConstructionTool;
 import model.tools.ResidentialZoneDelimiterTool;
+import model.tools.RoadConstructionTool;
 import model.tools.IndustrialZoneDelimiterTool;
 import model.tools.Tool;
 
@@ -134,6 +136,8 @@ public class GameBoard extends Observable {
                 this.tiles[i][j] = GrassTile.getDefault();
             }
         }
+        this.tiles[height/2][0] = new RoadTile();
+        		
         this.selectedTile = this.getTile(GameBoard.DEFAULT_SELECTED_LOCATION.getRow(), GameBoard.DEFAULT_SELECTED_LOCATION.getColumn());
 
         this.tools = new ArrayList<>();
@@ -142,13 +146,14 @@ public class GameBoard extends Observable {
         this.tools.add(new ResidentialZoneDelimiterTool());
         this.tools.add(new CommercialZoneDelimiterTool());
         this.tools.add(new IndustrialZoneDelimiterTool());
-
+        this.tools.add(new RoadConstructionTool());
 
         this.selectedTool = this.tools.get(GameBoard.DEFAULT_SELECTED_TOOL);
 
         this.pendingEvolutions = new LinkedList<>();
         this.pendingEventsList = new LinkedList<>();
         this.resources = new CityResources(difficulty.getInitialCurrency());
+        this.resources.setRoadConnection(this.tiles);
 
         this.message = GameBoard.NOTHING_MESSAGE;
         this.texts = texts;
@@ -178,6 +183,7 @@ public class GameBoard extends Observable {
      */
     public GameBoard(int length, LocalizedTexts texts) {
         this(length, length, texts);
+        
     }
 
     // Access
@@ -213,6 +219,7 @@ public class GameBoard extends Observable {
         assert row >= 0 && row < this.getHeight() && column >= 0 && column < this.getWidth() : "Ligne/Colonne incorrecte";
         return this.tiles[row][column];
     }
+ 
 
     // Access (Tool)
     /**
@@ -246,7 +253,10 @@ public class GameBoard extends Observable {
     public int getCurrency() {
         return this.resources.getCurrency();
     }
-
+    	
+    public CityResources getCityResources(){
+    	return this.resources;
+    }
     public int getUnworkingPopulation() {
         return this.resources.getUnworkingPopulation();
     }
@@ -354,6 +364,7 @@ public class GameBoard extends Observable {
     public void nextState() {
         GameBoard.ROUNDCOUNTER.incrementAndGet();
         this.resources.resetEphemerals();
+        this.resources.setRoadConnection(tiles);
         this.applyPendingEvents();
         this.applyNewEvent();
         this.updateTiles();

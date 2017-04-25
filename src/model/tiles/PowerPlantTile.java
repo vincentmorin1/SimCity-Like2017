@@ -137,5 +137,8 @@ public class PowerPlantTile extends Tile implements Destroyable {
             res.increaseEnergyProduction(extraProduction);
         }
     }
-
+    
+    @Override
+    public void setLinked(boolean b){  	
+    }
 }

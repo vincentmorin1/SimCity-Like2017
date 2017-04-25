@@ -17,6 +17,7 @@
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
+
  *  You should have received a copy of the GNU General Public License
  *  along with TNCity.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -36,12 +37,6 @@ public class IndustrialTile extends BuildableTile {
      * Default value of {@link IndustrialTile#getEvolutionEnergyConsumption()}
      */
     public final static int DEFAULT_EVOLUTION_ENERGY_CONSUMPTION = 5;
-
-    /**
-     * Extra money produces for each new update. In the limit of the capacity
-     * {@link #getProductionCapacity()}.
-     */
-    private final static int EXTRA_MONEY_PRODUCTION = 15;
 
     /**
      * Default value of {@link IndustrialTile#getMaxNeededEnergy()}
@@ -100,11 +95,12 @@ public class IndustrialTile extends BuildableTile {
      *            - {@link #getProductionCapacity()}
      */
     public IndustrialTile(int productionCapacity) {
-        super(IndustrialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION, DEFAULT_WORKERS_CAPACITY);     
+        super(IndustrialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION, IndustrialTile.DEFAULT_WORKERS_CAPACITY);     
         this.maxNeededEnergy = IndustrialTile.DEFAULT_MAX_NEEDED_ENERGY;
         this.productionCapacity = productionCapacity;
         this.production = 0;
-        this.isDestroyed = false;        
+        this.workers = 0;
+        this.isDestroyed = false;
     }
 
     /**
@@ -157,61 +153,67 @@ public class IndustrialTile extends BuildableTile {
      * @param o
      * @return Is {@value o} equals to this?
      */
-    public boolean equals(IndustrialTile o) {
-    	 return this == o || o.production == this.production && o.productionCapacity == this.productionCapacity && o.isDestroyed == this.isDestroyed && o.maxNeededEnergy == this.maxNeededEnergy;
+    public boolean equals(IndustrialTile o) { // A complÃ©ter!!
+    	 return this == o || o.workers == this.workers && o.production == this.production && o.productionCapacity == this.productionCapacity && o.isDestroyed == this.isDestroyed && o.maxNeededEnergy == this.maxNeededEnergy;
     }
 
     @Override
     public boolean isDestroyed() {
-        return this.state == ConstructionState.DESTROYED;
+        return this.isDestroyed;
     }
 
     // Change
     @Override
     public void disassemble(CityResources res) {
-        if (this.state == ConstructionState.BUILT) {
-            res.decreaseProductsCapacity(this.productionCapacity);
+        if (!this.isDestroyed) {
+            res.decreaseProductsCapacity(Math.min(this.productionCapacity,res.getProductsCapacity()));
             super.disassemble(res);
+            this.isDestroyed = true;
         }
     }
 
     @Override
     public void evolve(CityResources res) {
         super.evolve(res);
-
         if (this.state == ConstructionState.BUILT) {
-            res.increaseProductsCapacity(DEFAULT_PRODUCTION_CAPACITY);
             this.update(res);
+            res.increaseProductsCapacity(this.productionCapacity);
+
         }
     }
     
     @Override
     public void update(CityResources res) {
 
-        if (this.state == ConstructionState.BUILT) {
+        if (this.state == ConstructionState.BUILT && this.getLinked()) {
         	
         	final int neededEnergy =  this.maxNeededEnergy; 
-           
-        	// Si l'on a assez d'énergie
+        	int energyPercentage = 0;
+        	
+        	// Si l'on a assez d'Ã©nergie
             if (res.getUnconsumedEnergy() >= neededEnergy) {
             	res.consumeEnergy(neededEnergy);
             	this.isEnergyMissing = false;
-            	this.production = IndustrialTile.DEFAULT_PRODUCTION;
+            	energyPercentage = 100;
             }
-            // Sinon la production est diminuée de manière linéaire
+            // Sinon la production est diminuÃ©e de maniÃ¨re linÃ©aire
             else {
             	final int consumedEnergy = res.getUnconsumedEnergy();
             	res.consumeEnergy(consumedEnergy);
             	this.isEnergyMissing = true;
-            	final int missingEnergyPercentage = 100 - consumedEnergy * 100 / neededEnergy; // Integer division
-            	this.production = (100 - missingEnergyPercentage) * IndustrialTile.DEFAULT_PRODUCTION / 100; // Integer division
+            	energyPercentage = consumedEnergy * 100 / neededEnergy; // Integer division
+            	
             }
             
+            this.production = energyPercentage * IndustrialTile.DEFAULT_PRODUCTION / 100; // Integer division
+            
             this.workers = Math.min(res.getUnworkingPopulation(), this.inhabitantsCapacity);
+            final int workersPercentage = (this.workers*100 / IndustrialTile.DEFAULT_WORKERS_CAPACITY);
+            
             res.hireWorkers(this.workers);
             
-            // La production dépend linéairement du nombre de travailleurs
-            this.production = this.production * (this.workers*100 / DEFAULT_WORKERS_CAPACITY) / 100; // Integer division
+            // La production dÃ©pend linÃ©airement du nombre de travailleurs
+            this.production = this.production *  workersPercentage/ 100; // Integer division
             res.storeProducts(this.production);
             
         }

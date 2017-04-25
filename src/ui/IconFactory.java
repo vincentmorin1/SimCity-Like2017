@@ -28,8 +28,11 @@ import java.net.URL;
 
 import javax.swing.ImageIcon;
 
+import model.CityResources;
 import model.tiles.BuildableTile;
 import model.tiles.Destroyable;
+import model.tiles.RoadConnection;
+import model.tiles.RoadTile;
 import model.tiles.Tile;
 import model.tools.Tool;
 
@@ -76,6 +79,11 @@ public class IconFactory {
     public final static String DEBRIS_TILE_ID = "debris";
 
     /**
+     * Icon for roads.
+     */
+    public final static String ROAD_TILE_ID = "road-tile";
+
+    /**
      * Id if {@link BuildableTile#isEnergyMissing()} is enabled.
      */
     public final static String MISSING_ENERGY_POSTID = "missing-energy";
@@ -119,8 +127,8 @@ public class IconFactory {
      * @param aTile
      * @return Icon associated to {@value aTile}.
      */
-    public ImageIcon getTileIcon(Tile aTile) {
-        return this.getIcon(this.getTileId(aTile), IconFactory.NO_ICON_TILE_ID);
+    public ImageIcon getTileIcon(Tile aTile, RoadConnection roads) {
+        return this.getIcon(this.getTileId(aTile,roads), IconFactory.NO_ICON_TILE_ID);
     }
 
     // Implementation
@@ -135,7 +143,6 @@ public class IconFactory {
     private ImageIcon getIcon(String aIconId, String aReplacementIconId) {
         final String path = String.format(this.pathTemplate, aIconId);
         final URL url1 = ClassLoader.getSystemResource(path);
-
         if (url1 != null) {
             return new ImageIcon(url1);
         } else if (aReplacementIconId != null) {
@@ -163,10 +170,16 @@ public class IconFactory {
      * @param aTile
      * @return Id that corresponds to {@value aTile}.
      */
-    private String getTileId(Tile aTile) {
+    private String getTileId(Tile aTile, RoadConnection roads) {
         if (aTile instanceof Destroyable && ((Destroyable) aTile).isDestroyed()) {
             return IconFactory.DEBRIS_TILE_ID;
-        } else {
+            
+        } else if(aTile instanceof RoadTile){
+        	String s = roads.roadsAround((RoadTile) aTile);
+        	System.out.println(IconFactory.ROAD_TILE_ID + "-" + s);
+        	return IconFactory.ROAD_TILE_ID + "-" + s;
+        }
+        else {
             final String id = this.dashSeparatedWordsFromCamelCase(aTile.getClass().getSimpleName());
             // Turn the class's name into dash-separated words in lower-case.
 
@@ -178,13 +191,14 @@ public class IconFactory {
                 // lower-case
 
                 final String energyPostId;
-                if (t.isEnergyMissing()) {
+                if (t.getIsEnergyMissing()) {
                     energyPostId = '-' + IconFactory.MISSING_ENERGY_POSTID;
                 } else {
                     energyPostId = "";
                 }
-
+                
                 return id + statePostId + energyPostId;
+                
             } else {
                 return id;
             }

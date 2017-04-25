@@ -41,7 +41,7 @@ public class PropertiesView extends JPanel implements Observer {
 
     private JLabel currency;
     private JLabel energy;
-    private JLabel money;
+    //private JLabel money;
     private JLabel unworkingPop;
     private JLabel products;
 
@@ -56,11 +56,11 @@ public class PropertiesView extends JPanel implements Observer {
         this.add(new JLabel(texts.getUnconsumedEnergyLabel()));
         this.energy = new JLabel(Integer.toString(w.getEnergy()));
         this.add(this.energy);
+              
+        //this.add(new JLabel(texts.getUnconsumedMoneyLabel()));
+        //this.money = new JLabel(Integer.toString(w.getMoney()));
+        //this.add(this.money);
         
-        this.add(new JLabel(texts.getUnconsumedMoneyLabel()));
-        this.money = new JLabel(Integer.toString(w.getMoney()));
-        this.add(this.money);
-
         this.add(new JLabel(texts.getUnworkingPopulationLabel()));
         this.unworkingPop = new JLabel(Integer.toString(w.getUnworkingPopulation()));
         this.add(this.unworkingPop);
@@ -77,7 +77,7 @@ public class PropertiesView extends JPanel implements Observer {
 
         this.currency.setText(MessageFormat.format(world.getTexts().getCurrencyMsg(), world.getCurrency()));
         this.energy.setText("" + world.getEnergy()); 
-        this.money.setText("" + world.getMoney());
+        //this.money.setText("" + world.getMoney());
         this.unworkingPop.setText("" + world.getUnworkingPopulation());
         this.products.setText("" + world.getProducts());
     }

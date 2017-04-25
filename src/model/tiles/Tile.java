@@ -39,4 +39,5 @@ public abstract class Tile {
      */
     public abstract void update(CityResources res);
 
+    public abstract void setLinked(boolean b);
 }

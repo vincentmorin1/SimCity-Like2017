@@ -24,6 +24,10 @@
 
 package model;
 
+
+import model.tiles.RoadConnection;
+import model.tiles.Tile;
+
 /**
  * Represents the resources and the parameters of the city. An ephemeral
  * resource is reset at each step thanks to {@link CityResources#getVat()}.
@@ -96,7 +100,19 @@ public class CityResources {
      * {@link #getProductsCapacity()}
      */
     private int productsCapacity;
+    
+    private RoadConnection roadConnection;
 
+    
+    public void setRoadConnection(Tile[][] tiles){
+    	roadConnection = new RoadConnection(tiles);
+    	roadConnection.setRoadLink();
+    }
+    
+    public RoadConnection getRoadConnection(){
+    	return roadConnection;
+    }
+    
     // Creation
     /**
      *
@@ -108,6 +124,15 @@ public class CityResources {
 
         this.currency = aCurrency;
         this.vat = CityResources.DEFAULT_VAT;
+        this.unconsumedEnergy = 0;
+        this.energyProduction = 0;
+        this.moneyProduction = 0;
+        this.unconsumedMoney = 0;
+        this.unworkingPopulation = 0;
+        //this.population = 0;
+        //this.populationCapacity = 0;
+        this.productsCount = 0;
+        this.productsCapacity = 0;
     }
 
     /**
@@ -138,6 +163,7 @@ public class CityResources {
      * @param o
      * @return Is {@value o} equals to this?
      */
+    //A COMPLETER!
     public boolean equals(CityResources o) {
         return this == o || super.equals(o) && o.currency == this.currency && o.vat == this.vat && o.unconsumedEnergy == this.unconsumedEnergy && o.energyProduction == this.energyProduction && o.moneyProduction == this.moneyProduction
                 && o.unconsumedMoney == this.unconsumedMoney && o.unworkingPopulation == this.unworkingPopulation && o.population == this.population && o.populationCapacity == this.populationCapacity && o.productsCount == this.productsCount
@@ -186,6 +212,10 @@ public class CityResources {
         return this.energyProduction - this.unconsumedEnergy;
     }
 
+    /**
+     * @return true if linked by road.
+     */
+    
     /**
      * @return Number of available energy units.
      */
@@ -465,7 +495,7 @@ public class CityResources {
      *
      * @param amount
      */
-    public void decreaseProductsCapacity(int amount) {
+    public void decreaseProductsCapacity(int amount) {    	
         assert 0 <= amount && amount <= this.getProductsCapacity();
 
         this.productsCapacity = this.productsCapacity - amount;
