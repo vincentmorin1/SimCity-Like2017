@@ -67,6 +67,10 @@ public class GameBoardView extends JPanel implements Observer {
         for (int i = 0; i < world.getHeight(); i++) {
             for (int j = 0; j < world.getWidth(); j++) {
                 this.tiles[i][j].update();
+                if (this.tiles[i][j].getUnderCursor()) {
+                	this.tiles[i][j].updateCursor();
+                	this.tiles[i][j].setUnderCursor(false);
+                }
             }
         }
 

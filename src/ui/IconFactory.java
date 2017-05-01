@@ -28,7 +28,6 @@ import java.net.URL;
 
 import javax.swing.ImageIcon;
 
-import model.CityResources;
 import model.tiles.BuildableTile;
 import model.tiles.Destroyable;
 import model.tiles.RoadConnection;
@@ -119,8 +118,7 @@ public class IconFactory {
      * @return Icon associated to {@value aTool}.
      */
     public ImageIcon getToolIcon(Tool aTool) {
-        final String toolId = this.dashSeparatedWordsFromCamelCase(aTool.getClass().getSimpleName());
-        return this.getIcon(toolId, IconFactory.NO_ICON_TOOL_ID);
+        return this.getIcon(this.getToolId(aTool), IconFactory.NO_ICON_TOOL_ID);
     }
 
     /**
@@ -131,6 +129,14 @@ public class IconFactory {
         return this.getIcon(this.getTileId(aTile,roads), IconFactory.NO_ICON_TILE_ID);
     }
 
+    /**
+     * @param aCursor
+     * @return Cursor associated to {@value aCursor}.
+     */
+    public ImageIcon getCursorIcon(/*Cursor aCursor*/) {
+    	return this.getIcon(this.getCursorId(/*aCursor*/), IconFactory.NO_ICON_TILE_ID);
+    }
+    
     // Implementation
     /**
      * @param aIconId
@@ -166,6 +172,22 @@ public class IconFactory {
         return s.replaceAll(regexPattern, replacementPattern).toLowerCase();
     }
 
+    /**
+     * @param aTool
+     * @return Id that corresponds to {@value aTool}.
+     */
+    private String getToolId(Tool aTool) {
+    	return this.dashSeparatedWordsFromCamelCase(aTool.getClass().getSimpleName());
+    }
+    
+    /**
+     * @param aCursor
+     * @return Id that corresponds to {@value aCursor}.
+     */
+    private String getCursorId(/*Cursor aCursor*/) {
+    	return "cursor"; //this.dashSeparatedWordsFromCamelCase(aCursor.getClass().getSimpleName());
+    }
+    
     /**
      * @param aTile
      * @return Id that corresponds to {@value aTile}.

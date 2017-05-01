@@ -118,12 +118,14 @@ public class RoadConnection {
 		
 		if (height == heightMax/2 && width == 0){
 			if ( res == ""){
-				res = "EW";
+				res = "W";
 			}
 			else {
 				res += "W";
 			}
 		}
+		
+	
 		return res;
 	}
 	/**

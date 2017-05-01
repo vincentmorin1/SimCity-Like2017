@@ -44,12 +44,15 @@ public class TileUI extends JLabel {
     private int column;
 
     private GameBoard model;
+    
+	private boolean isUnderCursor;
 
     public TileUI(GameBoard m, final int row, final int column) {
         super(" ");
         this.model = m;
         this.row = row;
         this.column = column;
+		this.isUnderCursor = false;
         this.setBorder(null);
         this.addMouseListener(new MouseAdapter() {
             @Override
@@ -59,19 +62,18 @@ public class TileUI extends JLabel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
+            	TileUI.this.setUnderCursor(true);
                 TileUI.this.model.setSelectedTile(row, column);
             }
+
         });
-
         this.update();
-
     }
-
+    
     // Rafraîchissement du composant
     public void update() {
         final Tile elt = this.model.getTile(this.row, this.column);
-        final Tool selectedTool = this.model.getSelectedTool();
-
+        final Tool selectedTool = this.model.getSelectedTool();        
         if (selectedTool.canEffect(elt)) {
             final int cost = selectedTool.getCost(elt);
             this.setToolTipText(MessageFormat.format(this.model.getTexts().getCurrencyMsg(), cost));
@@ -82,5 +84,17 @@ public class TileUI extends JLabel {
         ImageIcon ii = IconFactory.getInstance().getTileIcon(elt,this.model.getCityResources().getRoadConnection());
         this.setIcon(ii);
     }
-
+    
+    public boolean getUnderCursor() {
+    	return this.isUnderCursor;
+    }
+    
+    public void setUnderCursor(boolean v) {
+    	this.isUnderCursor = v;
+    }
+    
+    public void updateCursor() {
+        ImageIcon cursor = IconFactory.getInstance().getCursorIcon();
+        this.setIcon(cursor);
+    }
 }
