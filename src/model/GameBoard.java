@@ -414,8 +414,8 @@ public class GameBoard extends Observable {
 
             e.evolve(this.resources);
 
-            if (e.canEvolve()) {
-                this.pendingEvolutions.add(e);
+            if (e.gotEvolutions()) {
+            	this.pendingEvolutions.add(e);
             }
         }
     }

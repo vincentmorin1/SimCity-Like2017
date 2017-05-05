@@ -50,7 +50,7 @@ public class RoadConnection {
 			verifAndAddStack();
 			position[0] += 1;
 		}
-		if (position[0] != widthMax && mapTiles[position[0]][position[1]] instanceof RoadTile){
+		if (position[0] != heightMax-1 && mapTiles[position[0]][position[1]] instanceof RoadTile){
 			position[0] += 1;
 			verifAndAddStack();
 			position[0] -= 1;
@@ -60,7 +60,7 @@ public class RoadConnection {
 			verifAndAddStack();
 			position[1] += 1;
 		}
-		if (position[1] != heightMax && mapTiles[position[0]][position[1]] instanceof RoadTile){
+		if (position[1] != widthMax-1 && mapTiles[position[0]][position[1]] instanceof RoadTile){
 			position[1] += 1;
 			verifAndAddStack();
 			position[1] -= 1;
@@ -77,6 +77,9 @@ public class RoadConnection {
 			for (int j = 0; j < widthMax; j++){
 				if (this.mapConnection[i][j] ==2 | this.mapConnection[i][j] ==1){
 					this.mapTiles[i][j].setLinked(true);
+				}
+				else {
+					this.mapTiles[i][j].setLinked(false);
 				}
 			}
 		}
@@ -106,10 +109,10 @@ public class RoadConnection {
 		if (height != 0 && mapTiles[height-1][width] instanceof RoadTile){
 			res += "N";
 		}
-		if (height != heightMax && mapTiles[height+1][width] instanceof RoadTile){
+		if (height != heightMax-1 && mapTiles[height+1][width] instanceof RoadTile){
 			res += "S";
 		}
-		if (width != widthMax && mapTiles[height][width+1] instanceof RoadTile){
+		if (width != widthMax-1 && mapTiles[height][width+1] instanceof RoadTile){
 			res += "E";
 		}
 		if (width != 0 && mapTiles[height][width-1] instanceof RoadTile){

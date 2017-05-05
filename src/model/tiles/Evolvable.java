@@ -44,4 +44,5 @@ public interface Evolvable {
      */
     public boolean canEvolve();
 
+    public boolean gotEvolutions();
 }

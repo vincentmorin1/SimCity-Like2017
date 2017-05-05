@@ -87,7 +87,6 @@ public abstract class BuildableTile extends Tile implements Evolvable, Destroyab
      * @param b
      */
     public void setLinked(boolean b){
-    	
     	this.linked = b;
     }
     
@@ -137,10 +136,16 @@ public abstract class BuildableTile extends Tile implements Evolvable, Destroyab
 
     // Status
     @Override
-    public final boolean canEvolve() {
+    public final boolean gotEvolutions() {
         return this.state == ConstructionState.UNDER_CONSTRUCTION;
     }
 
+    // Status
+    @Override
+    public final boolean canEvolve() {
+        return this.getLinked();
+    }
+    
     /**
      * @return Is energy missing in order to evolve or to update?
      */
@@ -156,7 +161,7 @@ public abstract class BuildableTile extends Tile implements Evolvable, Destroyab
 
     @Override
     public void evolve(CityResources res) {
-        if (canEvolve()) {
+        if (this.canEvolve()  && this.gotEvolutions()) {
             if (res.getUnconsumedEnergy() >= evolutionEnergyConsumption) {
                 this.isEnergyMissing = false;
 

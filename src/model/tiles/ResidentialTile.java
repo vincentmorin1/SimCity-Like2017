@@ -154,7 +154,7 @@ public class ResidentialTile extends BuildableTile {
 
     @Override
     public void update(CityResources res) {
-        if (this.state == ConstructionState.BUILT && this.getLinked()) {
+        if (this.state == ConstructionState.BUILT) {
             final int inhabitants = this.getInhabitants(res);
 
             final int busyPercentage = inhabitants * 100 / this.inhabitantsCapacity; // Integer

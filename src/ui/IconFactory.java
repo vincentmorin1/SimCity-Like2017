@@ -198,7 +198,6 @@ public class IconFactory {
             
         } else if(aTile instanceof RoadTile){
         	String s = roads.roadsAround((RoadTile) aTile);
-        	System.out.println(IconFactory.ROAD_TILE_ID + "-" + s);
         	return IconFactory.ROAD_TILE_ID + "-" + s;
         }
         else {
