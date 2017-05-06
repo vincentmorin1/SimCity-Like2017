@@ -82,8 +82,8 @@ public class ResidentialTile extends BuildableTile {
      * @param capacity
      *            - {@link #getInhabitantsCapacity()}
      */
-    public ResidentialTile() {
-        super(ResidentialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION,ResidentialTile.DEFAULT_INHABITANTS_CAPACITY);
+    public ResidentialTile(int topLeftCornerX ,int topLeftCornerY) {
+        super(ResidentialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION,ResidentialTile.DEFAULT_INHABITANTS_CAPACITY, topLeftCornerX ,topLeftCornerY);
 
         this.maxNeededEnergy = ResidentialTile.DEFAULT_MAX_NEEDED_ENERGY;
         this.maxJoiningInhabitants = ResidentialTile.DEFAULT_MAX_JOINING_INHABITANTS;

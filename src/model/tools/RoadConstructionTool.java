@@ -51,13 +51,13 @@ private final static int CURRENCY_COST = 5;
      * given CityResources.
      */
 	@Override
-	protected Tile innerEffect (Tile aTarget, CityResources r) {
+	protected Tile innerEffect (Tile aTarget, CityResources r, int topLeftCornerX ,int topLeftCornerY) {
 		assert canEffect(aTarget);
 		assert isAfordable(aTarget, r);
 
 		r.spend(RoadConstructionTool.CURRENCY_COST);
 
-		return new RoadTile();
+		return new RoadTile( topLeftCornerX , topLeftCornerY);
 	}
 
 
@@ -65,6 +65,16 @@ private final static int CURRENCY_COST = 5;
 	@Override
 	public String toString () {
 		return getClass().getSimpleName();
+	}
+	
+	@Override
+	public  int getDimensionX(){
+		return 1;
+	}
+	
+	@Override
+	public  int getDimensionY(){
+		return 1;
 	}
 
 }

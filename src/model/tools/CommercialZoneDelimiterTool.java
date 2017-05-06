@@ -80,13 +80,13 @@ public final class CommercialZoneDelimiterTool extends Tool {
      * given CityResources.
      */
 	@Override
-	protected Tile innerEffect (Tile aTarget, CityResources r) {
+	protected Tile innerEffect (Tile aTarget, CityResources r, int topLeftCornerX ,int topLeftCornerY) {
 		assert canEffect(aTarget);
 		assert isAfordable(aTarget, r);
 
 		r.spend(CommercialZoneDelimiterTool.CURRENCY_COST);
 
-		return new CommercialTile();
+		return new CommercialTile(CommercialTile.DEFAULT_CONSUMPTION_CAPACITY, topLeftCornerX ,topLeftCornerY);
 	}
 
 
@@ -96,4 +96,13 @@ public final class CommercialZoneDelimiterTool extends Tool {
 		return getClass().getSimpleName();
 	}
 
+	@Override
+	public  int getDimensionX(){
+		return 2;
+	}
+	
+	@Override
+	public  int getDimensionY(){
+		return 2;
+	}
 }

@@ -12,7 +12,7 @@ public class PowerPlantTileTest {
     public void testInit() {
         PowerPlantTile ppt = new PowerPlantTile();
         Assert.assertEquals(PowerPlantTile.DEFAULT_PRODUCTION_CAPACITY, ppt.getProductionCapacity());
-        ppt = new PowerPlantTile(10);
+        ppt = new PowerPlantTile(10,0,0);
         Assert.assertEquals(10, ppt.getProductionCapacity());
     }
     

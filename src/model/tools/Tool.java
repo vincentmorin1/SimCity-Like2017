@@ -55,6 +55,9 @@ public abstract class Tool {
 	 */
 	public abstract int getCost (Tile aTarget);
 
+	public abstract int getDimensionX();
+	public abstract int getDimensionY();
+	
 	/**
 	 * 
 	 * @param aTarget
@@ -63,9 +66,9 @@ public abstract class Tool {
 	 * 		if the tool can effect {@value aTarget} and
 	 * 		if it is affordable regarding {@value r}.
 	 */
-	public Tile effect (Tile aTarget, CityResources r) {
+	public Tile effect (Tile aTarget, CityResources r, int topLeftCornerX ,int topLeftCornerY) {
 		if (canEffect(aTarget) && isAfordable(aTarget, r)) {
-			return innerEffect(aTarget, r);
+			return innerEffect(aTarget, r, topLeftCornerX , topLeftCornerY);
 		}
 		else {
 			return aTarget;
@@ -78,6 +81,6 @@ public abstract class Tool {
 	 * @param r
 	 * @return Effect {@value aTarget} and spend needed resources from {@value r}.
 	 */
-	protected abstract Tile innerEffect (Tile aTarget, CityResources r);
+	protected abstract Tile innerEffect (Tile aTarget, CityResources r, int topLeftCornerX ,int topLeftCornerY);
 
 }

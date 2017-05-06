@@ -31,6 +31,9 @@ import model.CityResources;
  */
 public final class GrassTile extends Tile {
 
+    private final int topLeftCornerX;
+    private final int topLeftCornerY;
+    
     // Constant
     /**
      * Default instance.
@@ -51,8 +54,26 @@ public final class GrassTile extends Tile {
      * Prefer use {@link GrassTile#getDefault()} instead.
      */
     private GrassTile() {
+    	this.topLeftCornerX = 0;
+    	this.topLeftCornerY = 0;
     }
 
+	public int getDimensionX(){
+		return 1;
+	}
+
+	public int getDimensionY(){
+		return 1;
+	}
+	
+	public int getTopLeftCornerX(){
+		return this.topLeftCornerX;
+	}
+	
+	public int getTopLeftCornerY(){
+		return this.topLeftCornerY;
+	}
+	
     // Access
     @Override
     public int hashCode() {

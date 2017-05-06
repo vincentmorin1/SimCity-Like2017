@@ -71,7 +71,7 @@ public class RoadConnection {
 		}
 	}
 
-	public void setRoadLink(){
+	/*public void setRoadLink(){
 		loadRoads();
 		for (int i = 0; i < heightMax; i++){
 			for (int j = 0; j < widthMax; j++){
@@ -83,8 +83,38 @@ public class RoadConnection {
 				}
 			}
 		}
-	}
+	}*/
 
+	public void setRoadLink(){
+		loadRoads();
+		for (int i = 0; i < heightMax; i++){
+			for (int j = 0; j < widthMax; j++){
+				Tile actuelTile = this.mapTiles[i][j];
+				
+				if (actuelTile instanceof GrassTile){
+					actuelTile.setLinked(false);
+				}
+				
+				else {
+					if (this.mapConnection[i][j] ==2 | this.mapConnection[i][j] ==1){
+						for (int i2=0; i2< actuelTile.getDimensionX();i2++){
+							for (int j2=0; j2< actuelTile.getDimensionY();j2++){
+								this.mapTiles[actuelTile.getTopLeftCornerX()+i2][actuelTile.getTopLeftCornerY()+j2].setLinked(true);
+							}
+						}
+					}/*
+					else {
+						for (int i2=0; i2< actuelTile.getDimensionX();i2++){
+							for (int j2=0; j2< actuelTile.getDimensionY();j2++){
+								this.mapTiles[actuelTile.getTopLeftCornerX()+i2][actuelTile.getTopLeftCornerY()+j2].setLinked(false);
+							}
+						}
+					}*/
+				}
+				
+			}
+		}
+	}
 	private int[] getPosition(RoadTile rt){
 		int[] res = new int[2];
 		

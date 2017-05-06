@@ -80,13 +80,13 @@ public final class ResidentialZoneDelimiterTool extends Tool {
      * given CityResources.
      */
 	@Override
-	protected Tile innerEffect (Tile aTarget, CityResources r) {
+	protected Tile innerEffect (Tile aTarget, CityResources r, int topLeftCornerX ,int topLeftCornerY) {
 		assert canEffect(aTarget);
 		assert isAfordable(aTarget, r);
 
 		r.spend(ResidentialZoneDelimiterTool.CURRENCY_COST);
 
-		return new ResidentialTile();
+		return new ResidentialTile( topLeftCornerX , topLeftCornerY);
 	}
 
 
@@ -94,6 +94,16 @@ public final class ResidentialZoneDelimiterTool extends Tool {
 	@Override
 	public String toString () {
 		return getClass().getSimpleName();
+	}
+	
+	@Override
+	public  int getDimensionX(){
+		return 2;
+	}
+	
+	@Override
+	public  int getDimensionY(){
+		return 2;
 	}
 
 }

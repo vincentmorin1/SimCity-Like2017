@@ -28,6 +28,9 @@ import model.CityResources;
 
 public class PowerPlantTile extends Tile implements Destroyable {
 
+    private final int topLeftCornerX;
+    private final int topLeftCornerY;
+    
     // Constant
     /**
      * Extra energy produces for each new update. In the limit of the capacity
@@ -61,20 +64,38 @@ public class PowerPlantTile extends Tile implements Destroyable {
      * @param productionCapacity
      *            - {@link #getProductionCapacity()}
      */
-    public PowerPlantTile(int productionCapacity) {
+    public PowerPlantTile(int productionCapacity, int topLeftCornerX ,int topLeftCornerY) {
         super();
         this.productionCapacity = productionCapacity;
         this.production = 0;
         this.isDestroyed = false;
+    	this.topLeftCornerX = topLeftCornerX;
+    	this.topLeftCornerY = topLeftCornerY;
     }
 
     /**
      * Create with default settings.
      */
     public PowerPlantTile() {
-        this(PowerPlantTile.DEFAULT_PRODUCTION_CAPACITY);
+        this(PowerPlantTile.DEFAULT_PRODUCTION_CAPACITY, 0, 0);
     }
 
+	public int getDimensionX(){
+		return 1;
+	}
+
+	public int getDimensionY(){
+		return 1;
+	}
+	
+	public int getTopLeftCornerX(){
+		return this.topLeftCornerX;
+	}
+	
+	public int getTopLeftCornerY(){
+		return this.topLeftCornerY;
+	}
+	
     // Access
     /**
      * @return Current production.

@@ -6,32 +6,50 @@ public class RoadTile extends Tile implements Destroyable{
 	
     protected boolean isDestroyed;
 
+    private final int topLeftCornerX;
+    private final int topLeftCornerY;
+    
     /**
      * {@link #getLinked()} 
      */
     protected boolean linked;
     
     // Creation
-    public RoadTile() {}
+    public RoadTile(int topLeftCornerX ,int topLeftCornerY) {
+    	this.topLeftCornerX = topLeftCornerX;
+    	this.topLeftCornerY = topLeftCornerY;
+    }
 
-    @Override
+	public int getDimensionX(){
+		return 1;
+	}
+
+	public int getDimensionY(){
+		return 1;
+	}
+	
+	public int getTopLeftCornerX(){
+		return this.topLeftCornerX;
+	}
+	
+	public int getTopLeftCornerY(){
+		return this.topLeftCornerY;
+	}
+	
     public int hashCode() {
         return 1;
     }
 
     // Status
-    @Override
     public boolean equals(Object o) {
         return o instanceof RoadTile && this.equals((RoadTile) o);
     }
 
-    @Override
     public boolean isDestroyed() {
         return this.isDestroyed;
     }
 
     // Change
-    @Override
     public void disassemble(CityResources res) {
         if (!this.isDestroyed) {
             this.isDestroyed = true;

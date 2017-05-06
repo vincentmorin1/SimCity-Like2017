@@ -100,8 +100,8 @@ public class CommercialTile extends BuildableTile {
      * @param capacity
      *            - {@link #getProductionCapacity()}
      */
-    public CommercialTile(int productionCapacity) {
-        super(CommercialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION, DEFAULT_WORKERS_CAPACITY);     
+    public CommercialTile(int productionCapacity, int topLeftCornerX ,int topLeftCornerY) {
+        super(CommercialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION, DEFAULT_WORKERS_CAPACITY, topLeftCornerX , topLeftCornerY);     
         this.maxNeededEnergy = CommercialTile.DEFAULT_MAX_NEEDED_ENERGY;
         this.workers = 0;
         this.productsConsumption = 0;
@@ -114,7 +114,7 @@ public class CommercialTile extends BuildableTile {
      * Create with default settings.
      */
     public CommercialTile() {
-        this(CommercialTile.DEFAULT_CONSUMPTION_CAPACITY);
+        this(CommercialTile.DEFAULT_CONSUMPTION_CAPACITY,0,0);
     }
 
     // Access

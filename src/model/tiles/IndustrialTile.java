@@ -94,8 +94,8 @@ public class IndustrialTile extends BuildableTile {
      * @param capacity
      *            - {@link #getProductionCapacity()}
      */
-    public IndustrialTile(int productionCapacity) {
-        super(IndustrialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION, IndustrialTile.DEFAULT_WORKERS_CAPACITY);     
+    public IndustrialTile(int productionCapacity,int topLeftCornerX ,int topLeftCornerY) {
+        super(IndustrialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION, IndustrialTile.DEFAULT_WORKERS_CAPACITY, topLeftCornerX , topLeftCornerY);     
         this.maxNeededEnergy = IndustrialTile.DEFAULT_MAX_NEEDED_ENERGY;
         this.productionCapacity = productionCapacity;
         this.production = 0;
@@ -107,7 +107,7 @@ public class IndustrialTile extends BuildableTile {
      * Create with default settings.
      */
     public IndustrialTile() {
-        this(IndustrialTile.DEFAULT_PRODUCTION_CAPACITY);
+        this(IndustrialTile.DEFAULT_PRODUCTION_CAPACITY,0,0);
     }
 
     // Access

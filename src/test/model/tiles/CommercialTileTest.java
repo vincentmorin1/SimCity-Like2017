@@ -12,7 +12,7 @@ public class CommercialTileTest {
     public void testInit() {
         CommercialTile ppt = new CommercialTile();
         Assert.assertEquals(CommercialTile.DEFAULT_CONSUMPTION_CAPACITY, ppt.getProductionCapacity());
-        ppt = new CommercialTile(10);
+        ppt = new CommercialTile(10,0,0);
         Assert.assertEquals(10, ppt.getProductionCapacity());
     }
     

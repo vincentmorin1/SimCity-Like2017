@@ -80,16 +80,25 @@ public final class IndustrialZoneDelimiterTool extends Tool {
      * given CityResources.
      */
 	@Override
-	protected Tile innerEffect (Tile aTarget, CityResources r) {
+	protected Tile innerEffect (Tile aTarget, CityResources r, int topLeftCornerX ,int topLeftCornerY) {
 		assert canEffect(aTarget);
 		assert isAfordable(aTarget, r);
 
 		r.spend(IndustrialZoneDelimiterTool.CURRENCY_COST);
 
-		return new IndustrialTile();
+		return new IndustrialTile(IndustrialTile.DEFAULT_PRODUCTION_CAPACITY, topLeftCornerX ,topLeftCornerY);
 	}
 
-
+	@Override
+	public  int getDimensionX(){
+		return 2;
+	}
+	
+	@Override
+	public  int getDimensionY(){
+		return 2;
+	}
+	
 // Debugging
 	@Override
 	public String toString () {

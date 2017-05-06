@@ -31,6 +31,14 @@ import model.CityResources;
  */
 public abstract class Tile {
 
+	public abstract int getDimensionX();
+	
+	public abstract int getDimensionY();
+
+	public abstract int getTopLeftCornerX();
+	
+	public abstract int getTopLeftCornerY();
+
     // Change
     /**
      * Go to the next state.

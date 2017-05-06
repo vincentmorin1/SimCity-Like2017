@@ -133,7 +133,7 @@ public class GameBoard extends Observable {
                 this.tiles[i][j] = GrassTile.getDefault();
             }
         }
-        this.tiles[height/2][0] = new RoadTile();
+        this.tiles[height/2][0] = new RoadTile(height/2,0);
 
         this.selectedTile = this.getTile(GameBoard.DEFAULT_SELECTED_LOCATION.getRow(), GameBoard.DEFAULT_SELECTED_LOCATION.getColumn());
 
@@ -332,13 +332,36 @@ public class GameBoard extends Observable {
     public void effectTile(int row, int column) {
         assert row >= 0 && row < this.getHeight() && column >= 0 && column < this.getWidth() : "Ligne/Colonne incorrecte";
 
+        int sizeX = this.selectedTool.getDimensionX();
+        int sizeY = this.selectedTool.getDimensionY();
+        int maxX = this.tiles.length;
+        int maxY= this.tiles[0].length;
+        
+        boolean canEffect =  true;
+        
         final Tile currentTile = this.tiles[row][column];
-
-        if (this.selectedTool.canEffect(currentTile)) {
+        
+        if (row + sizeX <maxX && column + sizeY < maxY){
+	        for (int i=0; i<sizeX;i++){
+	        	for (int j=0; j<sizeY;j++){
+	        		canEffect = canEffect && this.selectedTool.canEffect(this.tiles[row+i][column+j]);
+	        	}
+	        }
+        }
+        else{
+        	canEffect = false;
+        }
+        
+        if (canEffect) {
             if (this.selectedTool.isAfordable(currentTile, this.resources)) {
 
-                final Tile newTile = this.selectedTool.effect(currentTile, this.resources);
-                this.tiles[row][column] = newTile;
+                final Tile newTile = this.selectedTool.effect(currentTile, this.resources, row, column);
+                
+                for (int i=0; i<sizeX;i++){
+                	for (int j=0; j<sizeY;j++){
+                        this.tiles[row+i][column+j] = newTile;
+                	}
+                }
 
                 this.pendingEvolutions.remove(currentTile);
                 if (newTile instanceof Evolvable) {
@@ -347,7 +370,8 @@ public class GameBoard extends Observable {
             } else {
                 this.message = this.texts.getMissingResourcesMsg();
             }
-        } else {
+        } 
+        else {
             this.message = this.texts.getToolCannotAffectMsg();
         }
 
@@ -424,11 +448,20 @@ public class GameBoard extends Observable {
      * Update all tiles via {@link Tile#update(CityResources)}.
      */
     private void updateTiles() {
+    	
+        for (int i=0; i< this.tiles.length;i++){
+        	for (int j=0; j< this.tiles[0].length; j++){
+        		if (this.tiles[i][j].getTopLeftCornerX() == i && this.tiles[i][j].getTopLeftCornerY() == j){
+        			this.tiles[i][j].update(this.resources);
+        		}
+        	}
+        }
+        /*
         for (final Tile[] rows : this.tiles) {
             for (final Tile t : rows) {
                 t.update(this.resources);
             }
-        }
+        }*/
     }
 
 }

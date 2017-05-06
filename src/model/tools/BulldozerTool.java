@@ -78,7 +78,7 @@ public final class BulldozerTool extends Tool {
      * CityResources.
      */
     @Override
-    protected Tile innerEffect(Tile aTarget, CityResources r) {
+    protected Tile innerEffect(Tile aTarget, CityResources r, int topLeftCornerX ,int topLeftCornerY) {
         assert canEffect(aTarget);
         assert isAfordable(aTarget, r);
 
@@ -94,4 +94,13 @@ public final class BulldozerTool extends Tool {
         return getClass().getSimpleName();
     }
 
+	@Override
+	public  int getDimensionX(){
+		return 1;
+	}
+	
+	@Override
+	public  int getDimensionY(){
+		return 1;
+	}
 }

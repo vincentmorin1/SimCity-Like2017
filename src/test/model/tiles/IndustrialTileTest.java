@@ -12,7 +12,7 @@ public class IndustrialTileTest {
     public void testInit() {
         IndustrialTile ppt = new IndustrialTile();
         Assert.assertEquals(IndustrialTile.DEFAULT_PRODUCTION_CAPACITY, ppt.getProductionCapacity());
-        ppt = new IndustrialTile(10);
+        ppt = new IndustrialTile(10,0,0);
         Assert.assertEquals(10, ppt.getProductionCapacity());
     }
     

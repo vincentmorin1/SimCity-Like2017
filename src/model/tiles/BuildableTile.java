@@ -37,6 +37,8 @@ public abstract class BuildableTile extends Tile implements Evolvable, Destroyab
      */
     protected final int inhabitantsCapacity;
 
+    private final int topLeftCornerX;
+    private final int topLeftCornerY;
 	/**
      * {@link #getEvolutionEnergyConsumption()}
      */
@@ -65,14 +67,16 @@ public abstract class BuildableTile extends Tile implements Evolvable, Destroyab
      * @param evolutionEnergyConsumption
      *            - {@link #getEvolutionEnergyConsumption()}
      */
-    public BuildableTile(int evolutionEnergyConsumption, int capacity) {
+    public BuildableTile(int evolutionEnergyConsumption, int capacity,int topLeftCornerX ,int topLeftCornerY) {
         assert evolutionEnergyConsumption >= 0;
 
         this.evolutionEnergyConsumption = evolutionEnergyConsumption;
         this.state = ConstructionState.UNDER_CONSTRUCTION;
         this.isEnergyMissing = false;
         this.inhabitantsCapacity = capacity;
-        this.linked = false; 
+        this.linked = false;
+        this.topLeftCornerX = topLeftCornerX;
+        this.topLeftCornerY = topLeftCornerY;
     }
 
     /**
@@ -90,6 +94,22 @@ public abstract class BuildableTile extends Tile implements Evolvable, Destroyab
     	this.linked = b;
     }
     
+	public int getDimensionX(){
+		return 2;
+	}
+
+	public int getDimensionY(){
+		return 2;
+	}
+
+	public int getTopLeftCornerX(){
+		return this.topLeftCornerX;
+	}
+	
+	public int getTopLeftCornerY(){
+		return this.topLeftCornerY;
+	}
+	
     // Access
     /**
      * @return Maximum number of inhabitants.

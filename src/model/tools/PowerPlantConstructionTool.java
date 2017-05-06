@@ -74,13 +74,13 @@ public final class PowerPlantConstructionTool extends Tool {
      * given CityResources.
      */
     @Override
-    protected Tile innerEffect(Tile aTarget, CityResources r) {
+    protected Tile innerEffect(Tile aTarget, CityResources r, int topLeftCornerX ,int topLeftCornerY) {
         assert this.canEffect(aTarget);
         assert this.isAfordable(aTarget, r);
 
         r.spend(PowerPlantConstructionTool.CURRENCY_COST);
 
-        return new PowerPlantTile();
+        return new PowerPlantTile(PowerPlantTile.DEFAULT_PRODUCTION_CAPACITY, topLeftCornerX , topLeftCornerY);
     }
 
     // Debugging
@@ -89,4 +89,13 @@ public final class PowerPlantConstructionTool extends Tool {
         return this.getClass().getSimpleName();
     }
 
+	@Override
+	public  int getDimensionX(){
+		return 1;
+	}
+	
+	@Override
+	public  int getDimensionY(){
+		return 1;
+	}
 }
