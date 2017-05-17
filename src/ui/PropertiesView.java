@@ -39,12 +39,32 @@ public class PropertiesView extends JPanel implements Observer {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * {@link GameBoard#getCurrency()}
+     */
     private JLabel currency;
+    
+    /**
+     * {@link GameBoard#getEnergy()}
+     */
     private JLabel energy;
-    //private JLabel money;
+    
+    /**
+     * {@link GameBoard#getUnworkingPopulation()}
+     */
     private JLabel unworkingPop;
+    
+    /**
+     * {@link GameBoard#getProducts()}    
+     */
     private JLabel products;
 
+    /**
+     * PropertiesView constructor
+     * 
+     * @param w
+     * @param texts
+     */
     public PropertiesView(GameBoard w, LocalizedTexts texts) {
         super();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -57,10 +77,6 @@ public class PropertiesView extends JPanel implements Observer {
         this.energy = new JLabel(Integer.toString(w.getEnergy()));
         this.add(this.energy);
         
-        //this.add(new JLabel(texts.getUnconsumedMoneyLabel()));
-        //this.money = new JLabel(Integer.toString(w.getMoney()));
-        //this.add(this.money);
-
         this.add(new JLabel(texts.getUnworkingPopulationLabel()));
         this.unworkingPop = new JLabel(Integer.toString(w.getUnworkingPopulation()));
         this.add(this.unworkingPop);

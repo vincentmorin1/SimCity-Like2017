@@ -46,17 +46,18 @@ public class RefreshView extends JPanel implements ActionListener{
 
     // Constant
     private static final long serialVersionUID = 1L;
-    private int vitesse;
     
-    
-    
-    
-    
+    private int vitesse;   
 
     // Creation
+    
+    /**
+     * RefreshView constructor
+     * 
+     * @param w
+     */
     public RefreshView(GameBoard w) {
-        super();
-        
+        super();     
         
         this.setBorder(BorderFactory.createBevelBorder(1, Color.GRAY,
         Color.BLACK));        
@@ -177,15 +178,7 @@ public class RefreshView extends JPanel implements ActionListener{
         
     }
 
-
-
-
-
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+	public void actionPerformed(ActionEvent e) {}
     
 }

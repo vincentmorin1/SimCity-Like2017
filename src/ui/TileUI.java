@@ -45,8 +45,18 @@ public class TileUI extends JLabel {
 
     private GameBoard model;
     
+    /**
+     * {@link #getUnderCursor()}
+     */
 	private boolean isUnderCursor;
 
+	/**
+	 * TileUI constructor
+	 * 
+	 * @param m
+	 * @param row
+	 * @param column
+	 */
     public TileUI(GameBoard m, final int row, final int column) {
         super(" ");
         this.model = m;
@@ -70,7 +80,10 @@ public class TileUI extends JLabel {
         this.update();
     }
     
-    // Rafraîchissement du composant
+    // Component refresh
+    /**
+     * Update
+     */
     public void update() {
         final Tile elt = this.model.getTile(this.row, this.column);
         final Tool selectedTool = this.model.getSelectedTool();        

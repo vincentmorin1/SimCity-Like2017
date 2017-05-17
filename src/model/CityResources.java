@@ -101,23 +101,53 @@ public class CityResources {
      */
     private int productsCapacity;
 
+    /**
+     * {@link #getRoadConnection()}
+     */
  	private RoadConnection roadConnection;
 
-    
+    /**
+     * Set the connection between road tiles
+     * 
+     * @param tiles
+     * 
+     * @see RoadConnection#setRoadLink()
+     * @see RoadConnection
+     * @see CityResources#roadConnection
+     */
     public void setRoadConnection(Tile[][] tiles){
     	roadConnection = new RoadConnection(tiles);
     	roadConnection.setRoadLink();
     }
     
+    /**
+     * Return the type of connection between 2 road tiles
+     * 
+     * @return RoadConnection
+     * 
+     * @see RoadConnection
+     * @see CityResources#roadConnection
+     */
     public RoadConnection getRoadConnection(){
     	return roadConnection;
     }
 
     // Creation
+    
     /**
+     * CityResources constructor
      *
      * @param aCurrency
-     *            - {@link #getCurrency()}
+     * - {@link #getCurrency()}
+     * 
+     * @see CityResources#vat
+     * @see CityResources#unconsumedEnergy
+     * @see CityResources#energyProduction
+     * @see CityResources#moneyProduction
+     * @see CityResources#unconsumedMoney
+     * @see CityResources#unworkingPopulation
+     * @see CityResources#productsCount
+     * @see CityResources#productsCapacity
      */
     public CityResources(int aCurrency) {
         assert aCurrency >= 0;
@@ -136,6 +166,7 @@ public class CityResources {
     }
 
     /**
+     * CityResources constructor
      *
      * @param aCurrency
      *            - {@link #getCurrency()}
@@ -163,7 +194,7 @@ public class CityResources {
      * @param o
      * @return Is {@value o} equals to this?
      */
-    //A COMPLETER!
+    
     public boolean equals(CityResources o) {
         return this == o || super.equals(o) && o.currency == this.currency && o.vat == this.vat && o.unconsumedEnergy == this.unconsumedEnergy && o.energyProduction == this.energyProduction && o.moneyProduction == this.moneyProduction
                 && o.unconsumedMoney == this.unconsumedMoney && o.unworkingPopulation == this.unworkingPopulation && o.population == this.population && o.populationCapacity == this.populationCapacity && o.productsCount == this.productsCount
@@ -308,7 +339,7 @@ public class CityResources {
     }
 
     /**
-     * Get VAT on {@value currencyAmount} and {@link #credit(int)} with the
+     * Get VAT on {@value currencyAmount} and {@link #credit(integer)} with the
      * obtained result.
      *
      * @param currencyAmount

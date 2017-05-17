@@ -4,9 +4,13 @@ import model.CityResources;
 
 public class RoadTile extends Tile implements Destroyable{
 	
+	/**
+	 * Evolution state
+	 */
     protected boolean isDestroyed;
 
     private final int topLeftCornerX;
+    
     private final int topLeftCornerY;
     
     /**
@@ -15,6 +19,12 @@ public class RoadTile extends Tile implements Destroyable{
     protected boolean linked;
     
     // Creation
+    /**
+     * RoadTile constructor
+     * 
+     * @param topLeftCornerX
+     * @param topLeftCornerY
+     */
     public RoadTile(int topLeftCornerX ,int topLeftCornerY) {
     	this.topLeftCornerX = topLeftCornerX;
     	this.topLeftCornerY = topLeftCornerY;
@@ -41,15 +51,18 @@ public class RoadTile extends Tile implements Destroyable{
     }
 
     // Status
+    @Override
     public boolean equals(Object o) {
         return o instanceof RoadTile && this.equals((RoadTile) o);
     }
 
+    @Override
     public boolean isDestroyed() {
         return this.isDestroyed;
     }
 
     // Change
+    @Override
     public void disassemble(CityResources res) {
         if (!this.isDestroyed) {
             this.isDestroyed = true;
@@ -64,7 +77,8 @@ public class RoadTile extends Tile implements Destroyable{
     }
     
     /**
-     * Change la valeur de linked
+     * Change the value of linked
+     * 
      * @param b
      */
     public void setLinked(boolean b){

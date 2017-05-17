@@ -31,9 +31,7 @@ public class FRTexts extends LocalizedTexts {
 
     // Messages
 	/**
-	 * Error message, displayed when the player is trying to modify a not allowed part of the tiles
-	 * 
-	 * @return Tool cannot affect a tile
+	 * @see LocalizedTexts#getToolCannotAffectMsg()
 	 */
     @Override
     public String getToolCannotAffectMsg() {
@@ -41,7 +39,7 @@ public class FRTexts extends LocalizedTexts {
     }
     
     /**
-     * @return Current message
+     * @see LocalizedTexts#getCurrencyMsg()
      */
     @Override
     public String getCurrencyMsg() {
@@ -49,7 +47,7 @@ public class FRTexts extends LocalizedTexts {
     }
     
     /**
-     * @return String 
+     * @see LocalizedTexts#getEarthQuakeMsg()
      */
     @Override
     public String getEarthQuakeMsg() {
@@ -57,7 +55,7 @@ public class FRTexts extends LocalizedTexts {
     }
     
     /**
-     * @return String 
+     * @see LocalizedTexts#getMissingResourcesMsg()
      */
     @Override
     public String getMissingResourcesMsg() {
@@ -65,7 +63,7 @@ public class FRTexts extends LocalizedTexts {
     }
     
     /**
-     * @return String 
+     * @see LocalizedTexts#getRoundMsg()
      */
     @Override
     public String getRoundMsg() {
@@ -75,7 +73,7 @@ public class FRTexts extends LocalizedTexts {
     // Labels
     
     /**
-     * @return String 
+     * @see LocalizedTexts#getCurrencyLabel()
      */
     @Override
     public String getCurrencyLabel() {
@@ -83,7 +81,7 @@ public class FRTexts extends LocalizedTexts {
     }
     
     /**
-     * @return String 
+     * @see LocalizedTexts#getUnconsumedEnergyLabel()
      */
     @Override
     public String getUnconsumedEnergyLabel() {
@@ -91,7 +89,7 @@ public class FRTexts extends LocalizedTexts {
     }
     
     /**
-     * @return String 
+     * @see LocalizedTexts#getUnconsumedMoneyLabel()
      */
     @Override
     public String getUnconsumedMoneyLabel() {
@@ -99,7 +97,7 @@ public class FRTexts extends LocalizedTexts {
     }
     
     /**
-     * @return String 
+     * @see LocalizedTexts#getStoredProductsLabel()
      */
     @Override
     public String getStoredProductsLabel() {
@@ -107,7 +105,7 @@ public class FRTexts extends LocalizedTexts {
     }
     
     /**
-     * @return String 
+     * @see LocalizedTexts#getUnworkingPopulationLabel()
      */
     @Override
     public String getUnworkingPopulationLabel() {

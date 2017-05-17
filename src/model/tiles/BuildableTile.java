@@ -37,7 +37,14 @@ public abstract class BuildableTile extends Tile implements Evolvable, Destroyab
      */
     protected final int inhabitantsCapacity;
 
+    /**
+     * {@link #getTopLeftCornerX()}
+     */
     private final int topLeftCornerX;
+    
+    /**
+     * {@link #getTopLeftCornerY()}
+     */
     private final int topLeftCornerY;
 	/**
      * {@link #getEvolutionEnergyConsumption()}
@@ -94,18 +101,30 @@ public abstract class BuildableTile extends Tile implements Evolvable, Destroyab
     	this.linked = b;
     }
     
+    /**
+     * @return Dimension of X
+     */
 	public int getDimensionX(){
 		return 2;
 	}
 
+	/**
+	 * @return Dimension of Y
+	 */
 	public int getDimensionY(){
 		return 2;
 	}
 
+	/**
+	 * @return Value of topLeftCornerX
+	 */
 	public int getTopLeftCornerX(){
 		return this.topLeftCornerX;
 	}
 	
+	/**
+	 * @return Value of topLeftCornerY
+	 */
 	public int getTopLeftCornerY(){
 		return this.topLeftCornerY;
 	}

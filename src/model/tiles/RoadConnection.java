@@ -2,13 +2,24 @@ package model.tiles;
 
 public class RoadConnection {
 	
+	
 	private Tile[][] mapTiles;
+	
 	private int[][] mapConnection;
+	
 	private int heightMax;
+	
 	private int widthMax;
+	
 	private Integer[] position;
+	
 	private Stack<Integer[]> stack;
 	
+	/**
+	 * RoadConnection constructor
+	 * 
+	 * @param tiles
+	 */
 	public RoadConnection(Tile[][] tiles){
 		this.mapTiles = tiles;
 		this.heightMax = tiles.length;
@@ -17,7 +28,10 @@ public class RoadConnection {
 		this.stack = new Stack<Integer[]>();
 		this.position = new Integer[2];
 	}
-	
+	 
+	/**
+	 * {@link #explorate()}
+	 */
 	public void loadRoads(){
 		position[0] = heightMax/2;
 		position[1] = 0;
@@ -25,12 +39,18 @@ public class RoadConnection {
 		explorate();
 	}
 	
+	/**
+	 * {@link #clone()}
+	 */
 	private void verifAndAddStack(){
 		if (mapConnection[position[0]][position[1]] == 0){
 			stack.push(position.clone());
 		}
 	}
 	
+	/**
+	 * {@link #verifAndAddStack()}
+	 */
 	private void explorate(){
 		
 		position = stack.pop();
@@ -71,20 +91,9 @@ public class RoadConnection {
 		}
 	}
 
-	/*public void setRoadLink(){
-		loadRoads();
-		for (int i = 0; i < heightMax; i++){
-			for (int j = 0; j < widthMax; j++){
-				if (this.mapConnection[i][j] ==2 | this.mapConnection[i][j] ==1){
-					this.mapTiles[i][j].setLinked(true);
-				}
-				else {
-					this.mapTiles[i][j].setLinked(false);
-				}
-			}
-		}
-	}*/
-
+	/**
+	 * {@link #loadRoads()}
+	 */
 	public void setRoadLink(){
 		loadRoads();
 		for (int i = 0; i < heightMax; i++){
@@ -102,19 +111,18 @@ public class RoadConnection {
 								this.mapTiles[actuelTile.getTopLeftCornerX()+i2][actuelTile.getTopLeftCornerY()+j2].setLinked(true);
 							}
 						}
-					}/*
-					else {
-						for (int i2=0; i2< actuelTile.getDimensionX();i2++){
-							for (int j2=0; j2< actuelTile.getDimensionY();j2++){
-								this.mapTiles[actuelTile.getTopLeftCornerX()+i2][actuelTile.getTopLeftCornerY()+j2].setLinked(false);
-							}
-						}
-					}*/
+					}
 				}
 				
 			}
 		}
 	}
+	
+	/**
+	 * 
+	 * @param rt
+	 * @return The position of a road tile
+	 */
 	private int[] getPosition(RoadTile rt){
 		int[] res = new int[2];
 		
@@ -129,6 +137,11 @@ public class RoadConnection {
 		return res;
 	}
 	
+	/**
+	 * 
+	 * @param rt
+	 * @return Where are road tile around this road (West, North, Est, South)
+	 */
 	public String roadsAround(RoadTile rt){
 		String res =  "";
 		
@@ -160,28 +173,5 @@ public class RoadConnection {
 		
 	
 		return res;
-	}
-	/**
-	public static void main(String[] args){
-       Tile[][] tiles = new Tile[5][5];
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                tiles[i][j] = GrassTile.getDefault();
-            }
-        }
-        tiles[0][2] = new RoadTile();
-        tiles[0][1] = new RoadTile();
-        tiles[0][0] = new RoadTile();
-        tiles[1][0] = new ResidentialTile();
-        
-        RoadConnection r = new RoadConnection(tiles);
-        r.setRoadLink();
-        
-        BuildableTile bt = (BuildableTile) r.mapTiles[1][0];
-        System.out.println(bt.getLinked());
-        
-        
-	}
-	*/
-	
+	}	
 }
