@@ -24,8 +24,6 @@
 package launcher;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -63,13 +61,23 @@ public final class SimCityUI extends JFrame implements ActionListener{
 
     private final static int DEFAULT_WIDTH = 20;
     
-    private JFrame menu = new JFrame();
+    /**
+     * Buttons from the first frame menu
+     * 
+     * @see SimCityUI#SimCityUI(int, int)
+     * @see JButton 
+     */
     private JButton button;
     private JButton button2;
     private JButton button3;
     private JButton button4;
     private JButton button5;
     
+    /**
+     * height and width, the both dimensions of the game frame
+     * 
+     * @see SimCityUI#SimCityUI(int, int)
+     */
     private int hauteur ;
     private int largeur ;
     
@@ -80,6 +88,9 @@ public final class SimCityUI extends JFrame implements ActionListener{
      * First argument: height Second argument: width
      *
      * @param args
+     * 
+     * @see SimCityUI
+     * @see SimCityUI#SimCityUI(int, int)
      */
     public static void main(String[] args) {
         final int height;
@@ -114,24 +125,30 @@ public final class SimCityUI extends JFrame implements ActionListener{
             }
         }
 
-        // Pour que ce soit le thread graphique qui construise les composants
-        // graphiques
+        // So that it is the graphical thread that builds the graphics components
         SwingUtilities.invokeLater(() -> new SimCityUI(height, width));
         
     }
-    
+    /**
+     * SimCityUI constructor
+     * Display a frame that contains buttons to configure the game : sound, language, tutorial
+     * Run the game
+     * 
+     * @param height
+     * @param widht
+     * 
+     * @see SimCityUI#hauteur
+     * @see SimCityUI#largeur
+     * @see JFrame
+     */
     // Creation
     public SimCityUI(int hauteur, int largeur) {
         super("SimCityTélécom");
         
         this.hauteur = hauteur;
         this.largeur = largeur;
-        // Choix de la langue
-        final LocalizedTexts texts = new UKTexts();
-        URL url = SimCityUI.class.getResource("/resources/Music.wav");
-		AudioClip ac = Applet.newAudioClip(url);
-		
-        //Crétion du menu
+       		
+        //Menu creation
         this.setTitle("Menu");
         this.setSize(1260,725);
         this.setLocationRelativeTo(null);
@@ -141,42 +158,54 @@ public final class SimCityUI extends JFrame implements ActionListener{
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         
-        button = new JButton("Jouer");
+        button = new JButton("Play");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 0;
         button.addActionListener(this);
         this.add(button, c);
         
-        button2 = new JButton("Langue UK");
+        button2 = new JButton("Language UK");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 1;
         button2.addActionListener(this);
         this.add(button2, c);
         
-        button3 = new JButton("Tutoriel");
+        button3 = new JButton("Tutorial");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 2;
         button3.addActionListener(this);
         this.add(button3, c);
                 
-        button4 = new JButton("Son OUI");
+        button4 = new JButton("Sound YES");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 3;
         button4.addActionListener(this);
         this.add(button4, c);
         
-        button5 = new JButton("Quitter");
+        button5 = new JButton("Quit");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 4;
         button5.addActionListener(this);
         this.add(button5, c);
     }
-
+    /**
+     * Apply the different action that depends of the user's actions.
+     * Use an ActionEvent in parameter
+     * @param e 
+     * 
+     * @see SimCityUI#button
+     * @see SimCityUI#button2
+     * @see SimCityUI#button3
+     * @see SimCityUI#button4
+     * @see SimCityUI#button5
+     * @see SimCityUI#hauteur
+     * @see SimCityUI#largeur
+     */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
@@ -186,34 +215,32 @@ public final class SimCityUI extends JFrame implements ActionListener{
 		
 		
 		if (source == button) {
-			if (button4.getText() == "Son OUI") {
+			if (button4.getText() == "Sound YES") {
 				ac.loop();
 			}
 			else {
 				ac.stop();
 			}
-			if (button2.getText() == "Langue UK") {
+			if (button2.getText() == "Language UK") {
 				final LocalizedTexts texts = new UKTexts();
-				// Création du monde
-				
+				// World creation				
 				this.dispose();
-				JFrame jeu = new JFrame();
-				
+				JFrame jeu = new JFrame();				
 				jeu.setTitle("TNCYTY");
 				GameBoard monde = new GameBoard(hauteur, largeur, texts);
-		        // Création de la vue du monde, placée au centre de la fenêtre
+		        // GameView creation, displayed on the middle of the frame
 		        GameBoardView vm = new GameBoardView(monde);
 		        monde.addObserver(vm);
 		        jeu.add(vm, BorderLayout.CENTER);
 
-		        // Création de la palette des éléments de jeu, placée �  gauche
+		        // Tools creation, displayed on left side of the frame
 		        ToolsView ve = new ToolsView(monde);
 		        monde.addObserver(ve);
 		        jeu.add(ve, BorderLayout.WEST);
-		        // Création du panneau d'informations
+		        // Board of information, on the right side of the frame
 		        PropertiesView vi = new PropertiesView(monde, texts);
 		        monde.addObserver(vi);
-		        // Création du panneau de rafraichissement
+		        // Refresh panel creation
 		        RefreshView rv = new RefreshView(monde);
 		        JPanel right = new JPanel();
 		        right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
@@ -221,7 +248,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
 		        right.add(Box.createVerticalGlue());
 		        right.add(rv);
 		        jeu.add(right, BorderLayout.EAST);
-			        // Création du panneau de message
+			        // MessageView creation
 		        MessagesView mv = new MessagesView();
 		        monde.addObserver(mv);
 		        jeu.add(mv, BorderLayout.SOUTH);
@@ -234,26 +261,28 @@ public final class SimCityUI extends JFrame implements ActionListener{
 			}
 			else {
 				final LocalizedTexts texts = new FRTexts();
-				// Création du monde
+				// World creation
 				
 				this.dispose();
-				JFrame jeu = new JFrame();
-				
+				JFrame jeu = new JFrame();				
 				jeu.setTitle("TNCYTY");
 				GameBoard monde = new GameBoard(hauteur, largeur, texts);
-		        // Création de la vue du monde, placée au centre de la fenêtre
+		        
+				// GameView creation, displayed on the middle of the frame 
 		        GameBoardView vm = new GameBoardView(monde);
 		        monde.addObserver(vm);
 		        jeu.add(vm, BorderLayout.CENTER);
 
-		        // Création de la palette des éléments de jeu, placée �  gauche
+		        // Tools creation, displayed on left side of the frame
 		        ToolsView ve = new ToolsView(monde);
 		        monde.addObserver(ve);
 		        jeu.add(ve, BorderLayout.WEST);
-		        // Création du panneau d'informations
+		        
+		        // Board of information, on the right side of the frame
 		        PropertiesView vi = new PropertiesView(monde, texts);
 		        monde.addObserver(vi);
-		        // Création du panneau de rafraichissement
+		        
+		        // Refresh panel creation
 		        RefreshView rv = new RefreshView(monde);
 		        JPanel right = new JPanel();
 		        right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
@@ -261,13 +290,13 @@ public final class SimCityUI extends JFrame implements ActionListener{
 		        right.add(Box.createVerticalGlue());
 		        right.add(rv);
 		        jeu.add(right, BorderLayout.EAST);
-			        // Création du panneau de message
+			    
+		        // MessageView creation
 		        MessagesView mv = new MessagesView();
 		        monde.addObserver(mv);
 		        jeu.add(mv, BorderLayout.SOUTH);
 		        jeu.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		        jeu.pack();
-
 		        jeu.setResizable(true);
 		        jeu.setVisible(true);
 				}
@@ -275,21 +304,21 @@ public final class SimCityUI extends JFrame implements ActionListener{
 			
 			
 		} else if (source == button2){
-			if (button2.getText() == "Langue UK") {
-				button2.setText("Langue FR");
+			if (button2.getText() == "Language UK") {
+				button2.setText("Language FR");
 			}
 			else {
-				button2.setText("Langue UK");
+				button2.setText("Language UK");
 			}
 		}
 		else if (source == button3) {
-			//cr�er un tutoriel
+			//Create a tutorial
 		}
-		else if (source == button4 && button4.getText() == "Son OUI") {
-			button4.setText("Son NON");
+		else if (source == button4 && button4.getText() == "Sound YES") {
+			button4.setText("Sound NO");
 		}
-		else if (source == button4 && button4.getText() == "Son NON") {
-			button4.setText("Son OUI");
+		else if (source == button4 && button4.getText() == "Sound NO") {
+			button4.setText("Sound YES");
 		}
 		else if (source == button5) {
 			this.dispose();

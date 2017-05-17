@@ -30,55 +30,88 @@ package localization;
 public class FRTexts extends LocalizedTexts {
 
     // Messages
+	/**
+	 * Error message, displayed when the player is trying to modify a not allowed part of the tiles
+	 * 
+	 * @return Tool cannot affect a tile
+	 */
     @Override
     public String getToolCannotAffectMsg() {
         return "Impossible de modifier cette partie du terrain";
     }
-
+    
+    /**
+     * @return Current message
+     */
     @Override
     public String getCurrencyMsg() {
-        return "{0} €";
+        return "{0} ï¿½";
     }
-
+    
+    /**
+     * @return String 
+     */
     @Override
     public String getEarthQuakeMsg() {
-        return "Un séisme a frappé aux coordonnées [ {0} ]";
+        return "Un sï¿½isme a frappï¿½ aux coordonnï¿½es [ {0} ]";
     }
-
+    
+    /**
+     * @return String 
+     */
     @Override
     public String getMissingResourcesMsg() {
         return "Manque de ressources";
     }
-
+    
+    /**
+     * @return String 
+     */
     @Override
     public String getRoundMsg() {
         return "Round #{0} : {1}";
     }
 
     // Labels
+    
+    /**
+     * @return String 
+     */
     @Override
     public String getCurrencyLabel() {
-        return "Crédit";
+        return "Crï¿½dit";
     }
-
+    
+    /**
+     * @return String 
+     */
     @Override
     public String getUnconsumedEnergyLabel() {
-        return "Energie non consommée";
+        return "Energie non consommï¿½e";
     }
     
+    /**
+     * @return String 
+     */
     @Override
     public String getUnconsumedMoneyLabel() {
-    	return "Argent non utilisée";
+    	return "Argent non utilisï¿½e";
     }
     
+    /**
+     * @return String 
+     */
     @Override
     public String getStoredProductsLabel() {
         return "Produits en stock";
     }
-
+    
+    /**
+     * @return String 
+     */
     @Override
     public String getUnworkingPopulationLabel() {
-        return "Population au chômage";
+        return "Population au chï¿½mage";
     }
 
 }
