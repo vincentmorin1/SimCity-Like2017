@@ -112,4 +112,28 @@ public class UKTexts extends LocalizedTexts {
         return "Unworking population";
     }
 
+    /**
+     * @see LocalizedTexts#getEfficiencyAtWorkLabel()
+     */
+	@Override
+	public String getEfficiencyAtWorkLabel() {
+		return "Efficiency at work";
+	}
+
+	/**
+	 * @see LocalizedTexts#getEconomyLabel()
+	 */
+	@Override
+	public String getEconomyLabel() {
+		return "Economy";
+	}
+
+	/**
+	 * @see LocalizedTexts#getHappinessLabel()
+	 */
+	@Override
+	public String getHappinessLabel() {
+		return "Happiness";
+	}
+
 }

@@ -112,4 +112,28 @@ public class FRTexts extends LocalizedTexts {
         return "Population au chï¿½mage";
     }
 
+    /**
+     * @see LocalizedTexts#getEfficiencyAtWorkLabel()
+     */
+	@Override
+	public String getEfficiencyAtWorkLabel() {
+		return "Efficacité au travail";
+	}
+
+	/**
+	 * @see LocalizedTexts#getEconomyLabel()
+	 */
+	@Override
+	public String getEconomyLabel() {
+		return "Economie";
+	}
+
+	/**
+	 * @see LocalizedTexts#getHappinessLabel()
+	 */
+	@Override
+	public String getHappinessLabel() {
+		return "Bonheur";
+	}
+
 }

@@ -88,4 +88,22 @@ public abstract class LocalizedTexts {
      */
     public abstract String getUnworkingPopulationLabel();
 
+	/**
+	 * 
+	 * @return Efficiency at work label.
+	 */
+	public abstract String getEfficiencyAtWorkLabel();
+
+	/**
+	 * 
+	 * @return Economy label.
+	 */
+	public abstract String getEconomyLabel();
+
+	/**
+	 * 
+	 * @return Happiness label.
+	 */
+	public abstract String getHappinessLabel();
+
 }

@@ -45,6 +45,7 @@ import ui.ToolsView;
 import ui.MessagesView;
 import ui.PropertiesView;
 import ui.RefreshView;
+import ui.FactorsView;
 import ui.GameBoardView;
 
 import java.applet.Applet;
@@ -252,8 +253,14 @@ public final class SimCityUI extends JFrame implements ActionListener{
 		        MessagesView mv = new MessagesView();
 		        monde.addObserver(mv);
 		        jeu.add(mv, BorderLayout.SOUTH);
+		        
 		        jeu.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		        jeu.pack();
+		        
+		        FactorsView fv = new FactorsView(monde, texts);
+		        monde.addObserver(fv);
+		        jeu.add(fv, BorderLayout.NORTH);
+		        
 
 		        jeu.setResizable(true);
 		        jeu.setVisible(true);
