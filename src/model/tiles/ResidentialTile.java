@@ -138,6 +138,7 @@ public class ResidentialTile extends BuildableTile {
             res.decreasePopulationCapacity(this.inhabitantsCapacity);
             super.disassemble(res);
             this.isDestroyed = true;
+            this.state = ConstructionState.DESTROYED;
         }
     }
 

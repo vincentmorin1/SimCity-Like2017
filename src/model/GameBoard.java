@@ -341,7 +341,13 @@ public class GameBoard extends Observable {
         
         final Tile currentTile = this.tiles[row][column];
         
-        if (row + sizeX <maxX && column + sizeY < maxY){
+        
+        if (this.selectedTool.getClass().getSimpleName() ==  "BulldozerTool"){
+        	sizeX = this.tiles[row][column].getDimensionX();
+        	sizeY = this.tiles[row][column].getDimensionY();
+        }
+        
+        if (row + sizeX -1 <maxX && column + sizeY-1 < maxY){
 	        for (int i=0; i<sizeX;i++){
 	        	for (int j=0; j<sizeY;j++){
 	        		canEffect = canEffect && this.selectedTool.canEffect(this.tiles[row+i][column+j]);

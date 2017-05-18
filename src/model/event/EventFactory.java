@@ -44,6 +44,7 @@ public class EventFactory {
      * Default Constructor.
      */
     private static enum eventType {
+    	EARTHQUAKE,
         NOTHING;
     }
 
@@ -58,8 +59,9 @@ public class EventFactory {
          */
         private static final long serialVersionUID = -6805412774816642699L;
 
-        {
-            this.put(eventType.NOTHING, 100);
+        {	
+        	this.put(eventType.EARTHQUAKE,10);
+            this.put(eventType.NOTHING, 90);
         }
     });
 
@@ -85,6 +87,9 @@ public class EventFactory {
         eventType type = EventFactory.probalisticEventsList.get(index);
         Event result;
         switch (type) {
+        	case EARTHQUAKE:
+                result = new EarthquakeEvent(world);
+        		break;
             case NOTHING:
                 result = new NothingEvent();
                 break;

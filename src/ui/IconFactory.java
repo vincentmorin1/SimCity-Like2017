@@ -177,6 +177,7 @@ public class IconFactory {
      * @return Id that corresponds to {@value aTool}.
      */
     private String getToolId(Tool aTool) {
+    	System.out.println(aTool.getClass().getSimpleName());
     	return this.dashSeparatedWordsFromCamelCase(aTool.getClass().getSimpleName());
     }
     

@@ -74,7 +74,7 @@ public final class BulldozerTool extends Tool {
     }
 
     /**
-     * innerEffect apply the buildozer to the given tile and update the given
+     * innerEffect apply the bulldozer to the given tile and update the given
      * CityResources.
      */
     @Override
