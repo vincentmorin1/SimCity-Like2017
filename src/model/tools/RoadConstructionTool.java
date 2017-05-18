@@ -27,7 +27,7 @@ private final static int CURRENCY_COST = 5;
 	}
 
 	/**
-     * isAfordable returns true if the user can apply the Industrial Tool, false
+     * isAfordable returns true if the user can apply the Road Tool, false
      * otherwise.
      */
 	@Override
@@ -47,7 +47,7 @@ private final static int CURRENCY_COST = 5;
 	}
 
 	/**
-     * innerEffect apply the Industrial tool to the given tile and update the
+     * innerEffect apply the Road tool to the given tile and update the
      * given CityResources.
      */
 	@Override

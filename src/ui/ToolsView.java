@@ -38,6 +38,11 @@ public class ToolsView extends JPanel implements Observer {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * ToolsView constructor
+     * 
+     * @param w
+     */
     public ToolsView(GameBoard w) {
         super();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

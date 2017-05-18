@@ -8,6 +8,14 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class Panneau extends JPanel {
+	
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Let the panel displaying image background
+	 * 
+	 * @param Graphic g
+	 */
 	public void paintComponent(Graphics g){
 		try {
 			Image img = ImageIO.read(new File("TNCYTY.PNG"));

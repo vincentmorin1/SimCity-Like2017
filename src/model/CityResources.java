@@ -50,6 +50,21 @@ public class CityResources {
      * {@link #getVat()}
      */
     private int vat;
+    
+    /**
+     * {@link #getHappiness()}
+     */
+    private int Happiness;
+    
+    /**
+     * {@link #getEfficiencyAtWork()}
+     */
+    private int EfficiencyAtWork;
+    
+    /**
+     * {@link #getEconomy()}
+     */
+    private int Economy;
 
     // Implementation (Energy)
     /**
@@ -101,23 +116,44 @@ public class CityResources {
      */
     private int productsCapacity;
 
+    /**
+     * {@link #getRoadConnection()}
+     */
  	private RoadConnection roadConnection;
 
-    
+    /**
+     * Set the connection between road tiles
+     * 
+     * @param tiles
+     * 
+     * @see RoadConnection#setRoadLink()
+     * @see RoadConnection
+     * @see CityResources#roadConnection
+     */
     public void setRoadConnection(Tile[][] tiles){
     	roadConnection = new RoadConnection(tiles);
     	roadConnection.setRoadLink();
     }
     
+    /**
+     * Return the type of connection between 2 road tiles
+     * 
+     * @return RoadConnection
+     * 
+     * @see RoadConnection
+     * @see CityResources#roadConnection
+     */
     public RoadConnection getRoadConnection(){
     	return roadConnection;
     }
 
     // Creation
+    
     /**
+     * CityResources constructor
      *
      * @param aCurrency
-     *            - {@link #getCurrency()}
+     * - {@link #getCurrency()}
      */
     public CityResources(int aCurrency) {
         assert aCurrency >= 0;
@@ -133,9 +169,13 @@ public class CityResources {
         //this.populationCapacity = 0;
         this.productsCount = 0;
         this.productsCapacity = 0;
+        this.Happiness = 50;
+        this.EfficiencyAtWork = 50;
+        this.Economy = 50;
     }
 
     /**
+     * CityResources constructor
      *
      * @param aCurrency
      *            - {@link #getCurrency()}
@@ -163,11 +203,11 @@ public class CityResources {
      * @param o
      * @return Is {@value o} equals to this?
      */
-    //A COMPLETER!
+    
     public boolean equals(CityResources o) {
         return this == o || super.equals(o) && o.currency == this.currency && o.vat == this.vat && o.unconsumedEnergy == this.unconsumedEnergy && o.energyProduction == this.energyProduction && o.moneyProduction == this.moneyProduction
                 && o.unconsumedMoney == this.unconsumedMoney && o.unworkingPopulation == this.unworkingPopulation && o.population == this.population && o.populationCapacity == this.populationCapacity && o.productsCount == this.productsCount
-                && o.productsCapacity == this.productsCapacity;
+                && o.productsCapacity == this.productsCapacity && o.Economy == this.Economy && o.EfficiencyAtWork == this.EfficiencyAtWork && o.Happiness == this.Happiness;
     }
 
     // Access
@@ -185,6 +225,9 @@ public class CityResources {
         result = result * 17 + this.populationCapacity;
         result = result * 17 + this.productsCount;
         result = result * 17 + this.productsCapacity;
+        result = result * 17 + this.Economy;
+        result = result * 17 + this.EfficiencyAtWork;
+        result = result * 17 + this.Happiness;
         return result;
     }
 
@@ -294,6 +337,30 @@ public class CityResources {
     public int getProductsCapacity() {
         return this.productsCapacity;
     }
+    
+    /**
+     * 
+     * @return In percentage, the current happiness in game
+     */
+    public int getHappiness() {
+		return this.Happiness;
+	}
+
+    /**
+     * 
+     * @return The efficiency at work in percentage
+     */
+	public int getEfficiencyAtWork() {
+		return this.EfficiencyAtWork;
+	}
+
+	/**
+	 * 
+	 * @return The current economy in percentage
+	 */
+	public int getEconomy() {
+		return this.Economy;
+	}
 
     // Change (Currency)
     /**
@@ -308,7 +375,7 @@ public class CityResources {
     }
 
     /**
-     * Get VAT on {@value currencyAmount} and {@link #credit(int)} with the
+     * Get VAT on {@value currencyAmount} and {@link #credit(integer)} with the
      * obtained result.
      *
      * @param currencyAmount
@@ -518,5 +585,6 @@ public class CityResources {
         this.unconsumedEnergy = this.energyProduction;
         this.unconsumedMoney = this.moneyProduction;
     }
+
 
 }

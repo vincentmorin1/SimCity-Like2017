@@ -36,10 +36,14 @@ import javax.swing.JTextArea;
 import model.GameBoard;
 
 public class MessagesView extends JPanel implements Observer {
+	
     private static final long serialVersionUID = 1L;
 
     private JTextArea message;
 
+    /**
+     * MessageView constructor
+     */
     public MessagesView() {
         super();
         this.setBorder(BorderFactory.createTitledBorder("Something special ?"));

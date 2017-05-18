@@ -39,7 +39,9 @@ public class GameBoardView extends JPanel implements Observer {
     private TileUI[][] tiles;
 
     /**
-     * Constructor.
+     * GameBoardView constructor
+     * 
+     * @param w
      */
     public GameBoardView(GameBoard w) {
         super();

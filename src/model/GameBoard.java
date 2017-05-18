@@ -49,6 +49,7 @@ import model.tools.ResidentialZoneDelimiterTool;
 import model.tools.RoadConstructionTool;
 import model.tools.IndustrialZoneDelimiterTool;
 import model.tools.Tool;
+import ui.FactorsView;
 
 public class GameBoard extends Observable {
 
@@ -151,6 +152,7 @@ public class GameBoard extends Observable {
         this.pendingEventsList = new LinkedList<>();
         this.resources = new CityResources(difficulty.getInitialCurrency());
         this.resources.setRoadConnection(this.tiles);
+      
 
         this.message = GameBoard.NOTHING_MESSAGE;
         this.texts = texts;
@@ -238,33 +240,81 @@ public class GameBoard extends Observable {
     public Tile getSelectedTile() {
         return this.selectedTile;
     }
-
+    
+    /**
+     * @return Selected tool.
+     */
     public Tool getSelectedTool() {
         return this.selectedTool;
     }
 
     // Access (City Resources)
-
+    
+    /**
+     * @return Current Currency
+     */
     public int getCurrency() {
         return this.resources.getCurrency();
     }
-
+    
+    /**
+     * @return The resources and the parameters of the city
+     */
     public CityResources getCityResources(){
     	return this.resources;
     }
 
+    /**
+     * @return The number of job-less citizens 
+     */
     public int getUnworkingPopulation() {
         return this.resources.getUnworkingPopulation();
     }
 
+    /**
+     * 
+     * @return Value of happiness in game, in percentage
+     */
+    public int getHappiness() {
+		return this.resources.getHappiness();
+	}
+
+    /**
+     * 
+     * @return Value of current efficiency at work, in percentage
+     */
+	public int getEfficiencyAtWork() {
+		return this.resources.getEfficiencyAtWork();
+	}
+
+	/**
+	 * 
+	 * @return Value of current economy in game, in percentage
+	 */
+	public int getEconomy() {
+		return this.resources.getEconomy();
+	}
+	
+    /**
+     * 
+     * @return The number of available energy units
+     */
     public int getEnergy() {
         return this.resources.getUnconsumedEnergy();
     }
     
+    /**
+     * 
+     * @return The number of available money units
+     */
     public int getMoney() {
     	return this.resources.getUnconsumedMoney();
     }
 
+    /**
+     * 
+     * @return The accumulated number of products
+     */
     public int getProducts() {
         return this.resources.getProductsCount();
     }

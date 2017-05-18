@@ -29,6 +29,7 @@ import model.CityResources;
 public class PowerPlantTile extends Tile implements Destroyable {
 
     private final int topLeftCornerX;
+    
     private final int topLeftCornerY;
     
     // Constant

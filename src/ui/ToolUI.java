@@ -40,6 +40,7 @@ public class ToolUI extends JButton {
 
     // Creation
     /**
+     * ToolUI constructor
      *
      * @param world
      * @param target

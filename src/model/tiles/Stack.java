@@ -6,22 +6,39 @@ import java.util.LinkedList;
 public class Stack<E> {
 	
 	private LinkedList<E> liste;
+	
 	private int taille;
 	
+	/**
+	 * Stack constructor
+	 */
 	public Stack(){
 		this.liste = new LinkedList<E>();
 		this.taille = 0;
 	}
 
+	/**
+	 * 
+	 * @return True if the list is empty, false in the other case
+	 */
 	public boolean isEmpty() {	
 		return this.liste.equals(new LinkedList<E>());
 	}
 
+	/**
+	 * 
+	 * @param elem
+	 */
 	public void push(E elem) {
 		this.liste.add(elem);
 		this.taille ++;
 	}
 
+	/**
+	 * 
+	 * @return The first element from the list where this element has been removed
+	 * @throws NoSuchElementException
+	 */
 	public E pop() throws NoSuchElementException {
 		if (this.isEmpty()){
 			throw new NoSuchElementException("Stack is empty");
@@ -32,6 +49,10 @@ public class Stack<E> {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return Size of the list
+	 */
 	public int size(){
 		return this.taille;
 	}
