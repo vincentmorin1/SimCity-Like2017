@@ -33,6 +33,9 @@ import model.CityResources;
 public class ResidentialTile extends BuildableTile {
 
     // Constants
+	public final static int DIMENSION_WIDTH = 2;
+	public final static int DIMENSION_HEIGHT = 2;
+	
     /**
      * Default value of {@link ResidentialTile#getEvolutionEnergyConsumption()}
      */
@@ -135,7 +138,9 @@ public class ResidentialTile extends BuildableTile {
     @Override
     public void disassemble(CityResources res) {
         if (!this.isDestroyed) {
-            res.decreasePopulationCapacity(this.inhabitantsCapacity);
+        	if (this.state==ConstructionState.BUILT){
+                res.decreasePopulationCapacity(this.inhabitantsCapacity);        		
+        	}
             super.disassemble(res);
             this.isDestroyed = true;
             this.state = ConstructionState.DESTROYED;

@@ -29,9 +29,11 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 
 import model.tiles.BuildableTile;
+import model.tiles.BuildingTile;
 import model.tiles.Destroyable;
 import model.tiles.RoadConnection;
 import model.tiles.RoadTile;
+import model.tiles.SchoolTile;
 import model.tiles.Tile;
 import model.tools.Tool;
 
@@ -205,23 +207,28 @@ public class IconFactory {
             final String id = this.dashSeparatedWordsFromCamelCase(aTile.getClass().getSimpleName());
             // Turn the class's name into dash-separated words in lower-case.
 
-            if (aTile instanceof BuildableTile) {
-                final BuildableTile t = (BuildableTile) aTile;
-
-                final String statePostId = '-' + t.getState().name().toLowerCase().replace('_', '-');
-                // Turn enumeration value into dash-separated words in
-                // lower-case
+            if (aTile instanceof BuildingTile) {
+                final BuildingTile bt = (BuildingTile) aTile;
+                String statePostId = "";
+                
+                if (aTile instanceof BuildableTile){
+                	BuildableTile t = (BuildableTile) aTile;
+                    statePostId = '-' + t.getState().name().toLowerCase().replace('_', '-');
+                    // Turn enumeration value into dash-separated words in
+                    // lower-case
+                }
 
                 final String energyPostId;
-                if (t.getIsEnergyMissing()) {
+                if (bt.getIsEnergyMissing()) {
                     energyPostId = '-' + IconFactory.MISSING_ENERGY_POSTID;
                 } else {
                     energyPostId = "";
                 }
-                
                 return id + statePostId + energyPostId;
                 
-            } else {
+            } 
+
+            else {
                 return id;
             }
         }

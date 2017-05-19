@@ -2,7 +2,10 @@ package model.tiles;
 
 import model.CityResources;
 
-public class RoadTile extends Tile implements Destroyable{
+public class RoadTile extends BuildingTile{
+	
+	public final static int DIMENSION_WIDTH = 1;
+	public final static int DIMENSION_HEIGHT = 1;
 	
 	/**
 	 * Evolution state
@@ -87,5 +90,10 @@ public class RoadTile extends Tile implements Destroyable{
     
     @Override
     public void update(CityResources res) {}
+
+	@Override
+	public boolean getIsEnergyMissing() {
+		return false;
+	}
 
 }

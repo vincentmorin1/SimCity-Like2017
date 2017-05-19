@@ -26,13 +26,16 @@ package model.tiles;
 
 import model.CityResources;
 
-public class PowerPlantTile extends Tile implements Destroyable {
+public class PowerPlantTile extends BuildingTile{
 
     private final int topLeftCornerX;
     
     private final int topLeftCornerY;
     
     // Constant
+	public final static int DIMENSION_WIDTH = 1;
+	public final static int DIMENSION_HEIGHT = 1;
+	
     /**
      * Extra energy produces for each new update. In the limit of the capacity
      * {@link #getProductionCapacity()}.
@@ -163,4 +166,14 @@ public class PowerPlantTile extends Tile implements Destroyable {
     @Override
     public void setLinked(boolean b){  	
     }
+
+	@Override
+	public boolean getLinked() {
+		return true;
+	}
+
+	@Override
+	public boolean getIsEnergyMissing() {
+		return false;
+	}
 }

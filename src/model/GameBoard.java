@@ -47,9 +47,9 @@ import model.tools.CommercialZoneDelimiterTool;
 import model.tools.PowerPlantConstructionTool;
 import model.tools.ResidentialZoneDelimiterTool;
 import model.tools.RoadConstructionTool;
+import model.tools.SchoolConstructionTool;
 import model.tools.IndustrialZoneDelimiterTool;
 import model.tools.Tool;
-import ui.FactorsView;
 
 public class GameBoard extends Observable {
 
@@ -145,6 +145,7 @@ public class GameBoard extends Observable {
         this.tools.add(new CommercialZoneDelimiterTool());
         this.tools.add(new IndustrialZoneDelimiterTool());
         this.tools.add(new RoadConstructionTool());
+        this.tools.add(new SchoolConstructionTool());
 
         this.selectedTool = this.tools.get(GameBoard.DEFAULT_SELECTED_TOOL);
 
@@ -390,10 +391,10 @@ public class GameBoard extends Observable {
         boolean canEffect =  true;
         
         final Tile currentTile = this.tiles[row][column];
+
         
-        
-        if (this.selectedTool.getClass().getSimpleName() ==  "BulldozerTool"){
-        	sizeX = this.tiles[row][column].getDimensionX();
+        if (this.selectedTool.getClass().getSimpleName().equals(BulldozerTool.class.getSimpleName())){
+        	sizeX = this.tiles[row][column].getDimensionX(); // Faudra swap les x et les y
         	sizeY = this.tiles[row][column].getDimensionY();
         }
         
@@ -406,6 +407,12 @@ public class GameBoard extends Observable {
         }
         else{
         	canEffect = false;
+        }
+
+        if (this.selectedTool.getClass().getSimpleName().equals(BulldozerTool.class.getSimpleName())){
+        	if (this.tiles[row][column].getTopLeftCornerX() != row || this.tiles[row][column].getTopLeftCornerY() != column){
+        		canEffect = false;
+        	}
         }
         
         if (canEffect) {

@@ -38,6 +38,8 @@ public final class ResidentialZoneDelimiterTool extends Tool {
 
 // Constant
 	private final static int CURRENCY_COST = 20;
+	
+	
 
 // Status
 	// Status
@@ -98,12 +100,12 @@ public final class ResidentialZoneDelimiterTool extends Tool {
 	
 	@Override
 	public  int getDimensionX(){
-		return 2;
+		return ResidentialTile.DIMENSION_WIDTH;
 	}
 	
 	@Override
 	public  int getDimensionY(){
-		return 2;
+		return ResidentialTile.DIMENSION_HEIGHT;
 	}
 
 }

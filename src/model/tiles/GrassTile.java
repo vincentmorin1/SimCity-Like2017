@@ -92,10 +92,6 @@ public final class GrassTile extends Tile {
         // Do nothings.
     }
     
-    // Change
-    @Override
-    public void setLinked(boolean b) {
-        // Do nothings.
-    }
+
 
 }

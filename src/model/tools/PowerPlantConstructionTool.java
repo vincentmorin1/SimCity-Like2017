@@ -91,11 +91,11 @@ public final class PowerPlantConstructionTool extends Tool {
 
 	@Override
 	public  int getDimensionX(){
-		return 1;
+		return PowerPlantTile.DIMENSION_WIDTH;
 	}
 	
 	@Override
 	public  int getDimensionY(){
-		return 1;
+		return PowerPlantTile.DIMENSION_HEIGHT;
 	}
 }

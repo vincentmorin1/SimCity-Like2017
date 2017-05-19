@@ -1,6 +1,6 @@
 package model.tiles;
 
-public class RoadConnection {
+public class RoadConnection{
 	
 	
 	private Tile[][] mapTiles;
@@ -58,7 +58,7 @@ public class RoadConnection {
 		if (mapTiles[position[0]][position[1]] instanceof RoadTile){
 			mapConnection[position[0]][position[1]] = 1;
 		}
-		else if (mapTiles[position[0]][position[1]] instanceof BuildableTile){
+		else if (mapTiles[position[0]][position[1]] instanceof BuildingTile){
 			mapConnection[position[0]][position[1]] = 2;
 		}
 		else {
@@ -100,15 +100,13 @@ public class RoadConnection {
 			for (int j = 0; j < widthMax; j++){
 				Tile actuelTile = this.mapTiles[i][j];
 				
-				if (actuelTile instanceof GrassTile){
-					actuelTile.setLinked(false);
-				}
-				
-				else {
+				if (actuelTile instanceof BuildingTile){
+					
 					if (this.mapConnection[i][j] ==2 | this.mapConnection[i][j] ==1){
 						for (int i2=0; i2< actuelTile.getDimensionX();i2++){
 							for (int j2=0; j2< actuelTile.getDimensionY();j2++){
-								this.mapTiles[actuelTile.getTopLeftCornerX()+i2][actuelTile.getTopLeftCornerY()+j2].setLinked(true);
+								BuildingTile bt = (BuildingTile) this.mapTiles[actuelTile.getTopLeftCornerX()+i2][actuelTile.getTopLeftCornerY()+j2];
+								bt.setLinked(true);
 							}
 						}
 					}

@@ -29,7 +29,7 @@ import model.CityResources;
 /**
  * Tile that can evolve and be destroyed. An evolution has an energy cost.
  */
-public abstract class BuildableTile extends Tile implements Evolvable, Destroyable {
+public abstract class BuildableTile extends BuildingTile implements Evolvable {
 
     // Implementation
 	/**

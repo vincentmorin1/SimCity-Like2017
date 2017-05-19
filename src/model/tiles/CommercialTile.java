@@ -33,6 +33,9 @@ import model.CityResources;
 public class CommercialTile extends BuildableTile {
 
     // Constants
+	public final static int DIMENSION_WIDTH = 2;
+	public final static int DIMENSION_HEIGHT = 2;
+
     /**
      * Default value of {@link CommercialTile#getEvolutionEnergyConsumption()}
      */

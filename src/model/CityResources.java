@@ -105,6 +105,13 @@ public class CityResources {
      */
     private int populationCapacity;
 
+    /**
+     * {@link #getNumberStudent()}
+     */
+    private int numberStudent;
+    
+    private int numberStudentWithoutSchool;
+    
     // Implementation (Product)
     /**
      * {@link #getProductsCount()}
@@ -169,6 +176,8 @@ public class CityResources {
         //this.populationCapacity = 0;
         this.productsCount = 0;
         this.productsCapacity = 0;
+        this.numberStudent = 0;
+        this.numberStudentWithoutSchool = 0;
         this.Happiness = 50;
         this.EfficiencyAtWork = 50;
         this.Economy = 50;
@@ -231,6 +240,20 @@ public class CityResources {
         return result;
     }
 
+    public int getNumberStudent(){
+    	return this.numberStudent;
+    	
+    }
+    
+    public int enrolStudent(int maxEnrol){
+    	int res =  Math.min(maxEnrol, this.numberStudentWithoutSchool);
+    	this.numberStudentWithoutSchool -= res;
+    	return res;
+    }
+    
+    public int getNumberStudentWithoutSchool(){
+    	return this.numberStudentWithoutSchool;
+    }
     // Access (Currency)
     /**
      *
@@ -581,9 +604,11 @@ public class CityResources {
      * Reset ephemeral resources.
      */
     public void resetEphemerals() {
-        this.unworkingPopulation = this.population;
+    	this.numberStudent = this.population/2;
+        this.unworkingPopulation = this.population/2;
         this.unconsumedEnergy = this.energyProduction;
         this.unconsumedMoney = this.moneyProduction;
+        this.numberStudentWithoutSchool = this.numberStudent;
     }
 
 

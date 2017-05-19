@@ -98,11 +98,11 @@ public final class CommercialZoneDelimiterTool extends Tool {
 
 	@Override
 	public  int getDimensionX(){
-		return 2;
+		return CommercialTile.DIMENSION_WIDTH;
 	}
 	
 	@Override
 	public  int getDimensionY(){
-		return 2;
+		return CommercialTile.DIMENSION_HEIGHT;
 	}
 }

@@ -79,11 +79,11 @@ public class RefreshView extends JPanel implements ActionListener{
 				timer.schedule(new TimerTask() {
 					public void run(){
 						w.nextState();
-						if (vitesse != 0){   //Si on clique sur un autre bouton, la boucle s'arrête 
+						if (vitesse != 0){   //Si on clique sur un autre bouton, la boucle s'arrï¿½te 
 							timer.cancel();
 						}
 					}
-				}, timeToRun,8000); //On répète la boucle toutes les 8 secondes
+				}, timeToRun,8000); //On repete la boucle toutes les 8 secondes
 				
 			}
         	

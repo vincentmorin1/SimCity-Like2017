@@ -25,6 +25,7 @@
 package model.tools;
 
 import model.CityResources;
+import model.tiles.BuildingTile;
 import model.tiles.Destroyable;
 import model.tiles.GrassTile;
 import model.tiles.Tile;
@@ -44,7 +45,7 @@ public final class BulldozerTool extends Tool {
      */
     @Override
     public boolean canEffect(Tile aTarget) {
-        return aTarget instanceof Destroyable;
+        return aTarget instanceof BuildingTile;
     }
 
     @Override

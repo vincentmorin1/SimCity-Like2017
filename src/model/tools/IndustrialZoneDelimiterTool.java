@@ -91,12 +91,12 @@ public final class IndustrialZoneDelimiterTool extends Tool {
 
 	@Override
 	public  int getDimensionX(){
-		return 2;
+		return IndustrialTile.DIMENSION_WIDTH;
 	}
 	
 	@Override
 	public  int getDimensionY(){
-		return 2;
+		return IndustrialTile.DIMENSION_HEIGHT;
 	}
 	
 // Debugging

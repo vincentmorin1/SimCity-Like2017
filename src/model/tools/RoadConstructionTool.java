@@ -69,12 +69,12 @@ private final static int CURRENCY_COST = 5;
 	
 	@Override
 	public  int getDimensionX(){
-		return 1;
+		return RoadTile.DIMENSION_WIDTH;
 	}
 	
 	@Override
 	public  int getDimensionY(){
-		return 1;
+		return RoadTile.DIMENSION_HEIGHT;
 	}
 
 }
