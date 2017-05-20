@@ -104,7 +104,7 @@ public class CommercialTile extends BuildableTile {
      *            - {@link #getProductionCapacity()}
      */
     public CommercialTile(int productionCapacity, int topLeftCornerX ,int topLeftCornerY) {
-        super(CommercialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION, DEFAULT_WORKERS_CAPACITY, topLeftCornerX , topLeftCornerY);     
+        super(CommercialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION, CommercialTile.DEFAULT_WORKERS_CAPACITY, topLeftCornerX , topLeftCornerY);     
         this.maxNeededEnergy = CommercialTile.DEFAULT_MAX_NEEDED_ENERGY;
         this.workers = 0;
         this.productsConsumption = 0;
@@ -213,7 +213,7 @@ public class CommercialTile extends BuildableTile {
             }
             
 
-	        this.workers = Math.min(res.getUnworkingPopulation(), this.inhabitantsCapacity); 
+	        this.workers = Math.min(res.getUnworkingSeniorPopulation(), this.inhabitantsCapacity); 
 	        final int workersPercentage = (this.workers*100 / CommercialTile.DEFAULT_WORKERS_CAPACITY);
 	  
 	        res.hireWorkers(this.workers);

@@ -52,12 +52,17 @@ public class PropertiesView extends JPanel implements Observer {
     /**
      * {@link GameBoard#getUnworkingPopulation()}
      */
-    private JLabel unworkingPop;
+    private JLabel unworkingSeniorPop;
     
     /**
      * {@link GameBoard#getProducts()}    
      */
     private JLabel products;
+    
+    /**
+     * {@link GameBoard#getProducts()}    
+     */
+    private JLabel unworkingStudentPop;
 
     /**
      * PropertiesView constructor
@@ -77,12 +82,16 @@ public class PropertiesView extends JPanel implements Observer {
         this.energy = new JLabel(Integer.toString(w.getEnergy()));
         this.add(this.energy);
         
-        this.add(new JLabel(texts.getUnworkingPopulationLabel()));
-        this.unworkingPop = new JLabel(Integer.toString(w.getUnworkingPopulation()));
-        this.add(this.unworkingPop);
+        this.add(new JLabel(texts.getUnworkingStudentPopulationLabel()));
+        this.unworkingStudentPop = new JLabel(w.getUnworkingStudentPopulation() + " / "+ w.getStudentPopulation());
+        this.add(this.unworkingStudentPop);
+        
+        this.add(new JLabel(texts.getUnworkingSeniorPopulationLabel()));
+        this.unworkingSeniorPop = new JLabel(w.getUnworkingSeniorPopulation() + " / " + w.getSeniorPopulation());
+        this.add(this.unworkingSeniorPop);
 
         this.add(new JLabel(texts.getStoredProductsLabel()));
-        this.products = new JLabel(Integer.toString(w.getProducts()));
+        this.products = new JLabel(w.getProducts() +" / "+ w.getCityResources().getProductsCapacity());
         this.add(this.products);
     }
 
@@ -93,9 +102,10 @@ public class PropertiesView extends JPanel implements Observer {
 
         this.currency.setText(MessageFormat.format(world.getTexts().getCurrencyMsg(), world.getCurrency()));
         this.energy.setText("" + world.getEnergy()); 
+        this.unworkingStudentPop.setText(world.getUnworkingStudentPopulation() + " / "+ world.getStudentPopulation());
         //this.money.setText("" + world.getMoney());
-        this.unworkingPop.setText("" + world.getUnworkingPopulation());
-        this.products.setText("" + world.getProducts());
+        this.unworkingSeniorPop.setText(world.getUnworkingSeniorPopulation() + " / " + world.getSeniorPopulation());
+        this.products.setText("" + world.getProducts()+" / "+world.getCityResources().getProductsCapacity());
     }
 
 }

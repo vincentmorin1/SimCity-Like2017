@@ -2,7 +2,6 @@ package model.tools;
 
 import model.CityResources;
 import model.tiles.GrassTile;
-import model.tiles.PowerPlantTile;
 import model.tiles.SchoolTile;
 import model.tiles.Tile;
 

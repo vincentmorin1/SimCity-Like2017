@@ -60,6 +60,7 @@ public class MessagesView extends JPanel implements Observer {
     public void update(Observable o, Object arg) {
         assert o instanceof GameBoard;
         GameBoard world = (GameBoard) o;
+
         if (world.getMessage() != null && !world.getMessage().isEmpty()) {
             String msg = MessageFormat.format(world.getTexts().getRoundMsg() + "\n", GameBoard.ROUNDCOUNTER.get(), world.getMessage());
             this.message.append(msg);

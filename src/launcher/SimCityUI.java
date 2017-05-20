@@ -238,9 +238,11 @@ public final class SimCityUI extends JFrame implements ActionListener{
 		        ToolsView ve = new ToolsView(monde);
 		        monde.addObserver(ve);
 		        jeu.add(ve, BorderLayout.WEST);
+		        
 		        // Board of information, on the right side of the frame
 		        PropertiesView vi = new PropertiesView(monde, texts);
 		        monde.addObserver(vi);
+		        
 		        // Refresh panel creation
 		        RefreshView rv = new RefreshView(monde);
 		        JPanel right = new JPanel();
@@ -249,6 +251,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
 		        right.add(Box.createVerticalGlue());
 		        right.add(rv);
 		        jeu.add(right, BorderLayout.EAST);
+		        
 			        // MessageView creation
 		        MessagesView mv = new MessagesView();
 		        monde.addObserver(mv);

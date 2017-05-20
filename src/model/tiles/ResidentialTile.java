@@ -187,7 +187,6 @@ public class ResidentialTile extends BuildableTile {
                                                                                                // division
                 final int leavingInhabitants = Math.min(this.maxLeavingInhabitants, missingEnergyPercentage * inhabitants / 100); // Integer
                                                                                                                                   // division
-
                 res.decreasePopulation(leavingInhabitants);
             }
         }

@@ -84,9 +84,14 @@ public abstract class LocalizedTexts {
     public abstract String getStoredProductsLabel();
 
     /**
+     * @return No-studying student's population label.
+     */
+    public abstract String getUnworkingStudentPopulationLabel();
+
+    /**
      * @return No-working population label.
      */
-    public abstract String getUnworkingPopulationLabel();
+    public abstract String getUnworkingSeniorPopulationLabel();
 
 	/**
 	 * 

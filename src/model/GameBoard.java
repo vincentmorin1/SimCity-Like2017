@@ -273,12 +273,26 @@ public class GameBoard extends Observable {
     public CityResources getCityResources(){
     	return this.resources;
     }
+    
+    public int getSeniorPopulation(){
+    	return this.resources.getSeniorPopulation();
+    }
 
     /**
      * @return The number of job-less citizens 
      */
-    public int getUnworkingPopulation() {
-        return this.resources.getUnworkingPopulation();
+    public int getUnworkingSeniorPopulation() {
+        return this.resources.getUnworkingSeniorPopulation();
+    }
+    
+    public int getStudentPopulation(){
+    	return this.resources.getStudentPopulation();
+    }
+    /**
+     * @return The number of unstudying student
+     */
+    public int getUnworkingStudentPopulation() {
+        return this.resources.getUnworkingStudentPopulation();
     }
 
     /**
@@ -407,6 +421,13 @@ public class GameBoard extends Observable {
         	sizeY = this.tiles[row][column].getDimensionY();
         }
         
+        if (this.selectedTool.getClass().getSimpleName().equals(BulldozerTool.class.getSimpleName())){
+        	if (this.tiles[row][column].getTopLeftCornerX() != row || this.tiles[row][column].getTopLeftCornerY() != column){
+        		row = this.tiles[row][column].getTopLeftCornerX();
+        		column = this.tiles[row][column].getTopLeftCornerY();
+        	}
+        }
+        
         if (row + sizeX -1 <maxX && column + sizeY-1 < maxY){
 	        for (int i=0; i<sizeX;i++){
 	        	for (int j=0; j<sizeY;j++){
@@ -418,12 +439,6 @@ public class GameBoard extends Observable {
         	canEffect = false;
         }
 
-        if (this.selectedTool.getClass().getSimpleName().equals(BulldozerTool.class.getSimpleName())){
-        	if (this.tiles[row][column].getTopLeftCornerX() != row || this.tiles[row][column].getTopLeftCornerY() != column){
-        		canEffect = false;
-        	}
-        }
-        
         if (canEffect) {
             if (this.selectedTool.isAfordable(currentTile, this.resources)) {
 
@@ -539,7 +554,6 @@ public class GameBoard extends Observable {
      */
     public Tile createMap(int i, int j){
 		int proba = ThreadLocalRandom.current().nextInt(0, 100);
-		System.out.println(proba);
 		if (i!=0 && j!=0 && (this.tiles[i-1][j] instanceof WaterTile || this.tiles[i][j-1] instanceof WaterTile) && proba<70 && this.numberWaterCase<15){
 			this.numberWaterCase++;
 			return WaterTile.getDefault();

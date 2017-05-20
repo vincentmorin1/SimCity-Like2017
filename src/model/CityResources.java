@@ -93,8 +93,9 @@ public class CityResources {
     /**
      * {@link #getUnworkingPopulation()}
      */
-    private int unworkingPopulation;
+    private int unworkingSeniorPopulation;
 
+    private int seniorPopulation;
     /**
      * {@link #getPopulation()}
      */
@@ -108,9 +109,9 @@ public class CityResources {
     /**
      * {@link #getNumberStudent()}
      */
-    private int numberStudent;
+    private int studentPopulation;
     
-    private int numberStudentWithoutSchool;
+    private int unworkingStudentPopulation;
     
     // Implementation (Product)
     /**
@@ -127,6 +128,97 @@ public class CityResources {
      * {@link #getRoadConnection()}
      */
  	private RoadConnection roadConnection;
+
+ 
+
+    // Creation
+    
+    /**
+     * CityResources constructor
+     *
+     * @param aCurrency
+     * - {@link #getCurrency()}
+     */
+    public CityResources(int aCurrency) {
+        assert aCurrency >= 0;
+
+        this.currency = aCurrency;
+        this.vat = CityResources.DEFAULT_VAT;
+        this.unconsumedEnergy = 0;
+        this.energyProduction = 0;
+        this.moneyProduction = 0;
+        this.unconsumedMoney = 0;
+        this.unworkingSeniorPopulation = 0;
+        this.unworkingStudentPopulation = 0;
+        this.population = 0;
+        this.seniorPopulation = 0;
+        this.studentPopulation = 0;
+        this.populationCapacity = 0;
+        this.productsCount = 0;
+        this.productsCapacity = 0;
+        this.Happiness = 50;
+        this.EfficiencyAtWork = 50;
+        this.Economy = 50;
+    }
+
+    /**
+     * CityResources constructor
+     *
+     * @param aCurrency
+     *            - {@link #getCurrency()}
+     * @param aPopulation
+     *            - {@link #getPopulation()} and
+     *            {@link #getPopulationCapacity()}
+     */
+    public CityResources(int aCurrency, int aPopulation) {
+        this(aCurrency);
+        assert aPopulation >= 0;
+        
+        this.population = aPopulation;
+        this.populationCapacity = aPopulation;
+
+        this.resetEphemerals();
+    }
+
+    // Status
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof CityResources && this.equals((CityResources) o);
+    }
+
+    /**
+     * @param o
+     * @return Is {@value o} equals to this?
+     */
+    
+    public boolean equals(CityResources o) {
+        return this == o || super.equals(o) && o.currency == this.currency && o.vat == this.vat && o.unconsumedEnergy == this.unconsumedEnergy && o.energyProduction == this.energyProduction && o.moneyProduction == this.moneyProduction
+                && o.unconsumedMoney == this.unconsumedMoney && o.unworkingSeniorPopulation == this.unworkingSeniorPopulation && o.population == this.population && o.populationCapacity == this.populationCapacity && o.productsCount == this.productsCount
+                && o.productsCapacity == this.productsCapacity && o.Economy == this.Economy && o.EfficiencyAtWork == this.EfficiencyAtWork && o.Happiness == this.Happiness;
+    }
+
+    // Access
+    @Override
+    public int hashCode() {
+        int result = 1;
+        result = result * 17 + this.currency;
+        result = result * 17 + this.vat;
+        result = result * 17 + this.unconsumedEnergy;
+        result = result * 17 + this.energyProduction;
+        result = result * 17 + this.moneyProduction;
+        result = result * 17 + this.unconsumedMoney;
+        result = result * 17 + this.unworkingSeniorPopulation;
+        result = result * 17 + this.unworkingStudentPopulation;
+        result = result * 17 + this.studentPopulation;
+        result = result * 17 + this.population;
+        result = result * 17 + this.populationCapacity;
+        result = result * 17 + this.productsCount;
+        result = result * 17 + this.productsCapacity;
+        result = result * 17 + this.Economy;
+        result = result * 17 + this.EfficiencyAtWork;
+        result = result * 17 + this.Happiness;
+        return result;
+    }
 
     /**
      * Set the connection between road tiles
@@ -153,107 +245,13 @@ public class CityResources {
     public RoadConnection getRoadConnection(){
     	return roadConnection;
     }
-
-    // Creation
-    
-    /**
-     * CityResources constructor
-     *
-     * @param aCurrency
-     * - {@link #getCurrency()}
-     */
-    public CityResources(int aCurrency) {
-        assert aCurrency >= 0;
-
-        this.currency = aCurrency;
-        this.vat = CityResources.DEFAULT_VAT;
-        this.unconsumedEnergy = 0;
-        this.energyProduction = 0;
-        this.moneyProduction = 0;
-        this.unconsumedMoney = 0;
-        this.unworkingPopulation = 0;
-        //this.population = 0;
-        //this.populationCapacity = 0;
-        this.productsCount = 0;
-        this.productsCapacity = 0;
-        this.numberStudent = 0;
-        this.numberStudentWithoutSchool = 0;
-        this.Happiness = 50;
-        this.EfficiencyAtWork = 50;
-        this.Economy = 50;
-    }
-
-    /**
-     * CityResources constructor
-     *
-     * @param aCurrency
-     *            - {@link #getCurrency()}
-     * @param aPopulation
-     *            - {@link #getPopulation()} and
-     *            {@link #getPopulationCapacity()}
-     */
-    public CityResources(int aCurrency, int aPopulation) {
-        this(aCurrency);
-        assert aPopulation >= 0;
-
-        this.population = aPopulation;
-        this.populationCapacity = aPopulation;
-
-        this.resetEphemerals();
-    }
-
-    // Status
-    @Override
-    public boolean equals(Object o) {
-        return o instanceof CityResources && this.equals((CityResources) o);
-    }
-
-    /**
-     * @param o
-     * @return Is {@value o} equals to this?
-     */
-    
-    public boolean equals(CityResources o) {
-        return this == o || super.equals(o) && o.currency == this.currency && o.vat == this.vat && o.unconsumedEnergy == this.unconsumedEnergy && o.energyProduction == this.energyProduction && o.moneyProduction == this.moneyProduction
-                && o.unconsumedMoney == this.unconsumedMoney && o.unworkingPopulation == this.unworkingPopulation && o.population == this.population && o.populationCapacity == this.populationCapacity && o.productsCount == this.productsCount
-                && o.productsCapacity == this.productsCapacity && o.Economy == this.Economy && o.EfficiencyAtWork == this.EfficiencyAtWork && o.Happiness == this.Happiness;
-    }
-
-    // Access
-    @Override
-    public int hashCode() {
-        int result = 1;
-        result = result * 17 + this.currency;
-        result = result * 17 + this.vat;
-        result = result * 17 + this.unconsumedEnergy;
-        result = result * 17 + this.energyProduction;
-        result = result * 17 + this.moneyProduction;
-        result = result * 17 + this.unconsumedMoney;
-        result = result * 17 + this.unworkingPopulation;
-        result = result * 17 + this.population;
-        result = result * 17 + this.populationCapacity;
-        result = result * 17 + this.productsCount;
-        result = result * 17 + this.productsCapacity;
-        result = result * 17 + this.Economy;
-        result = result * 17 + this.EfficiencyAtWork;
-        result = result * 17 + this.Happiness;
-        return result;
-    }
-
-    public int getNumberStudent(){
-    	return this.numberStudent;
-    	
-    }
     
     public int enrolStudent(int maxEnrol){
-    	int res =  Math.min(maxEnrol, this.numberStudentWithoutSchool);
-    	this.numberStudentWithoutSchool -= res;
+    	int res =  Math.min(maxEnrol, this.unworkingStudentPopulation);
+    	this.unworkingStudentPopulation -= res;
     	return res;
     }
     
-    public int getNumberStudentWithoutSchool(){
-    	return this.numberStudentWithoutSchool;
-    }
     // Access (Currency)
     /**
      *
@@ -315,22 +313,32 @@ public class CityResources {
         return this.unconsumedMoney;
     }
 
+    public int getStudentPopulation(){
+    	return this.studentPopulation;
+    }
+    
+    public int getUnworkingStudentPopulation(){
+    	return this.unworkingStudentPopulation;
+    }
 
     // Access (Population)
     /**
      * @return Number of job-less citizens.
      */
-    public int getUnworkingPopulation() {
-        return this.unworkingPopulation;
+    public int getUnworkingSeniorPopulation() {
+        return this.unworkingSeniorPopulation;
     }
 
     /**
      * @return Number of citizens with a job.
      */
-    public int getWorkingPopulation() {
-        return this.population - this.unworkingPopulation;
+    public int getWorkingSeniorPopulation() {
+        return this.population - this.unworkingSeniorPopulation;
     }
 
+    public int getSeniorPopulation(){
+    	return this.seniorPopulation;
+    }
     /**
      * @return Total number of citizens.
      */
@@ -500,9 +508,9 @@ public class CityResources {
      * @param amount
      */
     public void hireWorkers(int amount) {
-        assert 0 <= amount && amount <= this.getUnworkingPopulation();
+        assert 0 <= amount && amount <= this.getUnworkingSeniorPopulation();
 
-        this.unworkingPopulation = this.unworkingPopulation - amount;
+        this.unworkingSeniorPopulation = this.unworkingSeniorPopulation - amount;
     }
 
     /**
@@ -514,8 +522,15 @@ public class CityResources {
         assert amount >= 0;
 
         final int joiningPopulation = Math.min(this.populationCapacity - this.population, amount);
-        this.population = this.population + joiningPopulation;
-        this.unworkingPopulation = this.unworkingPopulation + joiningPopulation;
+        
+        this.studentPopulation += joiningPopulation/2;
+        this.unworkingStudentPopulation += joiningPopulation/2;
+
+        this.seniorPopulation += (joiningPopulation+1)/2;
+        this.unworkingSeniorPopulation = this.unworkingSeniorPopulation + (joiningPopulation+1)/2;
+        
+        this.population += joiningPopulation;
+
     }
 
     /**
@@ -526,8 +541,13 @@ public class CityResources {
     public void decreasePopulation(int amount) {
         assert amount >= 0;
 
+        this.studentPopulation = Math.max(0, this.studentPopulation - amount/2);
+        this.unworkingStudentPopulation = Math.min(this.unworkingStudentPopulation, this.studentPopulation);
+        
+        this.seniorPopulation = Math.max(0, this.seniorPopulation - (amount+1)/2);
+        this.unworkingSeniorPopulation = Math.min(this.unworkingSeniorPopulation, this.seniorPopulation);
+        
         this.population = Math.max(0, this.population - amount);
-        this.unworkingPopulation = Math.min(this.unworkingPopulation, this.population);
     }
 
     /**
@@ -546,11 +566,13 @@ public class CityResources {
      *
      * @param amount
      */
-    public void decreasePopulationCapacity(int amount) {
+    public void decreasePopulationCapacity(int amount) { 
         assert 0 <= amount && amount <= this.getPopulationCapacity();
-
+        
+        int sdf = Math.max(this.population - (this.populationCapacity - amount),0);
+        this.decreasePopulation(sdf);
+        
         this.populationCapacity = this.populationCapacity - amount;
-        this.population = Math.min(this.population, this.populationCapacity);
     }
 
     // Change (Product)
@@ -604,11 +626,13 @@ public class CityResources {
      * Reset ephemeral resources.
      */
     public void resetEphemerals() {
-    	this.numberStudent = this.population/2;
-        this.unworkingPopulation = this.population/2;
+    	this.studentPopulation = this.population/2;
+    	this.seniorPopulation = this.population - this.studentPopulation;
+        this.unworkingSeniorPopulation = this.seniorPopulation;
+        this.unworkingStudentPopulation = this.studentPopulation;
+        
         this.unconsumedEnergy = this.energyProduction;
         this.unconsumedMoney = this.moneyProduction;
-        this.numberStudentWithoutSchool = this.numberStudent;
     }
 
 

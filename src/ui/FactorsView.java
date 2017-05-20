@@ -49,7 +49,6 @@ public class FactorsView extends JPanel implements Observer {
 		this.Happiness = new JLabel(Integer.toString(w.getHappiness()));
 		this.add(this.Happiness);
 		
-		
 		this.add(new JLabel(texts.getEfficiencyAtWorkLabel()));
 		this.EfficiencyAtWork = new JLabel(Integer.toString(w.getEfficiencyAtWork()));
 		this.add(this.EfficiencyAtWork);

@@ -51,7 +51,7 @@ public class FRTexts extends LocalizedTexts {
      */
     @Override
     public String getEarthQuakeMsg() {
-        return "Un sï¿½isme a frappï¿½ aux coordonnï¿½es [ {0} ]";
+        return "Un seisme a frappe aux coordonnees [ {0} ]";
     }
     
     /**
@@ -77,7 +77,7 @@ public class FRTexts extends LocalizedTexts {
      */
     @Override
     public String getCurrencyLabel() {
-        return "Crï¿½dit";
+        return "Credit";
     }
     
     /**
@@ -85,7 +85,7 @@ public class FRTexts extends LocalizedTexts {
      */
     @Override
     public String getUnconsumedEnergyLabel() {
-        return "Energie non consommï¿½e";
+        return "Energie non consommee";
     }
     
     /**
@@ -93,7 +93,7 @@ public class FRTexts extends LocalizedTexts {
      */
     @Override
     public String getUnconsumedMoneyLabel() {
-    	return "Argent non utilisï¿½e";
+    	return "Argent non utilisee";
     }
     
     /**
@@ -105,11 +105,19 @@ public class FRTexts extends LocalizedTexts {
     }
     
     /**
+     * @see LocalizedTexts#getUnstudyingPopLabel()
+     */
+    @Override
+    public String getUnworkingStudentPopulationLabel() {
+        return "Etudiant sans Ã©cole!";
+    }
+    
+    /**
      * @see LocalizedTexts#getUnworkingPopulationLabel()
      */
     @Override
-    public String getUnworkingPopulationLabel() {
-        return "Population au chï¿½mage";
+    public String getUnworkingSeniorPopulationLabel() {
+        return "Population au chomage";
     }
 
     /**
@@ -117,7 +125,7 @@ public class FRTexts extends LocalizedTexts {
      */
 	@Override
 	public String getEfficiencyAtWorkLabel() {
-		return "Efficacité au travail";
+		return "Efficacite au travail";
 	}
 
 	/**

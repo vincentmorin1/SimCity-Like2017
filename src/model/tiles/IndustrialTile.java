@@ -210,7 +210,7 @@ public class IndustrialTile extends BuildableTile {
             
             this.production = energyPercentage * IndustrialTile.DEFAULT_PRODUCTION / 100; // Integer division
             
-            this.workers = Math.min(res.getUnworkingPopulation(), this.inhabitantsCapacity);
+            this.workers = Math.min(res.getUnworkingSeniorPopulation(), this.inhabitantsCapacity);
             final int workersPercentage = (this.workers*100 / IndustrialTile.DEFAULT_WORKERS_CAPACITY);
             
             res.hireWorkers(this.workers);

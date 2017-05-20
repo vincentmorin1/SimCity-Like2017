@@ -9,6 +9,7 @@ public class SchoolTile extends BuildingTile{
     public final static int DEFAULT_NUMBER_STUDENT_MAX = 70;
     
 	public final static int DIMENSION_WIDTH = 1;
+	
 	public final static int DIMENSION_HEIGHT = 2;
 	
     private final int topLeftCornerX;
@@ -40,7 +41,7 @@ public class SchoolTile extends BuildingTile{
         this.isDestroyed = false;
     	this.topLeftCornerX = topLeftCornerX;
     	this.topLeftCornerY = topLeftCornerY;
-    	this.setNumberStudent(0);
+    	this.numberStudent=0;
     	this.numberStudentMax = numberStudentMax;
     	this.linked = false;
     	this.isEnergyMissing = true;

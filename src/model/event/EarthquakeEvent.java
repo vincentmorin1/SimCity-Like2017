@@ -10,12 +10,14 @@ import model.GameBoard;
 import model.tiles.Destroyable;
 
 public class EarthquakeEvent extends Event  {
-
+	
+	private String message;
     /**
      * Default Constructor.
      */
 	public EarthquakeEvent(GameBoard world) {
         super(world);
+		this.message="";
     }
 
     /**
@@ -25,7 +27,7 @@ public class EarthquakeEvent extends Event  {
     public List<Event> applyEffects(CityResources resources) {
 		int amplitude = amplitude();
 
-        System.out.println("Earthquake! Magnitude of "+ amplitude + "  at "+ this.startingTile.getRow() + " " + this.startingTile.getColumn());
+        this.message = "Earthquake! Magnitude of "+ amplitude +"  at "+this.startingTile.getRow()+ " "+this.startingTile.getColumn();
         
         for (int i= 0 ; i< this.world.getHeight(); i++){
         	for (int j= 0 ; j< this.world.getWidth(); j++){
@@ -39,7 +41,7 @@ public class EarthquakeEvent extends Event  {
             			Destroyable building = (Destroyable) this.world.getTile(i,j);
             			if (!building.isDestroyed()){
                 			building.disassemble(resources);
-                			System.out.println("Batiment perdu : " + building.getClass().getSimpleName());            				
+                			this.message += "\nBatiment perdu : " + building.getClass().getSimpleName();            				
             			}
             		}
             		
@@ -54,7 +56,7 @@ public class EarthquakeEvent extends Event  {
      */
 	@Override
     public String getMessage(LocalizedTexts texts) {
-        return "";
+        return this.message;
     }
 	
     private int destroyBuildingProba(int row, int column, int amplitude){
@@ -72,16 +74,16 @@ public class EarthquakeEvent extends Event  {
     private int amplitude(){
     	int p = ThreadLocalRandom.current().nextInt(0, 100);
     	
-    	if (p>=100-27){ return 1;}
-    	else if (p>=100-27-22){ return 2;}
-    	else if (p>=100-27-22-17){ return 3;}
-    	else if (p>=100-27-22-17-13){ return 4;}
-    	else if (p>=100-27-22-17-13-9){ return 5;}
-    	else if (p>=100-27-22-17-13-9-5){ return 6;}
-    	else if (p>=100-27-22-17-13-9-5-3){ return 7;}
-    	else if (p>=100-27-22-17-13-9-5-3-2){ return 8;}
-    	else if (p>=100-27-22-17-13-9-5-3-2-1){ return 9;}
-    	else if (p>=100-27-22-17-13-9-5-3-2-1-1){ return 10;}
+    	if (p<27){ return 1;}
+    	else if (p<27+22){ return 2;}
+    	else if (p<27+22+17){ return 3;}
+    	else if (p<27+22+17+13){ return 4;}
+    	else if (p<27+22+17+13+9){ return 5;}
+    	else if (p<27+22+17+13+9+5){ return 6;}
+    	else if (p<27+22+17+13+9+5+3){ return 7;}
+    	else if (p<27+22+17+13+9+5+3+2){ return 8;}
+    	else if (p<27+22+17+13+9+5+3+2+1){ return 9;}
+    	else if (p<27+22+17+13+9+5+3+2+1+1){ return 10;}
     	
     	else { return -1;}
     }

@@ -43,7 +43,7 @@ public class UKTexts extends LocalizedTexts {
      */
     @Override
     public String getCurrencyMsg() {
-        return "£ {0}";
+        return "ï¿½ {0}";
     }
     
     /**
@@ -105,10 +105,18 @@ public class UKTexts extends LocalizedTexts {
     }
     
     /**
+     * @see LocalizedTexts#getUnstudyingPopLabel()
+     */
+    @Override
+    public String getUnworkingStudentPopulationLabel() {
+        return "Student without school!";
+    }
+    
+    /**
      * @see LocalizedTexts#getUnworkingPopulationLabel()
      */
     @Override
-    public String getUnworkingPopulationLabel() {
+    public String getUnworkingSeniorPopulationLabel() {
         return "Unworking population";
     }
 
