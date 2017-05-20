@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import localization.LocalizedTexts;
@@ -40,8 +41,10 @@ import model.event.Event;
 import model.event.EventFactory;
 import model.tiles.Evolvable;
 import model.tiles.GrassTile;
+import model.tiles.MountainTile;
 import model.tiles.RoadTile;
 import model.tiles.Tile;
+import model.tiles.WaterTile;
 import model.tools.BulldozerTool;
 import model.tools.CommercialZoneDelimiterTool;
 import model.tools.PowerPlantConstructionTool;
@@ -112,6 +115,10 @@ public class GameBoard extends Observable {
      */
     private final LocalizedTexts texts;
 
+    private int numberWaterCase;
+    private int numberMountainCase;
+    
+
     // Creation
     /**
      * Create a rectangle world with {@value height * width} tiles.
@@ -128,10 +135,12 @@ public class GameBoard extends Observable {
     public GameBoard(int height, int width, DifficultyLevel difficulty, LocalizedTexts texts) {
         assert width > 0 && height > 0 : "Dimensions incorrectes";
 
+        this.numberMountainCase = 0;
+        this.numberWaterCase = 0;
         this.tiles = new Tile[height][width];
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                this.tiles[i][j] = GrassTile.getDefault();
+                this.tiles[i][j] = this.createMap(i,j);//GrassTile.getDefault();
             }
         }
         this.tiles[height/2][0] = new RoadTile(height/2,0);
@@ -519,12 +528,35 @@ public class GameBoard extends Observable {
         		}
         	}
         }
-        /*
-        for (final Tile[] rows : this.tiles) {
-            for (final Tile t : rows) {
-                t.update(this.resources);
-            }
-        }*/
+        
+    }
+    
+    /**
+     * 
+     * @param i
+     * @param j
+     * @return
+     */
+    public Tile createMap(int i, int j){
+		int proba = ThreadLocalRandom.current().nextInt(0, 100);
+		System.out.println(proba);
+		if (i!=0 && j!=0 && (this.tiles[i-1][j] instanceof WaterTile || this.tiles[i][j-1] instanceof WaterTile) && proba<70 && this.numberWaterCase<15){
+			this.numberWaterCase++;
+			return WaterTile.getDefault();
+		}
+		else if (i!=0 && j!=0 && (this.tiles[i-1][j] instanceof MountainTile || this.tiles[i][j-1] instanceof MountainTile) && proba<70 && this.numberMountainCase<15){
+			this.numberMountainCase++;
+			return MountainTile.getDefault();
+		}
+		else if (proba < 1 && this.numberWaterCase<15){ 
+			this.numberWaterCase++;
+			return WaterTile.getDefault();
+		}
+		else if (proba < 2 && this.numberMountainCase<15){ 
+			this.numberMountainCase++;
+			return MountainTile.getDefault();
+		}
+		else{ return GrassTile.getDefault(); }
     }
 
 }
