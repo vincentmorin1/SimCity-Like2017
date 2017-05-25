@@ -1,8 +1,15 @@
 package model.tiles;
 
-public class RoadConnection{
+import java.io.Serializable;
+
+public class RoadConnection implements Serializable {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Tile[][] mapTiles;
 	
 	private int[][] mapConnection;

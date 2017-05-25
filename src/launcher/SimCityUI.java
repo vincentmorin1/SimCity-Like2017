@@ -28,6 +28,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 import javax.swing.Box;
@@ -81,6 +85,8 @@ public final class SimCityUI extends JFrame implements ActionListener{
      */
     private int hauteur ;
     private int largeur ;
+    
+    private LocalizedTexts texts;
     
     // Entry point
     /**
@@ -169,14 +175,14 @@ public final class SimCityUI extends JFrame implements ActionListener{
         button2 = new JButton("Language UK");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
-        c.gridy = 1;
+        c.gridy = 2;
         button2.addActionListener(this);
         this.add(button2, c);
         
-        button3 = new JButton("Tutorial");
+        button3 = new JButton("Load");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
-        c.gridy = 2;
+        c.gridy = 1;
         button3.addActionListener(this);
         this.add(button3, c);
                 
@@ -223,95 +229,77 @@ public final class SimCityUI extends JFrame implements ActionListener{
 				ac.stop();
 			}
 			if (button2.getText() == "Language UK") {
-				final LocalizedTexts texts = new UKTexts();
-				// World creation				
-				this.dispose();
-				JFrame jeu = new JFrame();				
-				jeu.setTitle("TNCYTY");
-				GameBoard monde = new GameBoard(hauteur, largeur, texts);
-		        // GameView creation, displayed on the middle of the frame
-		        GameBoardView vm = new GameBoardView(monde);
-		        monde.addObserver(vm);
-		        jeu.add(vm, BorderLayout.CENTER);
-
-		        // Tools creation, displayed on left side of the frame
-		        ToolsView ve = new ToolsView(monde);
-		        monde.addObserver(ve);
-		        jeu.add(ve, BorderLayout.WEST);
-		        
-		        // Board of information, on the right side of the frame
-		        PropertiesView vi = new PropertiesView(monde, texts);
-		        monde.addObserver(vi);
-		        
-		        // Refresh panel creation
-		        RefreshView rv = new RefreshView(monde);
-		        JPanel right = new JPanel();
-		        right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
-		        right.add(vi);
-		        right.add(Box.createVerticalGlue());
-		        right.add(rv);
-		        jeu.add(right, BorderLayout.EAST);
-		        
-			        // MessageView creation
-		        MessagesView mv = new MessagesView();
-		        monde.addObserver(mv);
-		        jeu.add(mv, BorderLayout.SOUTH);
-		        
-		        jeu.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		        jeu.pack();
-		        
-		        FactorsView fv = new FactorsView(monde, texts);
-		        monde.addObserver(fv);
-		        jeu.add(fv, BorderLayout.NORTH);
-		        
-
-		        jeu.setResizable(true);
-		        jeu.setVisible(true);
-				
+				this.texts = new UKTexts();
 			}
 			else {
-				final LocalizedTexts texts = new FRTexts();
-				// World creation
+				this.texts = new FRTexts();
+			}
+			// World creation				
+			this.dispose();
+			JFrame jeu = new JFrame();				
+			jeu.setTitle("TNCYTY");
+			GameBoard monde = new GameBoard(hauteur, largeur, texts);
+	        // GameView creation, displayed on the middle of the frame
+	        GameBoardView vm = new GameBoardView(monde);
+	        monde.addObserver(vm);
+	        jeu.add(vm, BorderLayout.CENTER);
+	        
+	        
+	        JButton save = new JButton("Save");
+			save.addActionListener (new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+			            FileOutputStream fileoutputstream = new FileOutputStream("Save");
+			            BufferedOutputStream bufferoutputstream = new BufferedOutputStream(fileoutputstream);
+			            ObjectOutputStream objectoutputstream = new ObjectOutputStream(bufferoutputstream);
+			            objectoutputstream.writeObject(monde);
+			            objectoutputstream.flush();
+			            objectoutputstream.close();
+			            fileoutputstream.close();
+			        } catch (IOException ioe) {
+			        	ioe.printStackTrace();
+			        } 
 				
-				this.dispose();
-				JFrame jeu = new JFrame();				
-				jeu.setTitle("TNCYTY");
-				GameBoard monde = new GameBoard(hauteur, largeur, texts);
-		        
-				// GameView creation, displayed on the middle of the frame 
-		        GameBoardView vm = new GameBoardView(monde);
-		        monde.addObserver(vm);
-		        jeu.add(vm, BorderLayout.CENTER);
-
-		        // Tools creation, displayed on left side of the frame
-		        ToolsView ve = new ToolsView(monde);
-		        monde.addObserver(ve);
-		        jeu.add(ve, BorderLayout.WEST);
-		        
-		        // Board of information, on the right side of the frame
-		        PropertiesView vi = new PropertiesView(monde, texts);
-		        monde.addObserver(vi);
-		        
-		        // Refresh panel creation
-		        RefreshView rv = new RefreshView(monde);
-		        JPanel right = new JPanel();
-		        right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
-		        right.add(vi);
-		        right.add(Box.createVerticalGlue());
-		        right.add(rv);
-		        jeu.add(right, BorderLayout.EAST);
-			    
-		        // MessageView creation
-		        MessagesView mv = new MessagesView();
-		        monde.addObserver(mv);
-		        jeu.add(mv, BorderLayout.SOUTH);
-		        jeu.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		        jeu.pack();
-		        jeu.setResizable(true);
-		        jeu.setVisible(true);
 				}
+	        	
+	        });		        
 
-			
+	        // Tools creation, displayed on left side of the frame
+	        ToolsView ve = new ToolsView(monde);
+	        monde.addObserver(ve);
+	        jeu.add(ve, BorderLayout.WEST);
+	        
+	        // Board of information, on the right side of the frame
+	        PropertiesView vi = new PropertiesView(monde, texts);
+	        monde.addObserver(vi);
+	        
+	        // Refresh panel creation
+	        RefreshView rv = new RefreshView(monde);
+	        JPanel right = new JPanel();
+	        right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
+	        right.add(vi);
+	        right.add(Box.createVerticalGlue());
+	        right.add(rv);
+	        right.add(save);
+	        jeu.add(right, BorderLayout.EAST);
+	        
+		        // MessageView creation
+	        MessagesView mv = new MessagesView();
+	        monde.addObserver(mv);
+	        jeu.add(mv, BorderLayout.SOUTH);
+	        
+	        jeu.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	        jeu.pack();
+	        
+	        FactorsView fv = new FactorsView(monde, texts);
+	        monde.addObserver(fv);
+	        jeu.add(fv, BorderLayout.NORTH);
+	        
+
+	        jeu.setResizable(true);
+	        jeu.setVisible(true);
 			
 		} else if (source == button2){
 			if (button2.getText() == "Language UK") {
@@ -322,7 +310,85 @@ public final class SimCityUI extends JFrame implements ActionListener{
 			}
 		}
 		else if (source == button3) {
-			//Create a tutorial
+			if (button4.getText() == "Sound YES") {
+				ac.loop();
+			}
+			else {
+				ac.stop();
+			}
+			if (button2.getText() == "Language UK") {
+				this.texts = new UKTexts();
+			}
+			else {
+				this.texts = new FRTexts();
+			}
+			// World creation				
+			this.dispose();
+			JFrame jeu = new JFrame();				
+			jeu.setTitle("TNCYTY");
+			GameBoard monde = new GameBoard("Save", texts);
+	        // GameView creation, displayed on the middle of the frame
+	        GameBoardView vm = new GameBoardView(monde);
+	        monde.addObserver(vm);
+	        jeu.add(vm, BorderLayout.CENTER);
+	        
+	        
+	        JButton save = new JButton("Save");
+			save.addActionListener (new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+			            FileOutputStream fileoutputstream = new FileOutputStream("Save");
+			            BufferedOutputStream bufferoutputstream = new BufferedOutputStream(fileoutputstream);
+			            ObjectOutputStream objectoutputstream = new ObjectOutputStream(bufferoutputstream);
+			            objectoutputstream.writeObject(monde);
+			            objectoutputstream.flush();
+			            objectoutputstream.close();
+			            fileoutputstream.close();
+			        } catch (IOException ioe) {
+			        	ioe.printStackTrace();
+			        } 
+				
+				}
+	        	
+	        });		        
+
+	        // Tools creation, displayed on left side of the frame
+	        ToolsView ve = new ToolsView(monde);
+	        monde.addObserver(ve);
+	        jeu.add(ve, BorderLayout.WEST);
+	        
+	        // Board of information, on the right side of the frame
+	        PropertiesView vi = new PropertiesView(monde, texts);
+	        monde.addObserver(vi);
+	        
+	        // Refresh panel creation
+	        RefreshView rv = new RefreshView(monde);
+	        JPanel right = new JPanel();
+	        right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
+	        right.add(vi);
+	        right.add(Box.createVerticalGlue());
+	        right.add(rv);
+	        right.add(save);
+	        jeu.add(right, BorderLayout.EAST);
+	        
+		        // MessageView creation
+	        MessagesView mv = new MessagesView();
+	        monde.addObserver(mv);
+	        jeu.add(mv, BorderLayout.SOUTH);
+	        
+	        jeu.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	        jeu.pack();
+	        
+	        FactorsView fv = new FactorsView(monde, texts);
+	        monde.addObserver(fv);
+	        jeu.add(fv, BorderLayout.NORTH);
+	        
+
+	        jeu.setResizable(true);
+	        jeu.setVisible(true);		
+						
 		}
 		else if (source == button4 && button4.getText() == "Sound YES") {
 			button4.setText("Sound NO");

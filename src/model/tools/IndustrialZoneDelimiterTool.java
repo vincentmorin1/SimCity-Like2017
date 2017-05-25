@@ -24,6 +24,8 @@
 
 package model.tools;
 
+import java.io.Serializable;
+
 import model.CityResources;
 import model.tiles.GrassTile;
 import model.tiles.IndustrialTile;
@@ -34,9 +36,13 @@ import model.tiles.Tile;
  * @author Victorien Elvinger
  *
  */
-public final class IndustrialZoneDelimiterTool extends Tool {
+public final class IndustrialZoneDelimiterTool extends Tool implements Serializable {
 
-// Constant
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	// Constant
 	private final static int CURRENCY_COST = 20;
 
 // Status

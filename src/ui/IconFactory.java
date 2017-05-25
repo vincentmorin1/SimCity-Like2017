@@ -33,7 +33,6 @@ import model.tiles.BuildingTile;
 import model.tiles.Destroyable;
 import model.tiles.RoadConnection;
 import model.tiles.RoadTile;
-import model.tiles.SchoolTile;
 import model.tiles.Tile;
 import model.tools.Tool;
 

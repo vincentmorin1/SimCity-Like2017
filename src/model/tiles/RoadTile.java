@@ -1,9 +1,15 @@
 package model.tiles;
 
+import java.io.Serializable;
+
 import model.CityResources;
 
-public class RoadTile extends BuildingTile{
+public class RoadTile extends BuildingTile implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public final static int DIMENSION_WIDTH = 1;
 	public final static int DIMENSION_HEIGHT = 1;
 	

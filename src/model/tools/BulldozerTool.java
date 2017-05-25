@@ -24,6 +24,8 @@
 
 package model.tools;
 
+import java.io.Serializable;
+
 import model.CityResources;
 import model.tiles.BuildingTile;
 import model.tiles.Destroyable;
@@ -33,9 +35,13 @@ import model.tiles.Tile;
 /**
  * The Bulldozer Tool can be used to destroy buildings.
  */
-public final class BulldozerTool extends Tool {
+public final class BulldozerTool extends Tool implements Serializable {
 
-    // Constant
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	// Constant
     private final static int CURRENCY_COST = 10;
 
     // Status

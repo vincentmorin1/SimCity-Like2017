@@ -24,11 +24,18 @@
 
 package model.tiles;
 
+import java.io.Serializable;
+
 import model.CityResources;
 
-public class PowerPlantTile extends BuildingTile{
+public class PowerPlantTile extends BuildingTile implements Serializable {
 
-    private final int topLeftCornerX;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private final int topLeftCornerX;
     
     private final int topLeftCornerY;
     

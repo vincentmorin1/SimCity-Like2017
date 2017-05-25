@@ -24,6 +24,11 @@
 
 package model;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -54,9 +59,14 @@ import model.tools.SchoolConstructionTool;
 import model.tools.IndustrialZoneDelimiterTool;
 import model.tools.Tool;
 
-public class GameBoard extends Observable {
+public class GameBoard extends Observable implements Serializable {
 
-    // Constant
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	// Constant
     public final static DifficultyLevel DEFAULT_DIFFICULTY = DifficultyLevel.STANDARD_LEVEL;
 
     public final static TilePosition DEFAULT_SELECTED_LOCATION = new TilePosition(0, 0);
@@ -73,12 +83,12 @@ public class GameBoard extends Observable {
     /**
      * Map of the world.
      */
-    private final Tile[][] tiles;
+    private Tile[][] tiles;
 
     /**
      * Available tools.
      */
-    private final List<Tool> tools;
+    private List<Tool> tools;
 
     /**
      * {@link #getSelectedTool()}
@@ -93,12 +103,12 @@ public class GameBoard extends Observable {
     /**
      * Pending evolutions.
      */
-    private final Queue<Evolvable> pendingEvolutions;
+    private Queue<Evolvable> pendingEvolutions;
 
     /**
      * Events to be applied to the world at the next refresh.
      */
-    private final List<Event> pendingEventsList;
+    private List<Event> pendingEventsList;
 
     /**
      * Available money.
@@ -110,10 +120,11 @@ public class GameBoard extends Observable {
      */
     private String message;
 
+        
     /**
      * {@link #getTexts()}
      */
-    private final LocalizedTexts texts;
+    private LocalizedTexts texts;
 
     private int numberWaterCase;
     private int numberMountainCase;
@@ -135,8 +146,6 @@ public class GameBoard extends Observable {
     public GameBoard(int height, int width, DifficultyLevel difficulty, LocalizedTexts texts) {
         assert width > 0 && height > 0 : "Dimensions incorrectes";
 
-        this.numberMountainCase = 0;
-        this.numberWaterCase = 0;
         this.tiles = new Tile[height][width];
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
@@ -147,7 +156,10 @@ public class GameBoard extends Observable {
 
         this.selectedTile = this.getTile(GameBoard.DEFAULT_SELECTED_LOCATION.getRow(), GameBoard.DEFAULT_SELECTED_LOCATION.getColumn());
 
-        this.tools = new ArrayList<>();
+        this.numberMountainCase = 0;
+        this.numberWaterCase = 0;
+        
+        this.tools=new ArrayList<>();
         this.tools.add(new BulldozerTool());
         this.tools.add(new PowerPlantConstructionTool());
         this.tools.add(new ResidentialZoneDelimiterTool());
@@ -181,7 +193,52 @@ public class GameBoard extends Observable {
     public GameBoard(int height, int width, LocalizedTexts texts) {
         this(height, width, GameBoard.DEFAULT_DIFFICULTY, texts);
     }
+    
+    public GameBoard(String path, LocalizedTexts texts){
+    	GameBoard world = null;
+        
+        try {
+            FileInputStream fileinputstream = new FileInputStream(path);
+            BufferedInputStream bufferedinputstream = new BufferedInputStream(fileinputstream);
+            ObjectInputStream objectinputstream = new ObjectInputStream(bufferedinputstream);
+        	try {
+            	world = (GameBoard) objectinputstream.readObject();
+        	}finally{
+                objectinputstream.close();
+                fileinputstream.close();
+        	
+            }
+        }catch (IOException | ClassNotFoundException ioe) {
+            ioe.printStackTrace();
+        }
+        if (world==null){
+        	try {
+				throw new Exception("Can't load file");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+        else{
+        	this.tiles = world.tiles;
+        	this.tools = world.tools;
+        	this.selectedTool = this.tools.get(GameBoard.DEFAULT_SELECTED_TOOL);
+        	
 
+            this.numberMountainCase = world.numberMountainCase;
+            this.numberWaterCase = world.numberWaterCase;
+            
+            
+            this.selectedTile = this.getTile(GameBoard.DEFAULT_SELECTED_LOCATION.getRow(), GameBoard.DEFAULT_SELECTED_LOCATION.getColumn());
+            this.pendingEvolutions = world.pendingEvolutions;
+            this.pendingEventsList = world.pendingEventsList;
+            this.resources = world.resources;
+                   
+            this.message = GameBoard.NOTHING_MESSAGE;
+            this.texts = world.texts;
+        }
+    }
+
+   
     /**
      * Create a square world with {@value length * length} tiles.
      *

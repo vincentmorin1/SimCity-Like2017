@@ -1,8 +1,15 @@
 package model.tiles;
 
-public abstract class BuildingTile extends Tile implements Destroyable{
+import java.io.Serializable;
+
+public abstract class BuildingTile extends Tile implements Destroyable, Serializable{
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Set the link state
      * @param b
      */

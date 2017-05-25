@@ -24,12 +24,19 @@
 
 package localization;
 
+import java.io.Serializable;
+
 /***
  * Texts used by the game.
  */
-public abstract class LocalizedTexts {
+public abstract class LocalizedTexts implements Serializable{
 
-    // Message
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	// Message
     /**
      * @return Message that indicates that the tool cannot affect a given tile.
      */

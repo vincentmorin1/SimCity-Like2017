@@ -24,14 +24,20 @@
 
 package model.tiles;
 
+import java.io.Serializable;
+
 import model.CityResources;
 
 /**
  * State-less tile that represents grass tiles.
  */
-public final class GrassTile extends Tile {
+public final class GrassTile extends Tile implements Serializable{
 
-    private final int topLeftCornerX;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final int topLeftCornerX;
     private final int topLeftCornerY;
     
     // Constant

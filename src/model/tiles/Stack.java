@@ -1,10 +1,16 @@
 package model.tiles;
 
 import java.util.NoSuchElementException;
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class Stack<E> {
+public class Stack<E> implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private LinkedList<E> liste;
 	
 	private int taille;

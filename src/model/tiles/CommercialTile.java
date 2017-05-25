@@ -24,15 +24,21 @@
 
 package model.tiles;
 
+import java.io.Serializable;
+
 import model.CityResources;
 
 /**
  * Enable to welcome new inhabitants and consume energy units according to the
  * number of inhabitants.
  */
-public class CommercialTile extends BuildableTile {
+public class CommercialTile extends BuildableTile implements Serializable {
 
-    // Constants
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	// Constants
 	public final static int DIMENSION_WIDTH = 2;
 	public final static int DIMENSION_HEIGHT = 2;
 

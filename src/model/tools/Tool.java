@@ -23,6 +23,8 @@
  */
 package model.tools;
 
+import java.io.Serializable;
+
 import model.CityResources;
 import model.tiles.Tile;
 
@@ -32,9 +34,14 @@ import model.tiles.Tile;
  * @author Victorien Elvinger
  *
  */
-public abstract class Tool {
+public abstract class Tool implements Serializable {
 
-// Status
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	// Status
 	/**
 	 *
 	 * @param aTarget

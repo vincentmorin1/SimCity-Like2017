@@ -1,10 +1,17 @@
 package model.tiles;
 
+import java.io.Serializable;
+
 import model.CityResources;
 
-public class SchoolTile extends BuildingTile{
+public class SchoolTile extends BuildingTile implements Serializable{
 
-    public final static int DEFAULT_ENERGY_CONSUMPTION = 15;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public final static int DEFAULT_ENERGY_CONSUMPTION = 15;
 
     public final static int DEFAULT_NUMBER_STUDENT_MAX = 70;
     

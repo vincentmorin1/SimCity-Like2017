@@ -24,12 +24,19 @@
 
 package localization;
 
+import java.io.Serializable;
+
 /**
  * United Kingdom localized texts.
  */
-public class FRTexts extends LocalizedTexts {
+public class FRTexts extends LocalizedTexts implements Serializable  {
 
-    // Messages
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	// Messages
 	/**
 	 * @see LocalizedTexts#getToolCannotAffectMsg()
 	 */

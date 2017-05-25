@@ -25,6 +25,8 @@
 package model;
 
 
+import java.io.Serializable;
+
 import model.tiles.RoadConnection;
 import model.tiles.Tile;
 
@@ -32,9 +34,14 @@ import model.tiles.Tile;
  * Represents the resources and the parameters of the city. An ephemeral
  * resource is reset at each step thanks to {@link CityResources#getVat()}.
  */
-public class CityResources {
+public class CityResources implements Serializable {
 
-    // Constant
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	// Constant
     /**
      * Default value for {@link CityResources#getVat()}.
      */

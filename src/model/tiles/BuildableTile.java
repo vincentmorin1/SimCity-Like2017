@@ -24,14 +24,21 @@
 
 package model.tiles;
 
+import java.io.Serializable;
+
 import model.CityResources;
 
 /**
  * Tile that can evolve and be destroyed. An evolution has an energy cost.
  */
-public abstract class BuildableTile extends BuildingTile implements Evolvable {
+public abstract class BuildableTile extends BuildingTile implements Evolvable, Serializable{
 
-    // Implementation
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	// Implementation
 	/**
      * {@link #getInhabitantsCapacity()}
      */

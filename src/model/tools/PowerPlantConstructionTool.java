@@ -24,14 +24,20 @@
 
 package model.tools;
 
+import java.io.Serializable;
+
 import model.CityResources;
 import model.tiles.GrassTile;
 import model.tiles.PowerPlantTile;
 import model.tiles.Tile;
 
-public final class PowerPlantConstructionTool extends Tool {
+public final class PowerPlantConstructionTool extends Tool implements Serializable {
 
-    // Constant
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	// Constant
     private final static int CURRENCY_COST = 40;
 
     // Status
