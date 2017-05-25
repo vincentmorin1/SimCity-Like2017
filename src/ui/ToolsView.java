@@ -24,11 +24,12 @@
 
 package ui;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import model.GameBoard;
@@ -45,11 +46,28 @@ public class ToolsView extends JPanel implements Observer {
      */
     public ToolsView(GameBoard w) {
         super();
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
+        this.setLayout(new GridBagLayout());
+        int i = 0;
+        GridBagConstraints c = new GridBagConstraints();
+        
         final Iterator<Tool> it = w.toolIterator();
         while (it.hasNext()) {
-            this.add(new ToolUI(w, it.next()));
+        	if (i <= 9) {
+        		c.fill = GridBagConstraints.HORIZONTAL;
+        		c.gridx = 1;
+        		c.gridy = i;
+        		this.add(new ToolUI(w, it.next()),c);
+        		
+        	}
+        	else {
+        		c.fill = GridBagConstraints.HORIZONTAL;
+        		c.gridx = 2;
+        		c.gridy = i-10;
+        		this.add(new ToolUI(w, it.next()),c);
+        		
+        	}
+        	i++;
+        	
         }
     }
 
