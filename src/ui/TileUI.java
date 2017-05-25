@@ -32,6 +32,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import model.GameBoard;
+import model.tiles.GrassTile;
+import model.tiles.BuildingTile;
+import model.tiles.RoadTile;
 import model.tiles.Tile;
 import model.tools.Tool;
 
@@ -80,6 +83,34 @@ public class TileUI extends JLabel {
         this.update();
     }
     
+    public Tile[] tilesAround() {
+	    final int posX = this.row;
+	    final int posY = this.column;
+	    final int sizeX = this.model.getHeight();
+	    final int sizeY = this.model.getWidth();
+	    
+	    Tile[] tilesAround = new Tile[4];
+	    for (int i=0; i<sizeX; i++) {
+	    	for (int j=0; j<sizeY; j++) {
+	    		if (this.model.getTile(i,j) instanceof GrassTile) {
+	    			for (int k=0; k<4; k++)
+	    				tilesAround[k] = this.model.getTile(i,j);
+	    }	}	}
+	    if (this.row > 0)
+	    	tilesAround[0] = this.model.getTile(posX-1,posY);
+	    if (this.row < sizeY-1)
+	    	tilesAround[1] = this.model.getTile(posX+1,posY);
+	    if (this.column < sizeX-1)
+	    	tilesAround[2] = this.model.getTile(posX,posY+1);
+	    if (this.column > 0)
+	    	tilesAround[3] = this.model.getTile(posX,posY-1);
+	    
+	    if (posX == sizeX/2 && posY == 0)
+	    	tilesAround[3] = this.model.getTile(posX,posY);
+	    			
+	    return tilesAround;
+    }
+    
     // Component refresh
     /**
      * Update
@@ -94,7 +125,15 @@ public class TileUI extends JLabel {
             this.setToolTipText(this.model.getTexts().getToolCannotAffectMsg());
         }
 
-        ImageIcon ii = IconFactory.getInstance().getTileIcon(elt,this.model.getCityResources().getRoadConnection());
+        String eltConnection = "";
+        if (elt instanceof RoadTile) {
+        	RoadTile rt = (RoadTile) elt;
+        	eltConnection = rt.getRoadConnection(this.tilesAround());
+        } else if (elt instanceof BuildingTile) {
+        	BuildingTile bt = (BuildingTile) elt;
+        	eltConnection = bt.getBuildingConnection(this.tilesAround());
+        }
+        ImageIcon ii = IconFactory.getInstance().getTileIcon(elt,eltConnection);
         this.setIcon(ii);
     }
     
@@ -107,7 +146,10 @@ public class TileUI extends JLabel {
     }
     
     public void updateCursor() {
-        ImageIcon cursor = IconFactory.getInstance().getCursorIcon();
-        this.setIcon(cursor);
+    	final Tile elt = this.model.getTile(this.row, this.column);
+    	if (!(elt instanceof BuildingTile)) {
+    		ImageIcon cursor = IconFactory.getInstance().getCursorIcon(elt);
+    		this.setIcon(cursor);
+    	}
     }
 }

@@ -62,9 +62,9 @@ public final class SimCityUI extends JFrame implements ActionListener{
     // Constants
     private final static long serialVersionUID = 1L;
 
-    private final static int DEFAULT_HEIGHT = 10;
+    private final static int DEFAULT_HEIGHT = 20;
 
-    private final static int DEFAULT_WIDTH = 20;
+    private final static int DEFAULT_WIDTH = 40;
     
     /**
      * Buttons from the first frame menu

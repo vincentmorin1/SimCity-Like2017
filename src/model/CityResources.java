@@ -27,8 +27,6 @@ package model;
 
 import java.io.Serializable;
 
-import model.tiles.RoadConnection;
-import model.tiles.Tile;
 
 /**
  * Represents the resources and the parameters of the city. An ephemeral
@@ -131,12 +129,6 @@ public class CityResources implements Serializable {
      */
     private int productsCapacity;
 
-    /**
-     * {@link #getRoadConnection()}
-     */
- 	private RoadConnection roadConnection;
-
- 
 
     // Creation
     
@@ -227,31 +219,6 @@ public class CityResources implements Serializable {
         return result;
     }
 
-    /**
-     * Set the connection between road tiles
-     * 
-     * @param tiles
-     * 
-     * @see RoadConnection#setRoadLink()
-     * @see RoadConnection
-     * @see CityResources#roadConnection
-     */
-    public void setRoadConnection(Tile[][] tiles){
-    	roadConnection = new RoadConnection(tiles);
-    	roadConnection.setRoadLink();
-    }
-    
-    /**
-     * Return the type of connection between 2 road tiles
-     * 
-     * @return RoadConnection
-     * 
-     * @see RoadConnection
-     * @see CityResources#roadConnection
-     */
-    public RoadConnection getRoadConnection(){
-    	return roadConnection;
-    }
     
     public int enrolStudent(int maxEnrol){
     	int res =  Math.min(maxEnrol, this.unworkingStudentPopulation);

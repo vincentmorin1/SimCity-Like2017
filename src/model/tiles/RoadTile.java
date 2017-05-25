@@ -94,6 +94,23 @@ public class RoadTile extends BuildingTile implements Serializable{
     	this.linked = b;
     }
     
+    public String getRoadConnection(Tile[] tiles){
+    	String res =  "-";		
+		if (tiles[0] instanceof RoadTile){
+			res += "N";
+		}
+		if (tiles[1] instanceof RoadTile){
+			res += "S";
+		}
+		if (tiles[2] instanceof RoadTile){
+			res += "E";
+		}
+		if (tiles[3] instanceof RoadTile){
+			res += "W";
+		}
+		return res;
+    }
+    
     @Override
     public void update(CityResources res) {}
 

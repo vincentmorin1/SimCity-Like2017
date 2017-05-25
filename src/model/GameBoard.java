@@ -173,7 +173,6 @@ public class GameBoard extends Observable implements Serializable {
         this.pendingEvolutions = new LinkedList<>();
         this.pendingEventsList = new LinkedList<>();
         this.resources = new CityResources(difficulty.getInitialCurrency());
-        this.resources.setRoadConnection(this.tiles);
       
 
         this.message = GameBoard.NOTHING_MESSAGE;
@@ -528,7 +527,6 @@ public class GameBoard extends Observable implements Serializable {
     public void nextState() {
         GameBoard.ROUNDCOUNTER.incrementAndGet();
         this.resources.resetEphemerals();
-        this.resources.setRoadConnection(tiles);
         this.applyPendingEvents();
         this.applyNewEvent();
         this.updateTiles();

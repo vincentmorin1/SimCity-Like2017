@@ -31,7 +31,6 @@ import javax.swing.ImageIcon;
 import model.tiles.BuildableTile;
 import model.tiles.BuildingTile;
 import model.tiles.Destroyable;
-import model.tiles.RoadConnection;
 import model.tiles.RoadTile;
 import model.tiles.Tile;
 import model.tools.Tool;
@@ -60,33 +59,26 @@ public class IconFactory {
      * 1: path
      */
     private final static String ERROR_MESSAGE_TEMPLATE = "error: icon not found at %s";
-
+    
     // Constant (id)
     /**
      * Default 'no-icon' for tool.
      */
     private final static String NO_ICON_TOOL_ID = "no-icon-tool";
 
+    
     /**
      * Default 'no-icon' for tile.
      */
     private final static String NO_ICON_TILE_ID = "no-icon-tile";
 
+    
     /**
      * Icon for all Destroyable tiles where {@link Destroyable#isDestroyed()} is
      * true.
      */
     public final static String DEBRIS_TILE_ID = "debris";
 
-    /**
-     * Icon for roads.
-     */
-    public final static String ROAD_TILE_ID = "road-tile";
-
-    /**
-     * Id if {@link BuildableTile#isEnergyMissing()} is enabled.
-     */
-    public final static String MISSING_ENERGY_POSTID = "missing-energy";
 
     // Implementation
     private final String pathTemplate;
@@ -123,20 +115,21 @@ public class IconFactory {
     }
 
     /**
-     * @param aTile
-     * @return Icon associated to {@value aTile}.
+     * @param aTile, aConnection
+     * @return Icon associated to {@value aTile, aConnection}.
      */
-    public ImageIcon getTileIcon(Tile aTile, RoadConnection roads) {
-        return this.getIcon(this.getTileId(aTile,roads), IconFactory.NO_ICON_TILE_ID);
+    public ImageIcon getTileIcon(Tile aTile, String aConnection) {                
+        return this.getIcon(this.getTileId(aTile,aConnection), IconFactory.NO_ICON_TILE_ID);
     }
 
     /**
-     * @param aCursor
-     * @return Cursor associated to {@value aCursor}.
+     * @param aTile
+     * @return Cursor associated to {@value aTile}.
      */
-    public ImageIcon getCursorIcon(/*Cursor aCursor*/) {
-    	return this.getIcon(this.getCursorId(/*aCursor*/), IconFactory.NO_ICON_TILE_ID);
+    public ImageIcon getCursorIcon(Tile aTile) {
+    	return this.getIcon(this.getCursorId(aTile), IconFactory.NO_ICON_TILE_ID);
     }
+  
     
     // Implementation
     /**
@@ -178,57 +171,51 @@ public class IconFactory {
      * @return Id that corresponds to {@value aTool}.
      */
     private String getToolId(Tool aTool) {
+    	//System.out.println(aTool.getClass().getSimpleName());
     	return this.dashSeparatedWordsFromCamelCase(aTool.getClass().getSimpleName());
     }
     
     /**
-     * @param aCursor
-     * @return Id that corresponds to {@value aCursor}.
+     * @param aTile
+     * @return Id that corresponds to cursor.
      */
-    private String getCursorId(/*Cursor aCursor*/) {
-    	return "cursor"; //this.dashSeparatedWordsFromCamelCase(aCursor.getClass().getSimpleName());
+    private String getCursorId(Tile aTile) {
+    	return getTileId(aTile,"") + "-cursor";
     }
+
     
     /**
      * @param aTile
      * @return Id that corresponds to {@value aTile}.
      */
-    private String getTileId(Tile aTile, RoadConnection roads) {
-        if (aTile instanceof Destroyable && ((Destroyable) aTile).isDestroyed()) {
+    private String getTileId(Tile aTile, String connectionPostId) {
+        
+    	if (aTile instanceof Destroyable && ((Destroyable) aTile).isDestroyed())
             return IconFactory.DEBRIS_TILE_ID;
-            
-        } else if(aTile instanceof RoadTile){
-        	String s = roads.roadsAround((RoadTile) aTile);
-        	return IconFactory.ROAD_TILE_ID + "-" + s;
-        }
+  
         else {
-            final String id = this.dashSeparatedWordsFromCamelCase(aTile.getClass().getSimpleName());
+            String id = this.dashSeparatedWordsFromCamelCase(aTile.getClass().getSimpleName());
             // Turn the class's name into dash-separated words in lower-case.
-
-            if (aTile instanceof BuildingTile) {
-                final BuildingTile bt = (BuildingTile) aTile;
+            
+            if(aTile instanceof RoadTile)
+            	id += connectionPostId;
+            
+            else if (aTile instanceof BuildingTile) {
                 String statePostId = "";
                 
                 if (aTile instanceof BuildableTile){
                 	BuildableTile t = (BuildableTile) aTile;
-                    statePostId = '-' + t.getState().name().toLowerCase().replace('_', '-');
+                    statePostId = "-" + t.getState().name().toLowerCase().replace('_', '-');
                     // Turn enumeration value into dash-separated words in
                     // lower-case
+                    System.out.println(statePostId);
                 }
-
-                final String energyPostId;
-                if (bt.getIsEnergyMissing()) {
-                    energyPostId = '-' + IconFactory.MISSING_ENERGY_POSTID;
-                } else {
-                    energyPostId = "";
-                }
-                return id + statePostId + energyPostId;
+                id += statePostId;
+            id += connectionPostId;  
                 
-            } 
 
-            else {
-                return id;
-            }
+            } 
+            return id;
         }
     }
 
