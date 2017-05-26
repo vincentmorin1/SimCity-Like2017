@@ -50,13 +50,17 @@ import model.tiles.MountainTile;
 import model.tiles.RoadTile;
 import model.tiles.Tile;
 import model.tiles.WaterTile;
+import model.tools.BeachConstructionTool;
 import model.tools.BulldozerTool;
 import model.tools.CommercialZoneDelimiterTool;
+import model.tools.HospitalConstructionTool;
 import model.tools.PowerPlantConstructionTool;
 import model.tools.ResidentialZoneDelimiterTool;
 import model.tools.RoadConstructionTool;
 import model.tools.SchoolConstructionTool;
+import model.tools.SnowStationConstructionTool;
 import model.tools.IndustrialZoneDelimiterTool;
+import model.tools.PoliceOfficeConstructionTool;
 import model.tools.Tool;
 
 public class GameBoard extends Observable implements Serializable {
@@ -167,6 +171,10 @@ public class GameBoard extends Observable implements Serializable {
         this.tools.add(new IndustrialZoneDelimiterTool());
         this.tools.add(new RoadConstructionTool());
         this.tools.add(new SchoolConstructionTool());
+        this.tools.add(new HospitalConstructionTool());
+        this.tools.add(new PoliceOfficeConstructionTool());
+        this.tools.add(new BeachConstructionTool());
+        this.tools.add(new SnowStationConstructionTool());
 
         this.selectedTool = this.tools.get(GameBoard.DEFAULT_SELECTED_TOOL);
 
@@ -475,13 +483,8 @@ public class GameBoard extends Observable implements Serializable {
         if (this.selectedTool.getClass().getSimpleName().equals(BulldozerTool.class.getSimpleName())){
         	sizeX = this.tiles[row][column].getDimensionX(); // Faudra swap les x et les y
         	sizeY = this.tiles[row][column].getDimensionY();
-        }
-        
-        if (this.selectedTool.getClass().getSimpleName().equals(BulldozerTool.class.getSimpleName())){
-        	if (this.tiles[row][column].getTopLeftCornerX() != row || this.tiles[row][column].getTopLeftCornerY() != column){
-        		row = this.tiles[row][column].getTopLeftCornerX();
-        		column = this.tiles[row][column].getTopLeftCornerY();
-        	}
+      		row = this.tiles[row][column].getTopLeftCornerX();
+    		column = this.tiles[row][column].getTopLeftCornerY();
         }
         
         if (row + sizeX -1 <maxX && column + sizeY-1 < maxY){
@@ -493,6 +496,11 @@ public class GameBoard extends Observable implements Serializable {
         }
         else{
         	canEffect = false;
+        }
+		
+        if (this.selectedTool.getClass().getSimpleName().equals(BeachConstructionTool.class.getSimpleName())){
+        	BeachConstructionTool bct = (BeachConstructionTool) this.selectedTool;
+        	canEffect = canEffect && bct.nextToWaterTile(row,column,this.tiles) ;
         }
 
         if (canEffect) {
@@ -617,11 +625,11 @@ public class GameBoard extends Observable implements Serializable {
 			this.numberMountainCase++;
 			return MountainTile.getDefault();
 		}
-		else if (proba < 1 && this.numberWaterCase<15){ 
+		else if (proba < 1 && this.numberWaterCase<30){ 
 			this.numberWaterCase++;
 			return WaterTile.getDefault();
 		}
-		else if (proba < 2 && this.numberMountainCase<15){ 
+		else if (proba < 2 && this.numberMountainCase<30){ 
 			this.numberMountainCase++;
 			return MountainTile.getDefault();
 		}

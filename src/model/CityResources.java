@@ -26,6 +26,7 @@ package model;
 
 
 import java.io.Serializable;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 /**
@@ -59,17 +60,17 @@ public class CityResources implements Serializable {
     /**
      * {@link #getHappiness()}
      */
-    private int Happiness;
+    private int happiness;
     
     /**
      * {@link #getEfficiencyAtWork()}
      */
-    private int EfficiencyAtWork;
+    private int efficiencyAtWork;
     
     /**
      * {@link #getEconomy()}
      */
-    private int Economy;
+    private int economy;
 
     // Implementation (Energy)
     /**
@@ -101,6 +102,12 @@ public class CityResources implements Serializable {
     private int unworkingSeniorPopulation;
 
     private int seniorPopulation;
+
+    
+    private int numberStudentWithoutLeisure;
+    
+    private int numberSeniorWithoutLeisure;
+
     /**
      * {@link #getPopulation()}
      */
@@ -152,12 +159,14 @@ public class CityResources implements Serializable {
         this.population = 0;
         this.seniorPopulation = 0;
         this.studentPopulation = 0;
+        this.numberStudentWithoutLeisure=0;
+        this.numberSeniorWithoutLeisure=0;
         this.populationCapacity = 0;
         this.productsCount = 0;
         this.productsCapacity = 0;
-        this.Happiness = 50;
-        this.EfficiencyAtWork = 50;
-        this.Economy = 50;
+        this.happiness = 50;
+        this.efficiencyAtWork = 50;
+        this.economy = 50;
     }
 
     /**
@@ -193,29 +202,32 @@ public class CityResources implements Serializable {
     public boolean equals(CityResources o) {
         return this == o || super.equals(o) && o.currency == this.currency && o.vat == this.vat && o.unconsumedEnergy == this.unconsumedEnergy && o.energyProduction == this.energyProduction && o.moneyProduction == this.moneyProduction
                 && o.unconsumedMoney == this.unconsumedMoney && o.unworkingSeniorPopulation == this.unworkingSeniorPopulation && o.population == this.population && o.populationCapacity == this.populationCapacity && o.productsCount == this.productsCount
-                && o.productsCapacity == this.productsCapacity && o.Economy == this.Economy && o.EfficiencyAtWork == this.EfficiencyAtWork && o.Happiness == this.Happiness;
+                && o.productsCapacity == this.productsCapacity && o.economy == this.economy && o.efficiencyAtWork == this.efficiencyAtWork && o.happiness == this.happiness;
     }
 
     // Access
     @Override
     public int hashCode() {
-        int result = 1;
-        result = result * 17 + this.currency;
-        result = result * 17 + this.vat;
-        result = result * 17 + this.unconsumedEnergy;
-        result = result * 17 + this.energyProduction;
-        result = result * 17 + this.moneyProduction;
-        result = result * 17 + this.unconsumedMoney;
-        result = result * 17 + this.unworkingSeniorPopulation;
-        result = result * 17 + this.unworkingStudentPopulation;
-        result = result * 17 + this.studentPopulation;
-        result = result * 17 + this.population;
-        result = result * 17 + this.populationCapacity;
-        result = result * 17 + this.productsCount;
-        result = result * 17 + this.productsCapacity;
-        result = result * 17 + this.Economy;
-        result = result * 17 + this.EfficiencyAtWork;
-        result = result * 17 + this.Happiness;
+    	int result = 1;
+        result = result* 17 + this.currency;
+        result = result* 17 + this.vat;
+        result = result* 17 + this.energyProduction;
+        result = result* 17 + this.unconsumedEnergy;
+        result = result* 17 + this.moneyProduction;
+        result = result* 17 + this.unconsumedMoney;
+        result = result* 17 + this.unworkingStudentPopulation;
+        result = result* 17 + this.unworkingSeniorPopulation;
+        result = result* 17 + this.studentPopulation;
+        result = result* 17 + this.seniorPopulation;
+        result = result* 17 + this.numberStudentWithoutLeisure;
+        result = result* 17 + this.numberSeniorWithoutLeisure;
+        result = result* 17 + this.population;
+        result = result* 17 + this.populationCapacity;
+        result = result* 17 + this.productsCount;
+        result = result* 17 + this.productsCapacity;
+        result = result* 17 + this.economy;
+        result = result* 17 + this.efficiencyAtWork;
+        result = result* 17 + this.happiness;
         return result;
     }
 
@@ -234,12 +246,17 @@ public class CityResources implements Serializable {
     public int getCurrency() {
         return this.currency;
     }
-
+    public void setCurrency(int c){
+    	this.currency = c;
+    }
     /**
      * @return Value-Added-Tax in percentage.
      */
     public int getVat() {
         return this.vat;
+    }
+    public void setVat(int v){
+    	this.vat = v;
     }
 
     // Access (Energy)
@@ -313,6 +330,15 @@ public class CityResources implements Serializable {
     public int getSeniorPopulation(){
     	return this.seniorPopulation;
     }
+
+    public int getNumberStudentWithoutLeisure(){
+    	return this.numberStudentWithoutLeisure;
+    }
+    
+    public int getNumberSeniorWithoutLeisure(){
+    	return this.numberSeniorWithoutLeisure;
+    }
+
     /**
      * @return Total number of citizens.
      */
@@ -348,7 +374,7 @@ public class CityResources implements Serializable {
      * @return In percentage, the current happiness in game
      */
     public int getHappiness() {
-		return this.Happiness;
+		return this.happiness;
 	}
 
     /**
@@ -356,7 +382,7 @@ public class CityResources implements Serializable {
      * @return The efficiency at work in percentage
      */
 	public int getEfficiencyAtWork() {
-		return this.EfficiencyAtWork;
+		return this.efficiencyAtWork;
 	}
 
 	/**
@@ -364,7 +390,7 @@ public class CityResources implements Serializable {
 	 * @return The current economy in percentage
 	 */
 	public int getEconomy() {
-		return this.Economy;
+		return this.economy;
 	}
 
     // Change (Currency)
@@ -549,6 +575,30 @@ public class CityResources implements Serializable {
         this.populationCapacity = this.populationCapacity - amount;
     }
 
+    public int peopleToLeisure(int maxAmount, int probaStudent, int probaSenior){
+    	int res = 0;
+    	int i=0;
+    	while (i < this.numberStudentWithoutLeisure && res < maxAmount){
+    		if (ThreadLocalRandom.current().nextInt(0, 100) < probaStudent){
+    			res ++;
+    			this.numberStudentWithoutLeisure --;
+    		}
+    		i++;
+    	}
+    	
+    	i=0;
+    	
+    	while (i < this.numberSeniorWithoutLeisure && res < maxAmount){
+    		if (ThreadLocalRandom.current().nextInt(0, 100) < probaSenior){
+    			res ++;
+    			this.numberSeniorWithoutLeisure --;
+    		}
+    		i++;
+    	}
+    	return res;
+    }
+
+
     // Change (Product)
     /**
      * Decrease {@link #getProductsCount()} by {@value amount}.
@@ -600,14 +650,19 @@ public class CityResources implements Serializable {
      * Reset ephemeral resources.
      */
     public void resetEphemerals() {
+    	this.creditWithTaxes(this.unconsumedMoney); ;
+    	
     	this.studentPopulation = this.population/2;
     	this.seniorPopulation = this.population - this.studentPopulation;
         this.unworkingSeniorPopulation = this.seniorPopulation;
         this.unworkingStudentPopulation = this.studentPopulation;
+        this.numberStudentWithoutLeisure = this.studentPopulation;
+        this.numberSeniorWithoutLeisure = this.seniorPopulation;
         
         this.unconsumedEnergy = this.energyProduction;
         this.unconsumedMoney = this.moneyProduction;
     }
+
 
 
 }
