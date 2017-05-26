@@ -245,6 +245,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        GameBoardView vm = new GameBoardView(monde);
 	        monde.addObserver(vm);
 	        JScrollPane sp = new JScrollPane (vm);
+	        sp.getVerticalScrollBar().setUnitIncrement(30);
 	        jeu.add(sp, BorderLayout.CENTER);
 	        
 	        
@@ -339,6 +340,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        GameBoardView vm = new GameBoardView(monde);
 	        monde.addObserver(vm);
 	        JScrollPane sp = new JScrollPane (vm);
+	        sp.getVerticalScrollBar().setUnitIncrement(30);
 	        jeu.add(sp, BorderLayout.CENTER);
 	        
 	        
