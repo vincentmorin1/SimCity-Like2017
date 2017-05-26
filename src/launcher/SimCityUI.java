@@ -306,7 +306,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        jeu.add(fv, BorderLayout.NORTH);
 	        
 
-	        jeu.setResizable(false);
+	        jeu.setResizable(true);
 	        jeu.setVisible(true);
 			
 		} else if (source == button2){
@@ -400,7 +400,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        jeu.add(fv, BorderLayout.NORTH);
 	        
 
-	        jeu.setResizable(false);
+	        jeu.setResizable(true);
 	        jeu.setVisible(true);		
 						
 		}
