@@ -222,7 +222,7 @@ public class ResidentialTile extends BuildableTile implements Serializable {
     }
 
     // Implementation
-    /**
+    /** FALSEEEEEE
      * @param res
      * @return Approximation of the number of inhabitants in the current
      *         residence if the population is uniformly distributed.
@@ -231,13 +231,18 @@ public class ResidentialTile extends BuildableTile implements Serializable {
      *         = 100 (including X) and the population is Z = 20, then the
      *         residence has (X / Y) * Z = 10 inhabitants.
      */
-    private int getInhabitants(CityResources res) {
-        assert res.getPopulationCapacity() != 0;
 
-        final int capacityPercentage = this.inhabitantsCapacity * 100 / res.getPopulationCapacity(); // Integer
-                                                                                                     // division
-        return res.getPopulation() * capacityPercentage / 100; // Integer
-                                                               // division
+    public int getResidents(){
+    	return this.residents;
+    }
+    
+    public String[] getInformations(){
+    	String[] res = new String[4];
+    	res[0] = this.getClass().getSimpleName();
+    	res[1] = "Residents : " + this.getResidents() + " / " + this.inhabitantsCapacity;
+    	res[2] = "Linked by road : " + this.getLinked();
+    	res[3] = "Powered : " + this.isEnergyMissing;
+    	return res;
     }
 
 }

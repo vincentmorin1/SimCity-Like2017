@@ -281,7 +281,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        monde.addObserver(pv);
 	        
 	        // Board of information, on the right side of the frame
-	        InformationView iv = new InformationView(monde, texts);
+	        InformationView iv = new InformationView(monde, monde.getInformationTool());
 	        monde.addObserver(iv);
 	        
 	        // Date panel creation

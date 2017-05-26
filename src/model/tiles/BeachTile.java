@@ -4,7 +4,12 @@ import model.CityResources;
 
 public class BeachTile extends BuildingTile{
 
-	    public final static int DEFAULT_ENERGY_CONSUMPTION = 0;
+	    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+		public final static int DEFAULT_ENERGY_CONSUMPTION = 0;
 
 	    public final static int DEFAULT_NUMBER_TOURISTS_MAX = 100;
 	    
@@ -150,4 +155,12 @@ public class BeachTile extends BuildingTile{
 	        
 	    }
 
+	    public String[] getInformations(){
+	    	String[] res = new String[4];
+	    	res[0] = this.getClass().getSimpleName();
+	    	res[1] = "Tourists : " + this.getNumberTourists() + "/" + this.numberTouristsMax;
+	    	res[2] = "Relié : " + this.getLinked();
+	    	res[3] = "Powered : " + this.getIsEnergyMissing();
+	    	return res;
+	    }
 	}

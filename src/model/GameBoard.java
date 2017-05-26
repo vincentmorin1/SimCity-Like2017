@@ -47,6 +47,7 @@ import model.event.EventFactory;
 import model.tiles.Evolvable;
 import model.tiles.GrassTile;
 import model.tiles.MountainTile;
+import model.tiles.ResidentialTile;
 import model.tiles.RoadTile;
 import model.tiles.Tile;
 import model.tiles.WaterTile;
@@ -131,6 +132,8 @@ public class GameBoard extends Observable implements Serializable {
      */
     private LocalizedTexts texts;
 
+    private InformationTool informationTool;
+    
     private int numberWaterCase;
     private int numberMountainCase;
     private int numberWaterCaseMax;
@@ -166,11 +169,12 @@ public class GameBoard extends Observable implements Serializable {
         this.tiles[height/2][0] = new RoadTile(height/2,0);
 
         this.selectedTile = this.getTile(GameBoard.DEFAULT_SELECTED_LOCATION.getRow(), GameBoard.DEFAULT_SELECTED_LOCATION.getColumn());
-
+        
+        this.informationTool = new InformationTool(this.tiles[0][0]);
 
         
         this.tools=new ArrayList<>();
-        this.tools.add(new InformationTool());
+        this.tools.add(this.informationTool);
         this.tools.add(new BulldozerTool());
         this.tools.add(new PowerPlantConstructionTool());
         this.tools.add(new ResidentialZoneDelimiterTool());
@@ -184,7 +188,7 @@ public class GameBoard extends Observable implements Serializable {
         this.tools.add(new SnowStationConstructionTool());
 
         this.selectedTool = this.tools.get(GameBoard.DEFAULT_SELECTED_TOOL);
-
+        
         this.pendingEvolutions = new LinkedList<>();
         this.pendingEventsList = new LinkedList<>();
         this.resources = new CityResources(difficulty.getInitialCurrency());
@@ -265,6 +269,9 @@ public class GameBoard extends Observable implements Serializable {
         this(length, length, texts);
     }
 
+    public InformationTool getInformationTool(){
+    	return this.informationTool;
+    }
     // Access
     public LocalizedTexts getTexts() {
         return this.texts;
@@ -486,53 +493,61 @@ public class GameBoard extends Observable implements Serializable {
         
         final Tile currentTile = this.tiles[row][column];
 
-        
-        if (this.selectedTool.getClass().getSimpleName().equals(BulldozerTool.class.getSimpleName())){
-        	sizeX = this.tiles[row][column].getDimensionX(); // Faudra swap les x et les y
-        	sizeY = this.tiles[row][column].getDimensionY();
-      		row = this.tiles[row][column].getTopLeftCornerX();
-    		column = this.tiles[row][column].getTopLeftCornerY();
+        if (this.selectedTool.getClass().getSimpleName().equals(InformationTool.class.getSimpleName())){
+        	InformationTool it = (InformationTool) this.selectedTool;
+        	this.informationTool = it;
+        	it.loadInformations(currentTile);
         }
+        else {
+        	
         
-        if (row + sizeX -1 <maxX && column + sizeY-1 < maxY){
-	        for (int i=0; i<sizeX;i++){
-	        	for (int j=0; j<sizeY;j++){
-	        		canEffect = canEffect && this.selectedTool.canEffect(this.tiles[row+i][column+j]);
-	        	}
+	        if (this.selectedTool.getClass().getSimpleName().equals(BulldozerTool.class.getSimpleName())){
+	        	sizeX = this.tiles[row][column].getDimensionX(); // Faudra swap les x et les y
+	        	sizeY = this.tiles[row][column].getDimensionY();
+	      		row = this.tiles[row][column].getTopLeftCornerX();
+	    		column = this.tiles[row][column].getTopLeftCornerY();
+	        }
+	        
+	        if (row + sizeX -1 <maxX && column + sizeY-1 < maxY){
+		        for (int i=0; i<sizeX;i++){
+		        	for (int j=0; j<sizeY;j++){
+		        		canEffect = canEffect && this.selectedTool.canEffect(this.tiles[row+i][column+j]);
+		        	}
+		        }
+	        }
+	        else{
+	        	canEffect = false;
+	        }
+			
+	        if (this.selectedTool.getClass().getSimpleName().equals(BeachConstructionTool.class.getSimpleName())){
+	        	BeachConstructionTool bct = (BeachConstructionTool) this.selectedTool;
+	        	canEffect = canEffect && bct.nextToWaterTile(row,column,this.tiles) ;
+	        }
+	
+	        if (canEffect) {
+	            if (this.selectedTool.isAfordable(currentTile, this.resources)) {
+	
+	                final Tile newTile = this.selectedTool.effect(currentTile, this.resources, row, column);
+	                
+	                for (int i=0; i<sizeX;i++){
+	                	for (int j=0; j<sizeY;j++){
+	                        this.tiles[row+i][column+j] = newTile;
+	                	}
+	                }
+	
+	                this.pendingEvolutions.remove(currentTile);
+	                if (newTile instanceof Evolvable) {
+	                    this.pendingEvolutions.add((Evolvable) newTile);
+	                }
+	            } else {
+	                this.message = this.texts.getMissingResourcesMsg();
+	            }
+	        } 
+	        else {
+	            this.message = this.texts.getToolCannotAffectMsg();
 	        }
         }
-        else{
-        	canEffect = false;
-        }
-		
-        if (this.selectedTool.getClass().getSimpleName().equals(BeachConstructionTool.class.getSimpleName())){
-        	BeachConstructionTool bct = (BeachConstructionTool) this.selectedTool;
-        	canEffect = canEffect && bct.nextToWaterTile(row,column,this.tiles) ;
-        }
-
-        if (canEffect) {
-            if (this.selectedTool.isAfordable(currentTile, this.resources)) {
-
-                final Tile newTile = this.selectedTool.effect(currentTile, this.resources, row, column);
-                
-                for (int i=0; i<sizeX;i++){
-                	for (int j=0; j<sizeY;j++){
-                        this.tiles[row+i][column+j] = newTile;
-                	}
-                }
-
-                this.pendingEvolutions.remove(currentTile);
-                if (newTile instanceof Evolvable) {
-                    this.pendingEvolutions.add((Evolvable) newTile);
-                }
-            } else {
-                this.message = this.texts.getMissingResourcesMsg();
-            }
-        } 
-        else {
-            this.message = this.texts.getToolCannotAffectMsg();
-        }
-
+        
         this.notifyViews();
     }
 

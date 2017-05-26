@@ -131,4 +131,11 @@ public class RoadTile extends BuildingTile implements Serializable{
 		return false;
 	}
 
+    public String[] getInformations(){
+    	String[] res = new String[3];
+    	res[0] = this.getClass().getSimpleName();
+    	res[1] = "Linked by road : " + this.getLinked();
+    	res[2] = "Powered : " + this.getIsEnergyMissing();
+    	return res;
+    }
 }

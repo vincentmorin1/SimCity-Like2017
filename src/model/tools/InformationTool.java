@@ -7,15 +7,17 @@ import model.tiles.Tile;
 
 public class InformationTool extends Tool implements Serializable{
 
-    /**
-	 * 
-	 */
+    
+	private Tile tile;
+	
 	private static final long serialVersionUID = 1L;
 	// Constant
     private final static int CURRENCY_COST = 0;
-    
-    private String[] toPrint;
-    
+        
+	public InformationTool(Tile t){
+		this.tile = t;
+	}
+	
     // Status
     /**
      * canEffect returns true if the given Tile is buildable, false otherwise.
@@ -30,8 +32,12 @@ public class InformationTool extends Tool implements Serializable{
 
     }
 
-    public void loadInformations(Tile tile){
-    	
+    public void loadInformations(Tile t){
+    	this.tile = t;
+    }
+    
+    public String[] getInformations(){
+    	return this.tile.getInformations();
     }
     /**
      * isAfordable returns true if the user can apply the PowerPlant Tool, false
@@ -77,5 +83,5 @@ public class InformationTool extends Tool implements Serializable{
 	public  int getDimensionY(){
 		return 1;
 	}
-	
+
 }

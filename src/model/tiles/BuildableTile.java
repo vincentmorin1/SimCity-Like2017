@@ -212,11 +212,8 @@ public abstract class BuildableTile extends BuildingTile implements Evolvable, S
     @Override
     public void evolve(CityResources res) {
         if (this.canEvolve()  && this.gotEvolutions()) {
-            System.out.println("hoy!");
-
             if (res.getUnconsumedEnergy() >= evolutionEnergyConsumption) {
                 this.isEnergyMissing = false;
-                System.out.println("hey!");
                 res.consumeEnergy(this.evolutionEnergyConsumption);
                 this.state = ConstructionState.BUILT;
                 

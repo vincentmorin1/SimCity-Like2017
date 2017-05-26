@@ -161,4 +161,12 @@ public class PoliceOfficeTile extends BuildingTile{
 	        }
 	    }
 
+	    public String[] getInformations(){
+	    	String[] res = new String[4];
+	    	res[0] = this.getClass().getSimpleName();
+	    	res[1] = "Policemen : " + this.getNumberWorkers() + " / " + this.numberWorkersMax;
+	    	res[2] = "Linked by road : " + this.getLinked();
+	    	res[3] = "Powered : " + this.isEnergyMissing;
+	    	return res;
+	    }
 	}

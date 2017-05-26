@@ -228,4 +228,18 @@ public class IndustrialTile extends BuildableTile implements Serializable {
             
         }
     }
+    
+    public int getWorkers(){
+    	return this.workers;
+    }
+    
+    public String[] getInformations(){
+    	String[] res = new String[5];
+    	res[0] = this.getClass().getSimpleName();
+    	res[1] = "Workers : " + this.getWorkers() + " / " + this.inhabitantsCapacity;
+    	res[2] = "Production : " + this.getProduction() + " / " + this.getProductionCapacity();
+    	res[3] = "Linked by road : " + this.getLinked();
+    	res[4] = "Powered : " + this.isEnergyMissing;
+    	return res;
+    }
 }

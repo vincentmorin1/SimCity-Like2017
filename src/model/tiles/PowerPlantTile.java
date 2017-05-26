@@ -183,4 +183,12 @@ public class PowerPlantTile extends BuildingTile implements Serializable {
 	public boolean getIsEnergyMissing() {
 		return false;
 	}
+	
+    public String[] getInformations(){
+    	String[] res = new String[3];
+    	res[0] = this.getClass().getSimpleName();
+    	res[1] = "Electricity production : " + this.getProduction();
+    	res[2] = "Linked by road : " + this.getLinked();
+    	return res;
+    }
 }

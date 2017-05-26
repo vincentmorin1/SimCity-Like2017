@@ -54,5 +54,6 @@ public abstract class Tile implements Serializable {
      */
     public abstract void update(CityResources res);
 
+    public abstract String[] getInformations();
 
 }
