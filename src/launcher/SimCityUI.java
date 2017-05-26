@@ -49,6 +49,7 @@ import ui.ToolsView;
 import ui.MessagesView;
 import ui.PropertiesView;
 import ui.RefreshView;
+import ui.DateView;
 import ui.FactorsView;
 import ui.GameBoardView;
 
@@ -283,9 +284,13 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        right.add(Box.createVerticalGlue());
 	        right.add(rv);
 	        right.add(save);
-	        jeu.add(right, BorderLayout.EAST);
 	        
-		        // MessageView creation
+	        //Date panel creation
+	        DateView dv = new DateView(monde);
+	        right.add(dv);
+	        
+	        jeu.add(right, BorderLayout.EAST);
+		    // MessageView creation
 	        MessagesView mv = new MessagesView();
 	        monde.addObserver(mv);
 	        jeu.add(mv, BorderLayout.SOUTH);
@@ -371,9 +376,14 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        right.add(Box.createVerticalGlue());
 	        right.add(rv);
 	        right.add(save);
+	        	        
+	        //Date panel creation
+	        DateView dv = new DateView(monde);
+	        right.add(dv);
+	        
 	        jeu.add(right, BorderLayout.EAST);
 	        
-		        // MessageView creation
+		    // MessageView creation
 	        MessagesView mv = new MessagesView();
 	        monde.addObserver(mv);
 	        jeu.add(mv, BorderLayout.SOUTH);
