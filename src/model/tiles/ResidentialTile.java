@@ -86,6 +86,8 @@ public class ResidentialTile extends BuildableTile implements Serializable {
      */
     protected boolean isDestroyed;
 
+    private int residents;
+
     // Creation
     /**
      * @param capacity
@@ -97,6 +99,7 @@ public class ResidentialTile extends BuildableTile implements Serializable {
         this.maxNeededEnergy = ResidentialTile.DEFAULT_MAX_NEEDED_ENERGY;
         this.maxJoiningInhabitants = ResidentialTile.DEFAULT_MAX_JOINING_INHABITANTS;
         this.maxLeavingInhabitants = ResidentialTile.DEFAULT_MAX_LEAVING_INHABITANTS;
+        this.residents = 0;
         this.isDestroyed = false;
     }
 
@@ -113,10 +116,13 @@ public class ResidentialTile extends BuildableTile implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = result * 17 + this.maxJoiningInhabitants;
-        result = result * 17 + this.maxLeavingInhabitants;
-        result = result * 17 + this.maxNeededEnergy;
+    	int result=1;
+        result= result * super.hashCode();
+        result = result* 17 + this.residents;
+        result = result* 17 + this.maxNeededEnergy;
+        result = result* 17 + this.maxJoiningInhabitants;
+        result = result* 17 + this.maxLeavingInhabitants;
+        result = result* 17 + Boolean.hashCode(this.isDestroyed);
         return result;
     }
 
@@ -145,7 +151,9 @@ public class ResidentialTile extends BuildableTile implements Serializable {
     public void disassemble(CityResources res) {
         if (!this.isDestroyed) {
         	if (this.state==ConstructionState.BUILT){
-                res.decreasePopulationCapacity(this.inhabitantsCapacity);        		
+                res.decreasePopulation(this.residents);
+                res.decreasePopulationCapacity(this.inhabitantsCapacity);
+                this.residents = 0;
         	}
             super.disassemble(res);
             this.isDestroyed = true;
@@ -167,22 +175,36 @@ public class ResidentialTile extends BuildableTile implements Serializable {
     @Override
     public void update(CityResources res) {
         if (this.state == ConstructionState.BUILT) {
-            final int inhabitants = this.getInhabitants(res);
+            //final int inhabitants = this.getInhabitants(res);
 
-            final int busyPercentage = inhabitants * 100 / this.inhabitantsCapacity; // Integer
+            final int busyPercentage = this.residents * 100 / this.inhabitantsCapacity; // Integer
                                                                                      // division
             final int neededEnergy = Math.max(1, busyPercentage * this.maxNeededEnergy / 100); // Integer
                                                                                                // division
+            if (! this.getLinked()){
+            	final int leavingInhabitants = Math.min(this.maxLeavingInhabitants, 20 * this.residents / 100); // Integer
+                // division
+            	this.residents -= leavingInhabitants;
+            	res.decreasePopulation(leavingInhabitants);
+            }
             
-            if (res.getUnconsumedEnergy() >= neededEnergy) {
+            else if (res.getUnconsumedEnergy() >= neededEnergy) {
+            	final int newcomers;
                 res.consumeEnergy(neededEnergy);
                 this.isEnergyMissing = false;
 
                 // Less space is available, less newcomers join
                 final int vacantPercentage = 100 - busyPercentage;
-                final int newcomers = vacantPercentage * this.maxJoiningInhabitants / 100;
+                if (this.residents != this.inhabitantsCapacity){
+                    newcomers = Math.max(1,vacantPercentage * this.maxJoiningInhabitants / 100);
+                }
+                else{
+                    newcomers = vacantPercentage * this.maxJoiningInhabitants / 100;
+                }
 
+                this.residents += newcomers;
                 res.increasePopulation(newcomers);
+                
             } else {
                 final int consumedEnergy = res.getUnconsumedEnergy();
                 res.consumeEnergy(consumedEnergy);
@@ -191,8 +213,9 @@ public class ResidentialTile extends BuildableTile implements Serializable {
                 // More energy units are missing, more inhabitants leave
                 final int missingEnergyPercentage = 100 - consumedEnergy * 100 / neededEnergy; // Integer
                                                                                                // division
-                final int leavingInhabitants = Math.min(this.maxLeavingInhabitants, missingEnergyPercentage * inhabitants / 100); // Integer
+                final int leavingInhabitants = Math.min(this.maxLeavingInhabitants, missingEnergyPercentage * this.residents / 100); // Integer
                                                                                                                                   // division
+            	this.residents -= leavingInhabitants;
                 res.decreasePopulation(leavingInhabitants);
             }
         }
