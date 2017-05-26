@@ -103,7 +103,6 @@ public class PropertiesView extends JPanel implements Observer {
         this.currency.setText(MessageFormat.format(world.getTexts().getCurrencyMsg(), world.getCurrency()));
         this.energy.setText("" + world.getEnergy()); 
         this.unworkingStudentPop.setText(world.getUnworkingStudentPopulation() + " / "+ world.getStudentPopulation());
-        //this.money.setText("" + world.getMoney());
         this.unworkingSeniorPop.setText(world.getUnworkingSeniorPopulation() + " / " + world.getSeniorPopulation());
         this.products.setText("" + world.getProducts()+" / "+world.getCityResources().getProductsCapacity());
     }

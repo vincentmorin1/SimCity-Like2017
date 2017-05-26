@@ -1,14 +1,20 @@
 package model.tools;
 
+import java.io.Serializable;
+
 import model.CityResources;
 import model.tiles.WaterTile;
 import model.tiles.BeachTile;
 import model.tiles.GrassTile;
 import model.tiles.Tile;
 
-public class BeachConstructionTool extends Tool {
+public class BeachConstructionTool extends Tool  implements Serializable{
 
-    // Constant
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	// Constant
     private final static int CURRENCY_COST = 70;
 
     // Status

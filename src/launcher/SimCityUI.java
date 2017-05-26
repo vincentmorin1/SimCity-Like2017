@@ -287,9 +287,10 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        
 	        //Date panel creation
 	        DateView dv = new DateView(monde);
+	        monde.addObserver(dv);
 	        right.add(dv);
-	        
 	        jeu.add(right, BorderLayout.EAST);
+	        
 		    // MessageView creation
 	        MessagesView mv = new MessagesView();
 	        monde.addObserver(mv);

@@ -1,14 +1,20 @@
 package model.tools;
 
+import java.io.Serializable;
+
 import model.CityResources;
 import model.tiles.BeachTile;
 import model.tiles.GrassTile;
 import model.tiles.Tile;
 import model.tiles.WaterTile;
 
-public class InformationTool extends Tool{
+public class InformationTool extends Tool implements Serializable{
 
-    // Constant
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	// Constant
     private final static int CURRENCY_COST = 0;
 
     // Status
@@ -51,11 +57,6 @@ public class InformationTool extends Tool{
      */
     @Override
     protected Tile innerEffect(Tile aTarget, CityResources r, int x ,int y) {
-        assert this.canEffect(aTarget);
-        assert this.isAfordable(aTarget, r);
-
-        r.spend(InformationTool.CURRENCY_COST);
-
         return null;
     }
 
@@ -74,4 +75,5 @@ public class InformationTool extends Tool{
 	public  int getDimensionY(){
 		return 1;
 	}
+	
 }

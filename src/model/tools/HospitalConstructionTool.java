@@ -1,13 +1,19 @@
 package model.tools;
 
+import java.io.Serializable;
+
 import model.CityResources;
 import model.tiles.GrassTile;
 import model.tiles.Tile;
 import model.tiles.HospitalTile;
 
-public class HospitalConstructionTool extends Tool {
+public class HospitalConstructionTool extends Tool implements Serializable{
 
-    // Constant
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	// Constant
     private final static int CURRENCY_COST = 120;
 
     // Status

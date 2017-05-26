@@ -27,7 +27,6 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -46,9 +45,10 @@ public class RefreshView extends JPanel implements ActionListener{
 
     // Constant
     private static final long serialVersionUID = 1L;
+    private GameBoard w;
+    private Timer timer;
+    private boolean canNext;
     
-    private int vitesse;   
-
     // Creation
     
     /**
@@ -58,102 +58,59 @@ public class RefreshView extends JPanel implements ActionListener{
      */
     public RefreshView(GameBoard w) {
         super();     
-        
-        this.setBorder(BorderFactory.createBevelBorder(1, Color.GRAY,
-        Color.BLACK));        
+        this.w = w;
+        this.canNext = false;
+        this.setBorder(BorderFactory.createBevelBorder(1, Color.GRAY,Color.BLACK));        
         this.setName("Refresh");
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-      
+        this.timer = new Timer();
         
         GridBagConstraints c = new GridBagConstraints();
-        
-        
+        	
         JToggleButton button = new JToggleButton (">");
         button.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				vitesse = 0;
-				Date timeToRun = new Date(System.currentTimeMillis());
-				Timer timer = new Timer();
-				timer.schedule(new TimerTask() {
-					public void run(){
-						w.nextState();
-						if (vitesse != 0){   //Si on clique sur un autre bouton, la boucle s'arr�te 
-							timer.cancel();
-						}
-					}
-				}, timeToRun,8000); //On repete la boucle toutes les 8 secondes
-				
+				timeNextState(4000);
 			}
         	
-        });
-        c.fill = GridBagConstraints.HORIZONTAL;        
-        c.gridx = 0;
-        c.gridy = 0;   
+        }); 
         
         JToggleButton button2 = new JToggleButton (">>");
         button2.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				vitesse = 1;
-				Date timeToRun = new Date(System.currentTimeMillis());
-				Timer timer = new Timer();
-				timer.schedule(new TimerTask() {
-					public void run() {
-						w.nextState();
-						if (vitesse != 1){
-							timer.cancel();
-						}
-					}
-				}, timeToRun,4000);
-				
+				timeNextState(2000);
 			}
         	
-        });
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 0;
+        }); 
         
         JToggleButton button3 = new JToggleButton (">>>");
         button3.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				vitesse = 2;
-				Date timeToRun = new Date(System.currentTimeMillis());
-				Timer timer = new Timer();
-				timer.schedule(new TimerTask() {
-					public void run() {
-						w.nextState();
-						if (vitesse != 2){
-							timer.cancel();
-						}
-					}
-				}, timeToRun,2000);
-						
+				timeNextState(1000);	
 			}
         	
         });
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 2;
+        
+
         
         JToggleButton button4 = new JToggleButton ("||");
         button4.addActionListener(new ActionListener() {
         	
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				vitesse = 3;
-				
-				
+				timer.cancel();
 			}
         	
-        });
+        }); 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
-        c.gridy = 2;        
+        c.gridy = 2;       
         
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(button);
@@ -178,6 +135,24 @@ public class RefreshView extends JPanel implements ActionListener{
         
     }
 
+    public void timeNextState(int period){
+    	this.canNext = false;
+    	
+    	this.timer.cancel();
+		this.timer = new Timer();
+		timer.schedule(new TimerTask() {
+			public void run() {
+				if (canNext){
+					w.nextState();
+				}
+				else{
+					canNext = true;
+				}
+			}
+		}, 0,period);
+    	
+    }
+    
     @Override
 	public void actionPerformed(ActionEvent e) {}
     

@@ -132,7 +132,8 @@ public class GameBoard extends Observable implements Serializable {
 
     private int numberWaterCase;
     private int numberMountainCase;
-    
+    private int numberWaterCaseMax;
+    private int numberMountainCaseMax;
 
     // Creation
     /**
@@ -150,6 +151,11 @@ public class GameBoard extends Observable implements Serializable {
     public GameBoard(int height, int width, DifficultyLevel difficulty, LocalizedTexts texts) {
         assert width > 0 && height > 0 : "Dimensions incorrectes";
 
+        this.numberMountainCase = 0;
+        this.numberWaterCase = 0;
+        this.numberWaterCaseMax = 60;
+        this.numberMountainCaseMax = 60;
+        
         this.tiles = new Tile[height][width];
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
@@ -160,8 +166,7 @@ public class GameBoard extends Observable implements Serializable {
 
         this.selectedTile = this.getTile(GameBoard.DEFAULT_SELECTED_LOCATION.getRow(), GameBoard.DEFAULT_SELECTED_LOCATION.getColumn());
 
-        this.numberMountainCase = 0;
-        this.numberWaterCase = 0;
+
         
         this.tools=new ArrayList<>();
         this.tools.add(new BulldozerTool());
@@ -617,19 +622,19 @@ public class GameBoard extends Observable implements Serializable {
      */
     public Tile createMap(int i, int j){
 		int proba = ThreadLocalRandom.current().nextInt(0, 100);
-		if (i!=0 && j!=0 && (this.tiles[i-1][j] instanceof WaterTile || this.tiles[i][j-1] instanceof WaterTile) && proba<70 && this.numberWaterCase<15){
+		if (i!=0 && j!=0 && (this.tiles[i-1][j] instanceof WaterTile || this.tiles[i][j-1] instanceof WaterTile) && proba<60 && this.numberWaterCase<this.numberWaterCaseMax){
 			this.numberWaterCase++;
 			return WaterTile.getDefault();
 		}
-		else if (i!=0 && j!=0 && (this.tiles[i-1][j] instanceof MountainTile || this.tiles[i][j-1] instanceof MountainTile) && proba<70 && this.numberMountainCase<15){
+		else if (i!=0 && j!=0 && (this.tiles[i-1][j] instanceof MountainTile || this.tiles[i][j-1] instanceof MountainTile) && proba<60 && this.numberMountainCase<this.numberMountainCaseMax){
 			this.numberMountainCase++;
 			return MountainTile.getDefault();
 		}
-		else if (proba < 1 && this.numberWaterCase<30){ 
+		else if (proba < 1 && this.numberWaterCase<this.numberWaterCaseMax){ 
 			this.numberWaterCase++;
 			return WaterTile.getDefault();
 		}
-		else if (proba < 2 && this.numberMountainCase<30){ 
+		else if (proba < 2 && this.numberMountainCase<this.numberMountainCaseMax){ 
 			this.numberMountainCase++;
 			return MountainTile.getDefault();
 		}
