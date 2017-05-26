@@ -162,12 +162,16 @@ public abstract class BuildableTile extends BuildingTile implements Evolvable, S
         return this.state;
     }
 
-    @Override
+	@Override
     public int hashCode() {
-        int result = 1;
-        result = result * 17 + this.inhabitantsCapacity;
-        result = result * 17 + evolutionEnergyConsumption;
-        result = result * 17 + state.hashCode();
+    	int result = 1;
+        result = result* 17 + this.topLeftCornerX;
+        result = result* 17 + this.topLeftCornerY;
+        result = result* 17 + this.inhabitantsCapacity;
+        result = result* 17 + this.evolutionEnergyConsumption;
+        result = result* 17 + this.state.hashCode();
+        result = result* 17 + Boolean.hashCode(this.linked);
+        result = result* 17 + Boolean.hashCode(this.isEnergyMissing);
         return result;
     }
 
@@ -208,9 +212,11 @@ public abstract class BuildableTile extends BuildingTile implements Evolvable, S
     @Override
     public void evolve(CityResources res) {
         if (this.canEvolve()  && this.gotEvolutions()) {
+            System.out.println("hoy!");
+
             if (res.getUnconsumedEnergy() >= evolutionEnergyConsumption) {
                 this.isEnergyMissing = false;
-
+                System.out.println("hey!");
                 res.consumeEnergy(this.evolutionEnergyConsumption);
                 this.state = ConstructionState.BUILT;
                 

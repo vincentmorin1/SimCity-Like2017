@@ -151,11 +151,13 @@ public class CommercialTile extends BuildableTile implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = result * 17 + this.maxNeededEnergy;
-        result = result * 17 + this.moneyProduction;
-        result = result * 17 + this.productionCapacity;
-        result = result * 17 + Boolean.hashCode(this.isDestroyed);
+    	int result = super.hashCode();
+        result = result* 17 + this.moneyProduction;
+        result = result* 17 + this.productionCapacity;
+        result = result* 17 + this.maxNeededEnergy;
+        result = result* 17 + this.workers;
+        result = result* 17 + Boolean.hashCode(this.isDestroyed);
+        result = result* 17 + this.productsConsumption;
         return result;
     }
 

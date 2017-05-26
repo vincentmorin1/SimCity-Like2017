@@ -144,11 +144,12 @@ public class IndustrialTile extends BuildableTile implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = result * 17 + this.maxNeededEnergy;
-        result = result * 17 + this.production;
-        result = result * 17 + this.productionCapacity;
-        result = result * 17 + Boolean.hashCode(this.isDestroyed);
+    	int result= super.hashCode();
+        result = result* 17 + this.production;
+        result = result* 17 + this.productionCapacity;
+        result = result* 17 + this.maxNeededEnergy;
+        result = result* 17 + this.workers;
+        result = result* 17 + Boolean.hashCode(this.isDestroyed);
         return result;
     }
 
