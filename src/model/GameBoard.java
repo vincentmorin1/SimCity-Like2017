@@ -60,6 +60,7 @@ import model.tools.RoadConstructionTool;
 import model.tools.SchoolConstructionTool;
 import model.tools.SnowStationConstructionTool;
 import model.tools.IndustrialZoneDelimiterTool;
+import model.tools.InformationTool;
 import model.tools.PoliceOfficeConstructionTool;
 import model.tools.Tool;
 
@@ -153,8 +154,8 @@ public class GameBoard extends Observable implements Serializable {
 
         this.numberMountainCase = 0;
         this.numberWaterCase = 0;
-        this.numberWaterCaseMax = 60;
-        this.numberMountainCaseMax = 60;
+        this.numberWaterCaseMax = height * width / 10;
+        this.numberMountainCaseMax = height * width / 10;
         
         this.tiles = new Tile[height][width];
         for (int i = 0; i < height; i++) {
@@ -169,6 +170,7 @@ public class GameBoard extends Observable implements Serializable {
 
         
         this.tools=new ArrayList<>();
+        this.tools.add(new InformationTool());
         this.tools.add(new BulldozerTool());
         this.tools.add(new PowerPlantConstructionTool());
         this.tools.add(new ResidentialZoneDelimiterTool());

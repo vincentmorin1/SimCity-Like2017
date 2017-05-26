@@ -3,10 +3,7 @@ package model.tools;
 import java.io.Serializable;
 
 import model.CityResources;
-import model.tiles.BeachTile;
-import model.tiles.GrassTile;
 import model.tiles.Tile;
-import model.tiles.WaterTile;
 
 public class InformationTool extends Tool implements Serializable{
 
@@ -16,7 +13,9 @@ public class InformationTool extends Tool implements Serializable{
 	private static final long serialVersionUID = 1L;
 	// Constant
     private final static int CURRENCY_COST = 0;
-
+    
+    private String[] toPrint;
+    
     // Status
     /**
      * canEffect returns true if the given Tile is buildable, false otherwise.
@@ -31,6 +30,9 @@ public class InformationTool extends Tool implements Serializable{
 
     }
 
+    public void loadInformations(Tile tile){
+    	
+    }
     /**
      * isAfordable returns true if the user can apply the PowerPlant Tool, false
      * otherwise.

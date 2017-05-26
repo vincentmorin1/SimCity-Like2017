@@ -52,7 +52,7 @@ public class ToolsView extends JPanel implements Observer {
         
         final Iterator<Tool> it = w.toolIterator();
         while (it.hasNext()) {
-        	if (i <= 9) {
+        	if (i <= 5) {
         		c.fill = GridBagConstraints.HORIZONTAL;
         		c.gridx = 1;
         		c.gridy = i;
@@ -62,7 +62,7 @@ public class ToolsView extends JPanel implements Observer {
         	else {
         		c.fill = GridBagConstraints.HORIZONTAL;
         		c.gridx = 2;
-        		c.gridy = i-10;
+        		c.gridy = i-6;
         		this.add(new ToolUI(w, it.next()),c);
         		
         	}

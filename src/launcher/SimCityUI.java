@@ -53,6 +53,7 @@ import ui.RefreshView;
 import ui.DateView;
 import ui.FactorsView;
 import ui.GameBoardView;
+import ui.InformationView;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
@@ -275,22 +276,33 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        jeu.add(ve, BorderLayout.WEST);
 	        
 	        // Board of information, on the right side of the frame
-	        PropertiesView vi = new PropertiesView(monde, texts);
-	        monde.addObserver(vi);
+	        PropertiesView pv = new PropertiesView(monde, texts);
+	        monde.addObserver(pv);
+	        
+	        // Board of information, on the right side of the frame
+	        InformationView iv = new InformationView(monde, texts);
+	        monde.addObserver(iv);
+	        
+	        // Date panel creation
+	        DateView dv = new DateView(monde);
+	        monde.addObserver(dv);
 	        
 	        // Refresh panel creation
 	        RefreshView rv = new RefreshView(monde);
+	        
+	        // East panel creation
 	        JPanel right = new JPanel();
 	        right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
-	        right.add(vi);
+	        right.add(pv);
+	        right.add(Box.createVerticalGlue());
+	        right.add(iv);
 	        right.add(Box.createVerticalGlue());
 	        right.add(rv);
+	        right.add(Box.createVerticalGlue());
 	        right.add(save);
-	        
-	        //Date panel creation
-	        DateView dv = new DateView(monde);
-	        monde.addObserver(dv);
+	        right.add(Box.createVerticalGlue());
 	        right.add(dv);
+	        
 	        jeu.add(right, BorderLayout.EAST);
 	        
 		    // MessageView creation
@@ -306,7 +318,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        jeu.add(fv, BorderLayout.NORTH);
 	        
 
-	        jeu.setResizable(false);
+	        jeu.setResizable(true);
 	        jeu.setVisible(true);
 			
 		} else if (source == button2){
@@ -386,7 +398,6 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        right.add(dv);
 	        
 	        jeu.add(right, BorderLayout.EAST);
-	        
 		    // MessageView creation
 	        MessagesView mv = new MessagesView();
 	        monde.addObserver(mv);
@@ -400,7 +411,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        jeu.add(fv, BorderLayout.NORTH);
 	        
 
-	        jeu.setResizable(false);
+	        jeu.setResizable(true);
 	        jeu.setVisible(true);		
 						
 		}
