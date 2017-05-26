@@ -39,6 +39,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 import localization.FRTexts;
@@ -63,7 +64,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
     // Constants
     private final static long serialVersionUID = 1L;
 
-    private final static int DEFAULT_HEIGHT = 20;
+    private final static int DEFAULT_HEIGHT = 40;
 
     private final static int DEFAULT_WIDTH = 40;
     
@@ -243,7 +244,8 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        // GameView creation, displayed on the middle of the frame
 	        GameBoardView vm = new GameBoardView(monde);
 	        monde.addObserver(vm);
-	        jeu.add(vm, BorderLayout.CENTER);
+	        JScrollPane sp = new JScrollPane (vm);
+	        jeu.add(sp, BorderLayout.CENTER);
 	        
 	        
 	        JButton save = new JButton("Save");
@@ -303,7 +305,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        jeu.add(fv, BorderLayout.NORTH);
 	        
 
-	        jeu.setResizable(true);
+	        jeu.setResizable(false);
 	        jeu.setVisible(true);
 			
 		} else if (source == button2){
@@ -335,7 +337,8 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        // GameView creation, displayed on the middle of the frame
 	        GameBoardView vm = new GameBoardView(monde);
 	        monde.addObserver(vm);
-	        jeu.add(vm, BorderLayout.CENTER);
+	        JScrollPane sp = new JScrollPane (vm);
+	        jeu.add(sp, BorderLayout.CENTER);
 	        
 	        
 	        JButton save = new JButton("Save");
@@ -396,7 +399,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        jeu.add(fv, BorderLayout.NORTH);
 	        
 
-	        jeu.setResizable(true);
+	        jeu.setResizable(false);
 	        jeu.setVisible(true);		
 						
 		}
