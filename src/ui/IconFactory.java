@@ -208,11 +208,11 @@ public class IconFactory {
                     statePostId = "-" + t.getState().name().toLowerCase().replace('_', '-');
                     // Turn enumeration value into dash-separated words in
                     // lower-case
-                    System.out.println(statePostId);
+                    //System.out.println(statePostId);
                 }
                 id += statePostId;
             id += connectionPostId;  
-                
+            //System.out.println(id);
 
             } 
             return id;
