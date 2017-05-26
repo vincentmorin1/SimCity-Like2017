@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 
 import localization.LocalizedTexts;
 import model.GameBoard;
+import model.Factor;
+import model.FactorsList;
 
 public class FactorsView extends JPanel implements Observer {
 	
@@ -39,7 +41,7 @@ public class FactorsView extends JPanel implements Observer {
 	 * @param w
 	 * @param texts
 	 */
-	public FactorsView(GameBoard w, LocalizedTexts texts) {
+	public FactorsView(FactorsList w, LocalizedTexts texts) {
 		super();
 		this.setLayout(new GridLayout(1,3));		
 		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));

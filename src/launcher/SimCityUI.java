@@ -314,8 +314,8 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        jeu.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	        jeu.pack();
 	        
-	        FactorsView fv = new FactorsView(monde, texts);
-	        monde.addObserver(fv);
+	        FactorsList fact = new FactorsList();
+	        FactorsView fv = new FactorsView(fact, texts);	        monde.addObserver(fv);
 	        jeu.add(fv, BorderLayout.NORTH);
 	        
 
@@ -408,7 +408,8 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        jeu.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	        jeu.pack();
 	        
-	        FactorsView fv = new FactorsView(monde, texts);
+	        FactorsList fact = new FactorsList();
+	        FactorsView fv = new FactorsView(fact, texts);
 	        monde.addObserver(fv);
 	        jeu.add(fv, BorderLayout.NORTH);
 	        
