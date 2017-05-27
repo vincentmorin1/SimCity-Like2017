@@ -4,7 +4,12 @@ import model.CityResources;
 
 public class HospitalTile extends BuildingTile{
 
-	    public final static int DEFAULT_ENERGY_CONSUMPTION = 15;
+	    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+		public final static int DEFAULT_ENERGY_CONSUMPTION = 15;
 
 	    public final static int DEFAULT_NUMBER_WORKERS_MAX = 20;
 	    
@@ -63,6 +68,10 @@ public class HospitalTile extends BuildingTile{
 			return HospitalTile.DIMENSION_HEIGHT;
 		}
 		
+		public int getMaxNeededEnergy() {
+			return this.maxNeededEnergy;
+		}
+		
 		public int getTopLeftCornerX(){
 			return this.topLeftCornerX;
 		}
@@ -73,6 +82,10 @@ public class HospitalTile extends BuildingTile{
 		
 		public int getNumberWorkers() {
 			return this.numberWorkers;
+		}
+		
+		public int getNumberWorkersMax() {
+			return this.numberWorkersMax;
 		}
    
 	    @Override

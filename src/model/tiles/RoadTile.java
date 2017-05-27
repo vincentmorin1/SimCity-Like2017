@@ -38,6 +38,10 @@ public class RoadTile extends BuildingTile implements Serializable{
     	this.topLeftCornerX = topLeftCornerX;
     	this.topLeftCornerY = topLeftCornerY;
     }
+    
+    public RoadTile() {
+    	this (0,0);
+    }
 
 	public int getDimensionX(){
 		return 1;
@@ -63,6 +67,14 @@ public class RoadTile extends BuildingTile implements Serializable{
     @Override
     public boolean equals(Object o) {
         return o instanceof RoadTile && this.equals((RoadTile) o);
+    }
+    
+    /**
+     * @param o
+     * @return Is {@value o} equals to this?
+     */
+    public boolean equals(RoadTile o) {
+        return this == o || o.linked == this.linked && o.isDestroyed == this.isDestroyed;
     }
 
     @Override

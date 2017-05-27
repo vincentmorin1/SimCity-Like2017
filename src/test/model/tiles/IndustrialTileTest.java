@@ -10,49 +10,52 @@ public class IndustrialTileTest {
     
     @Test
     public void testInit() {
-        IndustrialTile ppt = new IndustrialTile();
-        Assert.assertEquals(IndustrialTile.DEFAULT_PRODUCTION_CAPACITY, ppt.getProductionCapacity());
-        ppt = new IndustrialTile(10,0,0);
-        Assert.assertEquals(10, ppt.getProductionCapacity());
+        IndustrialTile it = new IndustrialTile();
+        Assert.assertEquals(IndustrialTile.DEFAULT_PRODUCTION_CAPACITY, it.getProductionCapacity());
+        Assert.assertEquals(IndustrialTile.DEFAULT_MAX_NEEDED_ENERGY, it.getMaxNeededEnergy());
+        Assert.assertEquals(IndustrialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION, it.getEvolutionEnergyConsumption());
+        Assert.assertEquals(IndustrialTile.DEFAULT_WORKERS_CAPACITY, it.getInhabitantsCapacity());
+        it = new IndustrialTile(10,0,0);
+        Assert.assertEquals(10, it.getProductionCapacity());
     }
     
     @Test
     public void testUpdate() {
-    	IndustrialTile ppt = new IndustrialTile();
+    	IndustrialTile it = new IndustrialTile();
         CityResources resources = new CityResources(100);
-        int initialValue = resources.getEnergyProduction();
-        ppt.update(resources);
-        Assert.assertEquals(initialValue + ppt.getProduction(), resources.getEnergyProduction());
+        int initialValue = resources.getProductsCount();
+        it.update(resources);
+        Assert.assertEquals(initialValue + it.getProduction(), resources.getProductsCount());
     }
     
     @Test
     public void testDisassemble() {
-    	IndustrialTile ppt = new IndustrialTile();
+    	IndustrialTile it = new IndustrialTile();
         CityResources resources = new CityResources(100);
-        ppt.update(resources);
-        int initialProduction = resources.getEnergyProduction();
-        ppt.disassemble(resources);
-        Assert.assertEquals(Math.max(0, initialProduction - ppt.getProductionCapacity()), resources.getEnergyProduction());
+        it.update(resources);
+        int initialProduction = resources.getProductsCount();
+        it.disassemble(resources);
+        Assert.assertEquals(Math.max(0, initialProduction - it.getProduction()), resources.getProductsCount());
     }
     
     @Test
     public void testIsDestroyed() {
-    	IndustrialTile ppt = new IndustrialTile();
+    	IndustrialTile it = new IndustrialTile();
         CityResources resources = new CityResources(100);
-        ppt.disassemble(resources);
-        Assert.assertEquals(true, ppt.isDestroyed());
+        it.disassemble(resources);
+        Assert.assertEquals(true, it.isDestroyed());
     }
     
     @Test
     public void testIsEquals() {
-    	IndustrialTile ppt1 = new IndustrialTile();
+    	IndustrialTile it1 = new IndustrialTile();
         CityResources resources = new CityResources(100);
-        ppt1.update(resources);
-        ppt1.disassemble(resources);
-        IndustrialTile ppt2 = new IndustrialTile();
-        ppt2.update(resources);
-        ppt2.disassemble(resources);
-        Assert.assertEquals(true, ppt1.equals(ppt2));
+        it1.update(resources);
+        it1.disassemble(resources);
+        IndustrialTile it2 = new IndustrialTile();
+        it2.update(resources);
+        it2.disassemble(resources);
+        Assert.assertEquals(true, it1.equals(it2));
     }
     
     

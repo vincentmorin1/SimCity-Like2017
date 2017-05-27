@@ -11,6 +11,9 @@ public class BeachTile extends BuildingTile{
 
 		public final static int DEFAULT_ENERGY_CONSUMPTION = 0;
 
+		/**
+		 * Default value of {@link getNumberTourists()}
+		 */
 	    public final static int DEFAULT_NUMBER_TOURISTS_MAX = 100;
 	    
 		public final static int DIMENSION_WIDTH = 1;
@@ -26,6 +29,8 @@ public class BeachTile extends BuildingTile{
 	    private final int maxNeededEnergy;
 	    
 	    private int numberTourists;
+	    
+	    private int energyConsumption;
 
 	    private final int numberTouristsMax;
 
@@ -41,6 +46,7 @@ public class BeachTile extends BuildingTile{
 	     */
 	    public BeachTile(int energyConsumption, int numberTouristsMax, int topLeftCornerX ,int topLeftCornerY) {
 	        super();
+	        this.energyConsumption = energyConsumption;
 	    	this.topLeftCornerX = topLeftCornerX;
 	    	this.topLeftCornerY = topLeftCornerY;
 	    	this.numberTourists=0;
@@ -75,6 +81,14 @@ public class BeachTile extends BuildingTile{
 		
 		public int getNumberTourists() {
 			return this.numberTourists;
+		}
+		
+		public int getNumberTouristsMax() {
+			return this.numberTouristsMax;
+		}
+		
+		public int getEnergyConsumption() {
+			return this.energyConsumption;
 		}
    
 	    @Override
