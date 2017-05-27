@@ -14,11 +14,11 @@ public class SchoolTileTest {
         SchoolTile st = new SchoolTile();
         Assert.assertEquals(SchoolTile.DEFAULT_ENERGY_CONSUMPTION, st.getMaxNeededEnergy());
         Assert.assertEquals(SchoolTile.DEFAULT_NUMBER_STUDENT_MAX, st.getNumberStudentMax());
-        st = new SchoolTile(10,10,0, 0);
+        st = new SchoolTile(10,0, 0);
         Assert.assertEquals(10, st.getMaxNeededEnergy());
-        Assert.assertEquals(10, st.getNumberStudentMax());
     }
     
+   
     @Test
     public void testDisassemble() {
         SchoolTile st = new SchoolTile();

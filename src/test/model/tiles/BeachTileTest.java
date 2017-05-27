@@ -20,11 +20,30 @@ public class BeachTileTest {
     }
     
     @Test
+    public void testUpdate() {
+    	BeachTile bt = new BeachTile();
+        CityResources resources = new CityResources(100);
+        int initialValue = resources.getNumberSeniorWithoutLeisure() + resources.getNumberStudentWithoutLeisure();
+        bt.update(resources);
+        Assert.assertEquals(initialValue - bt.getNumberTourists(), resources.getNumberSeniorWithoutLeisure() + resources.getNumberStudentWithoutLeisure());
+    }
+    
+    @Test
     public void testIsDestroyed() {
     	BeachTile bt = new BeachTile();
         CityResources resources = new CityResources(100);
         bt.disassemble(resources);
         Assert.assertEquals(true, bt.isDestroyed());
+    }
+    
+    @Test
+    public void testDisassemble() {
+    	BeachTile bt = new BeachTile();
+        CityResources resources = new CityResources(100);
+        bt.update(resources);
+        int initialValue = resources.getNumberSeniorWithoutLeisure() + resources.getNumberStudentWithoutLeisure();
+        bt.disassemble(resources);
+        Assert.assertEquals(Math.max(0, initialValue - bt.getNumberTourists()), resources.getNumberSeniorWithoutLeisure() + resources.getNumberStudentWithoutLeisure());
     }
     
     @Test

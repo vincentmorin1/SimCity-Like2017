@@ -13,9 +13,8 @@ public class PoliceOfficeTileTest {
         PoliceOfficeTile pot = new PoliceOfficeTile();
         Assert.assertEquals(PoliceOfficeTile.DEFAULT_ENERGY_CONSUMPTION, pot.getMaxNeededEnergy());
         Assert.assertEquals(PoliceOfficeTile.DEFAULT_NUMBER_WORKERS_MAX, pot.getNumberWorkersMax());
-        pot = new PoliceOfficeTile(10,10,0, 0);
+        pot = new PoliceOfficeTile(10,0, 0);
         Assert.assertEquals(10, pot.getMaxNeededEnergy());
-        Assert.assertEquals(10, pot.getNumberWorkersMax());
     }
     
     @Test
@@ -24,6 +23,17 @@ public class PoliceOfficeTileTest {
         CityResources resources = new CityResources(100);
         pot.disassemble(resources);
         Assert.assertEquals(true, pot.isDestroyed());
+    }
+    
+    
+    @Test
+    public void testDisassemble() {
+    	PoliceOfficeTile pot = new PoliceOfficeTile();
+        CityResources resources = new CityResources(100);
+        pot.update(resources);
+        int initialValue = resources.getUnworkingSeniorPopulation();
+        pot.disassemble(resources);
+        Assert.assertEquals(initialValue - pot.getNumberWorkers(),resources.getUnworkingSeniorPopulation());
     }
     
     @Test

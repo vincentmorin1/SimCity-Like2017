@@ -21,6 +21,15 @@ public class ResidentialTileTest {
     }
     
     @Test
+    public void testUpdate() {
+    	ResidentialTile rt = new ResidentialTile();
+        CityResources resources = new CityResources(100);
+        int initialValue = resources.getPopulation();
+        rt.update(resources);
+        Assert.assertEquals(initialValue + rt.getResidents(), resources.getPopulation());
+    }
+    
+    @Test
     public void testDisassemble() {
         ResidentialTile rt = new ResidentialTile();
         CityResources resources = new CityResources(100);

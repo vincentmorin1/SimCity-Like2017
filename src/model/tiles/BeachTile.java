@@ -149,6 +149,7 @@ public class BeachTile extends BuildingTile{
 	        if (!this.isDestroyed) {
 	            this.isDestroyed = true;
 	        }
+	        this.numberTourists=0;
 	    }
 
 	    @Override

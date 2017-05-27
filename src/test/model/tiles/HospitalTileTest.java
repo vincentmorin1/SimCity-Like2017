@@ -15,8 +15,7 @@ public class HospitalTileTest {
         HospitalTile ht = new HospitalTile();
         Assert.assertEquals(HospitalTile.DEFAULT_NUMBER_WORKERS_MAX, ht.getNumberWorkersMax());
         Assert.assertEquals(HospitalTile.DEFAULT_ENERGY_CONSUMPTION, ht.getMaxNeededEnergy());
-        ht = new HospitalTile(10,10,0, 0);
-        Assert.assertEquals(10, ht.getNumberWorkersMax());
+        ht = new HospitalTile(10,0, 0);
         Assert.assertEquals(10, ht.getMaxNeededEnergy());
     }
     
@@ -26,6 +25,16 @@ public class HospitalTileTest {
         CityResources resources = new CityResources(100);
         ht.disassemble(resources);
         Assert.assertEquals(true, ht.isDestroyed());
+    }
+    
+    @Test
+    public void testDisassemble() {
+    	HospitalTile ht = new HospitalTile();
+        CityResources resources = new CityResources(100);
+        ht.update(resources);
+        int initialValue = resources.getUnworkingSeniorPopulation();
+        ht.disassemble(resources);
+        Assert.assertEquals(initialValue - ht.getNumberWorkers(),resources.getUnworkingSeniorPopulation());
     }
     
     @Test
