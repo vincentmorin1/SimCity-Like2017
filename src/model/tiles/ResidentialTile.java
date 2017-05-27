@@ -106,6 +106,10 @@ public class ResidentialTile extends BuildableTile implements Serializable {
         this.isDestroyed = false;
         this.isEnergyMissing = true;
     }
+    
+    public ResidentialTile() {
+    	this(0,0);
+    }
 
 
     // Access

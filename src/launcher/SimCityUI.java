@@ -318,6 +318,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        FactorsList fact = new FactorsList();
 	        FactorsView fv = new FactorsView(fact, texts);
 	        monde.addObserver(fv);
+
 	        jeu.add(fv, BorderLayout.NORTH);
 	        
 

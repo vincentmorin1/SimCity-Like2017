@@ -4,7 +4,12 @@ import model.CityResources;
 
 public class SnowStationTile extends BuildingTile{
 
-	    public final static int DEFAULT_ENERGY_CONSUMPTION = 80;
+	    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+		public final static int DEFAULT_ENERGY_CONSUMPTION = 80;
 
 	    public final static int DEFAULT_NUMBER_TOURISTS_MAX = 25;
 	    
@@ -57,6 +62,14 @@ public class SnowStationTile extends BuildingTile{
 
 		public int getDimensionX(){
 			return SnowStationTile.DIMENSION_WIDTH;
+		}
+		
+		public int getMaxNeededEnergy() {
+			return this.maxNeededEnergy;
+		}
+		
+		public int getNumberTouristsMax() {
+			return this.numberTouristsMax;
 		}
 
 		public int getDimensionY(){

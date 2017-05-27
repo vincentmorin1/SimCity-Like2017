@@ -69,6 +69,10 @@ public class SchoolTile extends BuildingTile implements Serializable{
 		return SchoolTile.DIMENSION_WIDTH;
 	}
 
+	public int getMaxNeededEnergy() {
+		return this.maxNeededEnergy;
+	}
+	
 	public int getDimensionY(){
 		return SchoolTile.DIMENSION_HEIGHT;
 	}
@@ -82,7 +86,11 @@ public class SchoolTile extends BuildingTile implements Serializable{
 	}
 	
 	public int getNumberStudent() {
-		return numberStudent;
+		return this.numberStudent;
+	}
+	
+	public int getNumberStudentMax() {
+		return this.numberStudentMax;
 	}
 
 	public void setNumberStudent(int numberStudent) {

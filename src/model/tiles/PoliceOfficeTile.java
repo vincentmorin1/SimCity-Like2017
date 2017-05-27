@@ -4,7 +4,12 @@ import model.CityResources;
 
 public class PoliceOfficeTile extends BuildingTile{
 
-	    public final static int DEFAULT_ENERGY_CONSUMPTION = 15;
+	    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+		public final static int DEFAULT_ENERGY_CONSUMPTION = 15;
 
 	    public final static int DEFAULT_NUMBER_WORKERS_MAX = 25;
 	    
@@ -25,6 +30,7 @@ public class PoliceOfficeTile extends BuildingTile{
 	    private int numberWorkers;
 
 	    private final int numberWorkersMax;
+	    
 
 	    /**
 	     * Evolution state
@@ -57,7 +63,15 @@ public class PoliceOfficeTile extends BuildingTile{
 	        this(PoliceOfficeTile.DEFAULT_ENERGY_CONSUMPTION, 0, 0);
 	    }
 
-		public int getDimensionX(){
+	    public int getMaxNeededEnergy() {
+	    	return this.maxNeededEnergy;
+	    }
+	    
+	    public int getNumberWorkersMax() {
+	    	return this.numberWorkersMax;
+	    }
+
+	    public int getDimensionX(){
 			return PoliceOfficeTile.DIMENSION_WIDTH;
 		}
 
