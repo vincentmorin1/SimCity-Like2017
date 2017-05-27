@@ -61,7 +61,7 @@ public abstract class BuildableTile extends BuildingTile implements Evolvable, S
     /**
      * {@link #isEnergyMissing()}
      */
-    protected boolean isEnergyMissing;
+    protected boolean isEnergyMissingEvolution;
 
     /**
      * {@link #getState()}
@@ -76,17 +76,18 @@ public abstract class BuildableTile extends BuildingTile implements Evolvable, S
     
     // Creation
     /**
-     * Create a tile under construction.
-     *
-     * @param evolutionEnergyConsumption
-     *            - {@link #getEvolutionEnergyConsumption()}
+     * @param capacity
+     *            - {@link #getProductionCapacity()}
+     *            - {@link #getInhabitantsCapacity()}
+     *            - {@link #getTopLeftCornerX()}
+     *            - {@link #getTopLeftCornerY()}
      */
     public BuildableTile(int evolutionEnergyConsumption, int capacity,int topLeftCornerX ,int topLeftCornerY) {
         assert evolutionEnergyConsumption >= 0;
 
         this.evolutionEnergyConsumption = evolutionEnergyConsumption;
         this.state = ConstructionState.UNDER_CONSTRUCTION;
-        this.isEnergyMissing = false;
+        this.isEnergyMissingEvolution = false;
         this.inhabitantsCapacity = capacity;
         this.linked = false;
         this.topLeftCornerX = topLeftCornerX;
@@ -171,7 +172,7 @@ public abstract class BuildableTile extends BuildingTile implements Evolvable, S
         result = result* 17 + this.evolutionEnergyConsumption;
         result = result* 17 + this.state.hashCode();
         result = result* 17 + Boolean.hashCode(this.linked);
-        result = result* 17 + Boolean.hashCode(this.isEnergyMissing);
+        result = result* 17 + Boolean.hashCode(this.isEnergyMissingEvolution);
         return result;
     }
 
@@ -199,8 +200,8 @@ public abstract class BuildableTile extends BuildingTile implements Evolvable, S
     /**
      * @return Is energy missing in order to evolve or to update?
      */
-    public final boolean getIsEnergyMissing() {
-        return this.isEnergyMissing;
+    public final boolean getisEnergyMissingEvolution() {
+        return this.isEnergyMissingEvolution;
     }
 
     // Change
@@ -213,12 +214,12 @@ public abstract class BuildableTile extends BuildingTile implements Evolvable, S
     public void evolve(CityResources res) {
         if (this.canEvolve()  && this.gotEvolutions()) {
             if (res.getUnconsumedEnergy() >= evolutionEnergyConsumption) {
-                this.isEnergyMissing = false;
+                this.isEnergyMissingEvolution = false;
                 res.consumeEnergy(this.evolutionEnergyConsumption);
                 this.state = ConstructionState.BUILT;
                 
             } else {
-                this.isEnergyMissing = true;
+                this.isEnergyMissingEvolution = true;
             }
         }
     }

@@ -33,15 +33,17 @@ public class HospitalTile extends BuildingTile{
 
 	    // Creation
 	    /**
-	     * @param productionCapacity
+	     * @param capacity
 	     *            - {@link #getProductionCapacity()}
+	     *            - {@link #getTopLeftCornerX()}
+	     *            - {@link #getTopLeftCornerY()}
 	     */
-	    public HospitalTile(int energyConsumption, int numberWorkersMax, int topLeftCornerX ,int topLeftCornerY) {
+	    public HospitalTile(int energyConsumption, int topLeftCornerX ,int topLeftCornerY) {
 	        super();
 	    	this.topLeftCornerX = topLeftCornerX;
 	    	this.topLeftCornerY = topLeftCornerY;
 	    	this.numberWorkers=0;
-	    	this.numberWorkersMax = numberWorkersMax;
+	    	this.numberWorkersMax = HospitalTile.DEFAULT_NUMBER_WORKERS_MAX;
 	    	this.linked = false;
 	    	this.isEnergyMissing = true;
 	    	this.maxNeededEnergy = energyConsumption;
@@ -52,7 +54,7 @@ public class HospitalTile extends BuildingTile{
 	     * Create with default settings.
 	     */
 	    public HospitalTile() {
-	        this(HospitalTile.DEFAULT_ENERGY_CONSUMPTION, HospitalTile.DEFAULT_NUMBER_WORKERS_MAX, 0, 0);
+	        this(HospitalTile.DEFAULT_ENERGY_CONSUMPTION, 0, 0);
 	    }
 
 		public int getDimensionX(){
@@ -146,18 +148,14 @@ public class HospitalTile extends BuildingTile{
 	            if (res.getUnconsumedEnergy() >= neededEnergy) {
 	            	res.consumeEnergy(neededEnergy);
 	            	this.isEnergyMissing = false;
+	            	this.numberWorkers = Math.min(res.getUnworkingSeniorPopulation(), this.numberWorkersMax);	                
+	                res.hireWorkers(this.numberWorkers);
 	            }
 	            else {
 	            	this.isEnergyMissing = true;
-	            }
-	            
-	            if(! this.isEnergyMissing){
-	                this.numberWorkers = Math.min(res.getUnworkingSeniorPopulation(), this.numberWorkersMax);	                
-	                res.hireWorkers(this.numberWorkers);
-	            }
-	            else{
 	            	this.numberWorkers=0;
 	            }
+
 	        }
 	    }
 
@@ -166,7 +164,7 @@ public class HospitalTile extends BuildingTile{
 	    	res[0] = this.getClass().getSimpleName();
 	    	res[1] = "Workers : " + this.getNumberWorkers() + " / " + this.numberWorkersMax;
 	    	res[2] = "Linked by road : " + this.getLinked();
-	    	res[3] = "Powered : " + this.isEnergyMissing;
+	    	res[3] = "Powered : " + !this.isEnergyMissing;
 	    	return res;
 	    }
 	    

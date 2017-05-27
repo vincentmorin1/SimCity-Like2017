@@ -62,7 +62,7 @@ public class PoliceOfficeConstructionTool extends Tool  implements Serializable{
 
         r.spend(PoliceOfficeConstructionTool.CURRENCY_COST);
 
-        return new PoliceOfficeTile(PoliceOfficeTile.DEFAULT_ENERGY_CONSUMPTION, PoliceOfficeTile.DEFAULT_NUMBER_WORKERS_MAX, topLeftCornerX , topLeftCornerY);
+        return new PoliceOfficeTile(PoliceOfficeTile.DEFAULT_ENERGY_CONSUMPTION, topLeftCornerX , topLeftCornerY);
     }
 
     // Debugging

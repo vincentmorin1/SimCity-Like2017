@@ -36,12 +36,12 @@ public class SnowStationTile extends BuildingTile{
 	     * @param productionCapacity
 	     *            - {@link #getProductionCapacity()}
 	     */
-	    public SnowStationTile(int energyConsumption, int numberTouristsMax, int topLeftCornerX ,int topLeftCornerY) {
+	    public SnowStationTile(int energyConsumption, int topLeftCornerX ,int topLeftCornerY) {
 	        super();
 	    	this.topLeftCornerX = topLeftCornerX;
 	    	this.topLeftCornerY = topLeftCornerY;
 	    	this.numberTourists = 0;
-	    	this.numberTouristsMax = numberTouristsMax;
+	    	this.numberTouristsMax = SnowStationTile.DEFAULT_NUMBER_TOURISTS_MAX;
 	    	this.linked = false;
 	    	this.isEnergyMissing = true;
 	    	this.maxNeededEnergy = energyConsumption;
@@ -52,7 +52,7 @@ public class SnowStationTile extends BuildingTile{
 	     * Create with default settings.
 	     */
 	    public SnowStationTile() {
-	        this(SnowStationTile.DEFAULT_ENERGY_CONSUMPTION, SnowStationTile.DEFAULT_NUMBER_TOURISTS_MAX, 0, 0);
+	        this(SnowStationTile.DEFAULT_ENERGY_CONSUMPTION, 0, 0);
 	    }
 
 		public int getDimensionX(){
@@ -92,7 +92,7 @@ public class SnowStationTile extends BuildingTile{
 	     * @return Is energy missing in order to evolve or to update?
 	     */
 	    public final boolean getIsEnergyMissing() {
-	        return false;
+	        return this.isEnergyMissing;
 	    }
 
 	    
@@ -139,19 +139,18 @@ public class SnowStationTile extends BuildingTile{
 	    @Override
 	    public void update(CityResources res) {
 	    	
-	        if (!(this.isDestroyed) && this.getLinked()) { 
-	        	this.numberTourists = res.peopleToLeisure(this.numberTouristsMax,20,40);
+	        if (!(this.isDestroyed) && this.getLinked()){
+	        	if (res.getUnconsumedEnergy() > this.maxNeededEnergy) { 
+
+	        		res.consumeEnergy(maxNeededEnergy);
+	        		this.isEnergyMissing = false;
+		        	this.numberTourists = res.peopleToLeisure(this.numberTouristsMax,20,40);	
+		        }
+		        else{
+		        	this.isEnergyMissing = true;
+		        	this.numberTourists = 0;
+		        }  
 	        }
-	            /*
-	            if(! this.isEnergyMissing){
-	                this.numberTourists = Math.min(res.getUnworkingSeniorPopulation(), this.numberTouristsMax);	                
-	                res.hireWorkers(this.numberTourists);
-	            }
-	            else{
-	            	this.numberTourists=0;
-	            }
-	            */
-	        
 	    }
 	    
 	    public String[] getInformations(){
@@ -159,8 +158,9 @@ public class SnowStationTile extends BuildingTile{
 	    	res[0] = this.getClass().getSimpleName();
 	    	res[1] = "Tourists : " + this.getNumberTourists() + "/" + this.numberTouristsMax;
 	    	res[2] = "Linked by road : " + this.getLinked();
-	    	res[3] = "Powered : " + this.getIsEnergyMissing();
+	    	res[3] = "Powered : " + !this.getIsEnergyMissing();
 	    	return res;
 	    }
+	    
 
 	}

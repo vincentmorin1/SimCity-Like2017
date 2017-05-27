@@ -76,5 +76,4 @@ public class WaterTile  extends Tile implements Serializable{
     	res[0] = this.getClass().getSimpleName();
     	return res;
     }
-
 }

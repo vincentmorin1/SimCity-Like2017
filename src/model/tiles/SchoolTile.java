@@ -40,16 +40,18 @@ public class SchoolTile extends BuildingTile implements Serializable{
 
     // Creation
     /**
-     * @param productionCapacity
+     * @param capacity
      *            - {@link #getProductionCapacity()}
+     *            - {@link #getTopLeftCornerX()}
+     *            - {@link #getTopLeftCornerY()}
      */
-    public SchoolTile(int energyConsumption, int numberStudentMax, int topLeftCornerX ,int topLeftCornerY) {
+    public SchoolTile(int energyConsumption, int topLeftCornerX ,int topLeftCornerY) {
         super();
         this.isDestroyed = false;
     	this.topLeftCornerX = topLeftCornerX;
     	this.topLeftCornerY = topLeftCornerY;
     	this.numberStudent=0;
-    	this.numberStudentMax = numberStudentMax;
+    	this.numberStudentMax = SchoolTile.DEFAULT_NUMBER_STUDENT_MAX;
     	this.linked = false;
     	this.isEnergyMissing = true;
     	this.maxNeededEnergy = energyConsumption;
@@ -60,7 +62,7 @@ public class SchoolTile extends BuildingTile implements Serializable{
      * Create with default settings.
      */
     public SchoolTile() {
-        this(SchoolTile.DEFAULT_ENERGY_CONSUMPTION, SchoolTile.DEFAULT_NUMBER_STUDENT_MAX, 0, 0);
+        this(SchoolTile.DEFAULT_ENERGY_CONSUMPTION, 0, 0);
     }
 
 	public int getDimensionX(){
@@ -149,26 +151,17 @@ public class SchoolTile extends BuildingTile implements Serializable{
     @Override
     public void update(CityResources res) {
     	
-        if (!(this.isDestroyed) && this.getLinked()) {
-        	final int neededEnergy =  this.maxNeededEnergy; 
+        if (!(this.isDestroyed) && this.getLinked()){
         	
-        	// Si l'on a assez d'énergie
-            if (res.getUnconsumedEnergy() >= neededEnergy) {
-            	res.consumeEnergy(neededEnergy);
-            	this.isEnergyMissing = false;
-            }
-            // Sinon la production est diminuée de manière linéaire
-            else {
-            	this.isEnergyMissing = true;
-            }
-            
-            if(! this.isEnergyMissing){
-            	this.setNumberStudent(res.enrolStudent(this.numberStudentMax));
-            }
-            else{
-            	this.setNumberStudent(0);
-            }
-            	
+        	if (res.getUnconsumedEnergy() > this.maxNeededEnergy) { 
+	    		res.consumeEnergy(maxNeededEnergy);
+	    		this.isEnergyMissing = false;
+	        	this.numberStudent = res.enrolStudent(this.numberStudentMax);	
+	        }
+	        else{
+	        	this.isEnergyMissing = true;
+	        	this.numberStudent = 0;
+	        }  
         }
     }
 
@@ -177,7 +170,7 @@ public class SchoolTile extends BuildingTile implements Serializable{
     	res[0] = this.getClass().getSimpleName();
     	res[1] = "Students : " + this.getNumberStudent() + "/" + this.numberStudentMax;
     	res[2] = "Linked by road : " + this.getLinked();
-    	res[3] = "Powered: " + this.getIsEnergyMissing();
+    	res[3] = "Powered: " + !this.getIsEnergyMissing();
     	return res;
     }
     

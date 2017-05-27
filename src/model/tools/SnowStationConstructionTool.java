@@ -62,7 +62,7 @@ public class SnowStationConstructionTool extends Tool  implements Serializable{
 
         r.spend(SnowStationConstructionTool.CURRENCY_COST);
 
-        return new SnowStationTile(SnowStationTile.DEFAULT_ENERGY_CONSUMPTION, SnowStationTile.DEFAULT_NUMBER_TOURISTS_MAX, topLeftCornerX , topLeftCornerY);
+        return new SnowStationTile(SnowStationTile.DEFAULT_ENERGY_CONSUMPTION, topLeftCornerX , topLeftCornerY);
     }
 
     // Debugging

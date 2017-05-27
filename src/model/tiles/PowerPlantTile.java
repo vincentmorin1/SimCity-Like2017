@@ -72,8 +72,10 @@ public class PowerPlantTile extends BuildingTile implements Serializable {
 
     // Creation
     /**
-     * @param productionCapacity
+     * @param capacity
      *            - {@link #getProductionCapacity()}
+     *            - {@link #getTopLeftCornerX()}
+     *            - {@link #getTopLeftCornerY()}
      */
     public PowerPlantTile(int productionCapacity, int topLeftCornerX ,int topLeftCornerY) {
         super();

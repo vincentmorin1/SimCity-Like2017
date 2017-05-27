@@ -15,9 +15,10 @@ public abstract class BuildingTile extends Tile implements Destroyable, Serializ
      */
     public abstract void setLinked(boolean b);
     
+	public abstract boolean getIsEnergyMissing();
+	
     public abstract boolean getLinked();
     
-    public abstract boolean getIsEnergyMissing();
     
     public String getBuildingConnection(Tile[] tiles){
     	String res =  "";

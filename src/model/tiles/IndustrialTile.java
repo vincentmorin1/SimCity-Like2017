@@ -98,10 +98,14 @@ public class IndustrialTile extends BuildableTile implements Serializable {
      */
     protected boolean isDestroyed;
 
+    private boolean isEnergyMissing;
+    
     // Creation
     /**
      * @param capacity
      *            - {@link #getProductionCapacity()}
+     *            - {@link #getTopLeftCornerX()}
+     *            - {@link #getTopLeftCornerY()}
      */
     public IndustrialTile(int productionCapacity,int topLeftCornerX ,int topLeftCornerY) {
         super(IndustrialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION, IndustrialTile.DEFAULT_WORKERS_CAPACITY, topLeftCornerX , topLeftCornerY);     
@@ -110,6 +114,7 @@ public class IndustrialTile extends BuildableTile implements Serializable {
         this.production = 0;
         this.workers = 0;
         this.isDestroyed = false;
+        this.isEnergyMissing=true;
     }
 
     /**
@@ -237,9 +242,14 @@ public class IndustrialTile extends BuildableTile implements Serializable {
     	String[] res = new String[5];
     	res[0] = this.getClass().getSimpleName();
     	res[1] = "Workers : " + this.getWorkers() + " / " + this.inhabitantsCapacity;
-    	res[2] = "Production : " + this.getProduction() + " / " + this.getProductionCapacity();
+    	res[2] = "Production : " + this.getProduction() + " / " + IndustrialTile.DEFAULT_PRODUCTION;
     	res[3] = "Linked by road : " + this.getLinked();
-    	res[4] = "Powered : " + this.isEnergyMissing;
+    	res[4] = "Powered : " + !this.isEnergyMissing;
     	return res;
     }
+
+	@Override
+	public boolean getIsEnergyMissing() {
+		return this.isEnergyMissing;
+	}
 }

@@ -62,7 +62,7 @@ public class HospitalConstructionTool extends Tool implements Serializable{
 
         r.spend(HospitalConstructionTool.CURRENCY_COST);
 
-        return new HospitalTile(HospitalTile.DEFAULT_ENERGY_CONSUMPTION, HospitalTile.DEFAULT_NUMBER_WORKERS_MAX, topLeftCornerX , topLeftCornerY);
+        return new HospitalTile(HospitalTile.DEFAULT_ENERGY_CONSUMPTION, topLeftCornerX , topLeftCornerY);
     }
 
     // Debugging

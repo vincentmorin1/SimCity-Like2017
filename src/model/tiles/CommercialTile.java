@@ -104,10 +104,14 @@ public class CommercialTile extends BuildableTile implements Serializable {
      */
     protected boolean isDestroyed;
 
+    private boolean isEnergyMissing;
+    
     // Creation
     /**
      * @param capacity
      *            - {@link #getProductionCapacity()}
+     *            - {@link #getTopLeftCornerX()}
+     *            - {@link #getTopLeftCornerY()}
      */
     public CommercialTile(int productionCapacity, int topLeftCornerX ,int topLeftCornerY) {
         super(CommercialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION, CommercialTile.DEFAULT_WORKERS_CAPACITY, topLeftCornerX , topLeftCornerY);     
@@ -116,7 +120,8 @@ public class CommercialTile extends BuildableTile implements Serializable {
         this.productsConsumption = 0;
         this.moneyProduction = 0;
         this.productionCapacity = CommercialTile.DEFAULT_CONSUMPTION_CAPACITY;
-        this.isDestroyed = false;        
+        this.isDestroyed = false;  
+        this.isEnergyMissing = true;
     }
 
     /**
@@ -171,8 +176,10 @@ public class CommercialTile extends BuildableTile implements Serializable {
      * @param o
      * @return Is {@value o} equals to this?
      */
-    public boolean equals(CommercialTile o) { // A compléter!!
-    	 return this == o || o.workers == this.workers && o.moneyProduction == this.moneyProduction && o.productionCapacity == this.productionCapacity && o.isDestroyed == this.isDestroyed && o.maxNeededEnergy == this.maxNeededEnergy;
+    public boolean equals(CommercialTile o) {
+    	 return this == o || o.workers == this.workers && o.moneyProduction == this.moneyProduction &&
+    			 o.productionCapacity == this.productionCapacity && o.isDestroyed == this.isDestroyed &&
+    			 o.maxNeededEnergy == this.maxNeededEnergy && o.productsConsumption == this.productsConsumption;
     }
 
     @Override
@@ -222,7 +229,7 @@ public class CommercialTile extends BuildableTile implements Serializable {
             
 
 	        this.workers = Math.min(res.getUnworkingSeniorPopulation(), this.inhabitantsCapacity); 
-	        final int workersPercentage = (this.workers*100 / CommercialTile.DEFAULT_WORKERS_CAPACITY);
+	        final int workersPercentage = (this.workers*100 / this.getInhabitantsCapacity());
 	  
 	        res.hireWorkers(this.workers);
 	
@@ -230,7 +237,7 @@ public class CommercialTile extends BuildableTile implements Serializable {
 	        final int productsPercentage = Math.min(100, productsAvailable * 100 / CommercialTile.DEFAULT_CONSUMPTION_CAPACITY); 
 	        
 	        this.moneyProduction = productsPercentage * workersPercentage * energyPercentage * CommercialTile.DEFAULT_MONEY_PRODUCTION  / (100 * 100 * 100); // Integer division
-	        this.productsConsumption = productsPercentage * workersPercentage * energyPercentage * CommercialTile.DEFAULT_CONSUMPTION_CAPACITY / (100 * 100 * 100);
+	        this.productsConsumption = productsPercentage * workersPercentage * energyPercentage * this.getProductionCapacity() / (100 * 100 * 100);
 	        
 	        res.consumeProducts(this.productsConsumption);
 	        res.increaseMoneyProduction(this.moneyProduction);
@@ -246,9 +253,14 @@ public class CommercialTile extends BuildableTile implements Serializable {
     	String[] res = new String[5];
     	res[0] = this.getClass().getSimpleName();
     	res[1] = "Workers : " + this.getWorkers() + " / " + this.inhabitantsCapacity;
-    	res[2] = "Production : " + this.getProduction() + " / " + this.getProductionCapacity();
+    	res[2] = "Production : " + this.getProduction() + " / " + CommercialTile.DEFAULT_MONEY_PRODUCTION;
     	res[3] = "Linked by road : " + this.getLinked();
-    	res[4] = "Powered : " + this.isEnergyMissing;
+    	res[4] = "Powered : " + !this.isEnergyMissing;
     	return res;
     }
+
+	@Override
+	public boolean getIsEnergyMissing() {
+		return this.isEnergyMissing;
+	}
 }

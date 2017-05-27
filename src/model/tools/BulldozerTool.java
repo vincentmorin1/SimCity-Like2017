@@ -30,6 +30,8 @@ import model.CityResources;
 import model.tiles.BuildingTile;
 import model.tiles.Destroyable;
 import model.tiles.GrassTile;
+import model.tiles.SnowStationTile;
+import model.tiles.MountainTile;
 import model.tiles.Tile;
 
 /**
@@ -91,8 +93,13 @@ public final class BulldozerTool extends Tool implements Serializable {
 
         ((Destroyable) aTarget).disassemble(r);
         r.spend(BulldozerTool.CURRENCY_COST);
-
-        return GrassTile.getDefault();
+        
+        if (aTarget instanceof SnowStationTile ){
+        	return MountainTile.getDefault();
+        }
+        else{
+            return GrassTile.getDefault();
+        }
     }
 
     // Debugging

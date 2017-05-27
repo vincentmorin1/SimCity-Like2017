@@ -45,6 +45,7 @@ public abstract class Tile implements Serializable {
 	public abstract int getTopLeftCornerX();
 	
 	public abstract int getTopLeftCornerY();
+	
 
     // Change
     /**

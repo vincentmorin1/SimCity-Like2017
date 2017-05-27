@@ -142,17 +142,7 @@ public class BeachTile extends BuildingTile{
 	    	
 	        if (!(this.isDestroyed) && this.getLinked()) {
 	        	this.numberTourists = res.peopleToLeisure(this.numberTouristsMax,40,20);
-	        }
-	            /*
-	            if(! this.isEnergyMissing){
-	                this.numberTourists = Math.min(res.getUnworkingSeniorPopulation(), this.numberTouristsMax);	                
-	                res.hireWorkers(this.numberTourists);
-	            }
-	            else{
-	            	this.numberTourists=0;
-	            }
-	            */
-	        
+	        }	        
 	    }
 
 	    public String[] getInformations(){
@@ -160,7 +150,9 @@ public class BeachTile extends BuildingTile{
 	    	res[0] = this.getClass().getSimpleName();
 	    	res[1] = "Tourists : " + this.getNumberTourists() + "/" + this.numberTouristsMax;
 	    	res[2] = "Relié : " + this.getLinked();
-	    	res[3] = "Powered : " + this.getIsEnergyMissing();
+	    	res[3] = "Powered : " + !this.getIsEnergyMissing();
 	    	return res;
 	    }
+
+
 	}

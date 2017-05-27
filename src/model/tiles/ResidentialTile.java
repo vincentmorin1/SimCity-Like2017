@@ -87,11 +87,14 @@ public class ResidentialTile extends BuildableTile implements Serializable {
     protected boolean isDestroyed;
 
     private int residents;
+    
+    private boolean isEnergyMissing;
 
     // Creation
     /**
      * @param capacity
-     *            - {@link #getInhabitantsCapacity()}
+     *            - {@link #getTopLeftCornerX()}
+     *            - {@link #getTopLeftCornerY()}
      */
     public ResidentialTile(int topLeftCornerX ,int topLeftCornerY) {
         super(ResidentialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION,ResidentialTile.DEFAULT_INHABITANTS_CAPACITY, topLeftCornerX ,topLeftCornerY);
@@ -101,6 +104,7 @@ public class ResidentialTile extends BuildableTile implements Serializable {
         this.maxLeavingInhabitants = ResidentialTile.DEFAULT_MAX_LEAVING_INHABITANTS;
         this.residents = 0;
         this.isDestroyed = false;
+        this.isEnergyMissing = true;
     }
 
 
@@ -182,7 +186,7 @@ public class ResidentialTile extends BuildableTile implements Serializable {
             final int neededEnergy = Math.max(1, busyPercentage * this.maxNeededEnergy / 100); // Integer
                                                                                                // division
             if (! this.getLinked()){
-            	final int leavingInhabitants = Math.min(this.maxLeavingInhabitants, 20 * this.residents / 100); // Integer
+            	final int leavingInhabitants = Math.max(this.maxLeavingInhabitants, 20 * this.residents / 100); // Integer
                 // division
             	this.residents -= leavingInhabitants;
             	res.decreasePopulation(leavingInhabitants);
@@ -241,8 +245,14 @@ public class ResidentialTile extends BuildableTile implements Serializable {
     	res[0] = this.getClass().getSimpleName();
     	res[1] = "Residents : " + this.getResidents() + " / " + this.inhabitantsCapacity;
     	res[2] = "Linked by road : " + this.getLinked();
-    	res[3] = "Powered : " + this.isEnergyMissing;
+    	res[3] = "Powered : " + !this.isEnergyMissing;
     	return res;
     }
+
+
+	@Override
+	public boolean getIsEnergyMissing() {
+		return this.isEnergyMissing;
+	}
 
 }

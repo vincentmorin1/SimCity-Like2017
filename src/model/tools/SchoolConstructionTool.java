@@ -62,7 +62,7 @@ public class SchoolConstructionTool extends Tool implements Serializable{
 
         r.spend(SchoolConstructionTool.CURRENCY_COST);
 
-        return new SchoolTile(SchoolTile.DEFAULT_ENERGY_CONSUMPTION, SchoolTile.DEFAULT_NUMBER_STUDENT_MAX, topLeftCornerX , topLeftCornerY);
+        return new SchoolTile(SchoolTile.DEFAULT_ENERGY_CONSUMPTION, topLeftCornerX , topLeftCornerY);
     }
 
     // Debugging

@@ -98,26 +98,26 @@ public class RoadTile extends BuildingTile implements Serializable{
     	String res =  "-";		
 		if (tiles[0] instanceof RoadTile)
 			res += "N";
-		else if (tiles[0] instanceof BuildableTile) {
-			BuildableTile bt = (BuildableTile) tiles[0];
+		else if (tiles[0] instanceof BuildingTile) {
+			BuildingTile bt = (BuildingTile) tiles[0];
 			bt.setLinked(true);
 		}
 		if (tiles[1] instanceof RoadTile)
 			res += "S";
-		else if (tiles[1] instanceof BuildableTile) {
-			BuildableTile bt = (BuildableTile) tiles[1];
+		else if (tiles[1] instanceof BuildingTile) {
+			BuildingTile bt = (BuildingTile) tiles[1];
 			bt.setLinked(true);
 		}
 		if (tiles[2] instanceof RoadTile)
 			res += "E";
-		else if (tiles[2] instanceof BuildableTile) {
-			BuildableTile bt = (BuildableTile) tiles[2];
+		else if (tiles[2] instanceof BuildingTile) {
+			BuildingTile bt = (BuildingTile) tiles[2];
 			bt.setLinked(true);
 		}
 		if (tiles[3] instanceof RoadTile)
 			res += "W";
-		else if (tiles[3] instanceof BuildableTile) {
-			BuildableTile bt = (BuildableTile) tiles[3];
+		else if (tiles[3] instanceof BuildingTile) {
+			BuildingTile bt = (BuildingTile) tiles[3];
 			bt.setLinked(true);
 		}
 		return res;
@@ -135,7 +135,6 @@ public class RoadTile extends BuildingTile implements Serializable{
     	String[] res = new String[3];
     	res[0] = this.getClass().getSimpleName();
     	res[1] = "Linked by road : " + this.getLinked();
-    	res[2] = "Powered : " + this.getIsEnergyMissing();
     	return res;
     }
 }

@@ -652,6 +652,7 @@ public class CityResources implements Serializable {
     public void resetEphemerals() {
     	this.creditWithTaxes(this.unconsumedMoney); ;
     	
+    	
     	this.studentPopulation = this.population/2;
     	this.seniorPopulation = this.population - this.studentPopulation;
         this.unworkingSeniorPopulation = this.seniorPopulation;
@@ -661,6 +662,7 @@ public class CityResources implements Serializable {
         
         this.unconsumedEnergy = this.energyProduction;
         this.unconsumedMoney = this.moneyProduction;
+        this.moneyProduction = 0;
     }
 
 

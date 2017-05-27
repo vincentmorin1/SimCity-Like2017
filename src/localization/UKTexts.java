@@ -66,7 +66,7 @@ public class UKTexts extends LocalizedTexts implements Serializable{
      */
     @Override
     public String getMissingResourcesMsg() {
-        return "Missing resources";
+        return "You're too poor!";
     }
     
     /**

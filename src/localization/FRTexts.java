@@ -66,7 +66,7 @@ public class FRTexts extends LocalizedTexts implements Serializable  {
      */
     @Override
     public String getMissingResourcesMsg() {
-        return "Manque de ressources";
+        return "Votre pauvreté vous empêche d'achever votre projet";
     }
     
     /**
