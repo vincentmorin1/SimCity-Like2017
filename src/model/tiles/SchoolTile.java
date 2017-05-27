@@ -15,22 +15,49 @@ public class SchoolTile extends BuildingTile implements Serializable{
 
     public final static int DEFAULT_NUMBER_STUDENT_MAX = 70;
     
+	/**
+	 * Dimension x of the tile 
+	 */
 	public final static int DIMENSION_WIDTH = 1;
 	
+	/**
+	 * Dimension y of the tile
+	 */
 	public final static int DIMENSION_HEIGHT = 2;
 	
+    /**
+     * {@link #getTopLeftCornerX()}
+     */
     private final int topLeftCornerX;
     
+    /**
+     * {@link #getTopLeftCornerY()}
+     */
     private final int topLeftCornerY;
     
+    /**
+     * {@link #getLinked()}
+     */
     private boolean linked;
     
+    /**
+     * {@link #getIsEnergyMissing()}
+     */
     private boolean isEnergyMissing;
     
+    /**
+     * {@link #getMaxNeededEnergy()}
+     */
     private final int maxNeededEnergy;
     
+    /**
+     * {@link #getNumberStudent()}
+     */
     private int numberStudent;
 
+    /**
+     * {@link #getNumberStudentMax()}
+     */
     private final int numberStudentMax;
 
     /**
@@ -40,10 +67,10 @@ public class SchoolTile extends BuildingTile implements Serializable{
 
     // Creation
     /**
-     * @param capacity
-     *            - {@link #getProductionCapacity()}
-     *            - {@link #getTopLeftCornerX()}
-     *            - {@link #getTopLeftCornerY()}
+     * 
+     * @param energyConsumption  - {@link #getProductionCapacity()}
+     * @param topLeftCornerX  - {@link #getTopLeftCornerX()}
+     * @param topLeftCornerY - {@link #getTopLeftCornerY()}
      */
     public SchoolTile(int energyConsumption, int topLeftCornerX ,int topLeftCornerY) {
         super();
@@ -65,61 +92,69 @@ public class SchoolTile extends BuildingTile implements Serializable{
         this(SchoolTile.DEFAULT_ENERGY_CONSUMPTION, 0, 0);
     }
 
+    @Override
 	public int getDimensionX(){
 		return SchoolTile.DIMENSION_WIDTH;
 	}
 
+    /**
+     * @return Total energy needed.
+     */
 	public int getMaxNeededEnergy() {
 		return this.maxNeededEnergy;
 	}
-	
+
+    @Override
 	public int getDimensionY(){
 		return SchoolTile.DIMENSION_HEIGHT;
 	}
-	
+
+    @Override
 	public int getTopLeftCornerX(){
 		return this.topLeftCornerX;
 	}
-	
+
+    @Override
 	public int getTopLeftCornerY(){
 		return this.topLeftCornerY;
 	}
 	
+    /**
+     * @return Number of students.
+     */
 	public int getNumberStudent() {
 		return this.numberStudent;
 	}
 	
+	/**
+	 * @return Maximum number of students.
+	 */
 	public int getNumberStudentMax() {
 		return this.numberStudentMax;
 	}
 
+	/**
+	 * @param numberStudent
+	 */
 	public void setNumberStudent(int numberStudent) {
 		this.numberStudent = Math.min(numberStudent, this.numberStudentMax);
 	}
     
     @Override
     public void setLinked(boolean b){
-    	this.linked = b;
-    	
+    	this.linked = b;  	
     }
     
-    /**
-     *  @return true if linked by road.
-     */
+    @Override
     public boolean getLinked(){
     	return this.linked;
     }
     
-    /**
-     * @return Is energy missing in order to evolve or to update?
-     */
+    @Override
     public final boolean getIsEnergyMissing() {
         return this.isEnergyMissing;
     }
-
-    
-
-    
+   
     @Override
     public int hashCode() {
         int result = 1;
@@ -134,14 +169,16 @@ public class SchoolTile extends BuildingTile implements Serializable{
         return o instanceof SchoolTile && this.equals((SchoolTile) o);
     }
 
-    /**
-     * @param sc
-     * @return Is {@value sc} equals to this?
-     */
-    public boolean equals(SchoolTile sc) {
-        return this == sc || (sc.isDestroyed == this.isDestroyed && this.numberStudent == sc.numberStudent);
+    @Override
+    public boolean equals(BuildingTile o) {
+    	if (o instanceof SchoolTile){
+    		SchoolTile sc = (SchoolTile) o;
+            return this == sc || (sc.isDestroyed == this.isDestroyed && this.numberStudent == sc.numberStudent);
+    	}
+    	else{
+    		return false;
+    	}
     }
-
     @Override
     public boolean isDestroyed() {
         return this.isDestroyed;
@@ -173,6 +210,7 @@ public class SchoolTile extends BuildingTile implements Serializable{
         }
     }
 
+    @Override
     public String[] getInformations(){
     	String[] res = new String[4];
     	res[0] = this.getClass().getSimpleName();

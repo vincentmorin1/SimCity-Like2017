@@ -14,6 +14,9 @@ public class SchoolConstructionTool extends Tool implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	// Constant
+	/**
+	 * Price to build a school.
+	 */
     private final static int CURRENCY_COST = 100;
 
     // Status

@@ -96,6 +96,9 @@ public class PropertiesView extends JPanel implements Observer {
     }
 
     @Override
+    /**
+     * Update the display of resources.
+     */
     public void update(Observable o, Object arg) {
         assert o instanceof GameBoard;
         GameBoard world = (GameBoard) o;

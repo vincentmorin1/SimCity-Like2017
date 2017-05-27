@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 
 import localization.LocalizedTexts;
 import model.GameBoard;
-import model.Factor;
 import model.FactorsList;
 
 public class FactorsView extends JPanel implements Observer {
@@ -63,6 +62,9 @@ public class FactorsView extends JPanel implements Observer {
 	
 	
 	@Override
+	/**
+	 * Update the display of the factors.
+	 */
 	public void update(Observable o, Object arg) {
 		assert o instanceof GameBoard;
         GameBoard world = (GameBoard) o;

@@ -43,6 +43,9 @@ public final class IndustrialZoneDelimiterTool extends Tool implements Serializa
 	 */
 	private static final long serialVersionUID = 1L;
 	// Constant
+	/**
+	 * Price to build an industrial area 
+	 */
 	private final static int CURRENCY_COST = 20;
 
 // Status

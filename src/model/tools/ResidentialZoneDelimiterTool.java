@@ -38,11 +38,14 @@ import model.tiles.Tile;
  */
 public final class ResidentialZoneDelimiterTool extends Tool implements Serializable {
 
-/**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	// Constant
+
+	/**
+	 * Price to build a residential area
+	 */
 	private final static int CURRENCY_COST = 20;
 	
 	

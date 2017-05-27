@@ -9,48 +9,85 @@ public class BeachTile extends BuildingTile{
 	 */
 	private static final long serialVersionUID = 1L;
 
+		/**
+		 * Default energy consumption {@link #getEnergyConsumption()}
+		 */
 		public final static int DEFAULT_ENERGY_CONSUMPTION = 0;
 
 		/**
-		 * Default value of {@link getNumberTourists()}
+		 * Default value of {@link #getNumberTouristsMax()}
 		 */
 	    public final static int DEFAULT_NUMBER_TOURISTS_MAX = 100;
 	    
+		/**
+		 * Dimension x of the tile {@link #getDimensionX()}
+		 */
 		public final static int DIMENSION_WIDTH = 1;
 		
+		/**
+		 * Dimension x of the tile {@link #getDimensionY()} 
+		 */
 		public final static int DIMENSION_HEIGHT = 1;
 		
+		/**
+		 * {@link #getTopLeftCornerX()}
+		 */
 	    private final int topLeftCornerX;
 	    
+		/**
+		 * {@link #getTopLeftCornerY()}
+		 */
 	    private final int topLeftCornerY;
 	    
+	    /**
+	     * {@link #getLinked()}
+	     */
 	    private boolean linked;
 	        
+	    /**
+	     * {@link #getEnergyConsumption()}
+	     */
 	    private final int maxNeededEnergy;
 	    
+	    /**
+	     * {@link #getNumberTourists()
+	     */
 	    private int numberTourists;
 	    
+	    /**
+	     * {@link #getEnergyConsumption()}
+	     */
 	    private int energyConsumption;
 
+	    /**
+	     * {@link #getNumberTouristsMax()
+	     */
 	    private final int numberTouristsMax;
 
 	    /**
 	     * Evolution state
+	     * {@link #isDestroyed()}
 	     */
 	    protected boolean isDestroyed;
 
 	    // Creation
 	    /**
-	     * @param productionCapacity
-	     *            - {@link #getProductionCapacity()}
+	     * @param energyConsumption
+	     *            - {@link #getEnergyConsumption()}
+	     * @param numberTouristsMax
+	     * 			  - {@link #getNumberTouristsMax()}
+	     * @param topLeftCornerX
+	     * 			  - {@link #topLeftCornerX()}
+	     * @param topLeftCornerY
+	     * 			  - {@link #topLeftCornerY()}
 	     */
-	    public BeachTile(int energyConsumption, int numberTouristsMax, int topLeftCornerX ,int topLeftCornerY) {
+	    public BeachTile(int energyConsumption, int topLeftCornerX ,int topLeftCornerY) {
 	        super();
 	        this.energyConsumption = energyConsumption;
 	    	this.topLeftCornerX = topLeftCornerX;
 	    	this.topLeftCornerY = topLeftCornerY;
 	    	this.numberTourists=0;
-	    	this.numberTouristsMax = numberTouristsMax;
+	    	this.numberTouristsMax = BeachTile.DEFAULT_NUMBER_TOURISTS_MAX;
 	    	this.linked = false;
 	    	this.maxNeededEnergy = energyConsumption;
 	    	this.isDestroyed = false;
@@ -60,33 +97,49 @@ public class BeachTile extends BuildingTile{
 	     * Create with default settings.
 	     */
 	    public BeachTile() {
-	        this(BeachTile.DEFAULT_ENERGY_CONSUMPTION, BeachTile.DEFAULT_NUMBER_TOURISTS_MAX, 0, 0);
+	        this(BeachTile.DEFAULT_ENERGY_CONSUMPTION, 0, 0);
 	    }
+	    
 
+	    @Override
 		public int getDimensionX(){
 			return BeachTile.DIMENSION_WIDTH;
 		}
 
+
+	    @Override
 		public int getDimensionY(){
 			return BeachTile.DIMENSION_HEIGHT;
 		}
 		
+
+	    @Override
 		public int getTopLeftCornerX(){
 			return this.topLeftCornerX;
 		}
-		
+
+	    @Override
 		public int getTopLeftCornerY(){
 			return this.topLeftCornerY;
 		}
-		
+	    
+		/**
+		 * @return tourist's number
+		 */
 		public int getNumberTourists() {
 			return this.numberTourists;
 		}
 		
+		/**
+		 * @return maximum tourist's number
+		 */
 		public int getNumberTouristsMax() {
 			return this.numberTouristsMax;
 		}
 		
+		/**
+		 * @return energy consumption
+		 */
 		public int getEnergyConsumption() {
 			return this.energyConsumption;
 		}
@@ -96,22 +149,20 @@ public class BeachTile extends BuildingTile{
 	    	this.linked = b;
 	    	
 	    }
-	    
-	    /**
-	     *  @return true if linked by road.
-	     */
+
+	    @Override
 	    public boolean getLinked(){
 	    	return this.linked;
 	    }
 	    
-	    /**
-	     * @return Is energy missing in order to evolve or to update?
-	     */
+
+	    @Override
 	    public final boolean getIsEnergyMissing() {
 	        return false;
 	    }
 
-	    
+
+	    @Override
 	    public int hashCode() {
 	    	int result=1;
 	        result = result* 17 + this.numberTourists;
@@ -130,12 +181,15 @@ public class BeachTile extends BuildingTile{
 	        return o instanceof BeachTile && this.equals((BeachTile) o);
 	    }
 
-	    /**
-	     * @param sc
-	     * @return Is {@value sc} equals to this?
-	     */
-	    public boolean equals(BeachTile sc) {
-	        return this == sc || (sc.isDestroyed == this.isDestroyed && this.numberTourists == sc.numberTourists);
+	    @Override
+	    public boolean equals(BuildingTile o) {
+	    	if (o instanceof BeachTile){
+	    		BeachTile sc = (BeachTile) o;
+	    		return this == sc || (sc.isDestroyed == this.isDestroyed && this.numberTourists == sc.numberTourists);
+	    	}
+	    	else{
+	    		return false;
+	    	}
 	    }
 
 	    @Override
@@ -159,12 +213,13 @@ public class BeachTile extends BuildingTile{
 	        	this.numberTourists = res.peopleToLeisure(this.numberTouristsMax,40,20);
 	        }	        
 	    }
-
+	    
+	    @Override
 	    public String[] getInformations(){
 	    	String[] res = new String[4];
 	    	res[0] = this.getClass().getSimpleName();
 	    	res[1] = "Tourists : " + this.getNumberTourists() + "/" + this.numberTouristsMax;
-	    	res[2] = "Relié : " + this.getLinked();
+	    	res[2] = "Linked : " + this.getLinked();
 	    	res[3] = "Powered : " + !this.getIsEnergyMissing();
 	    	return res;
 	    }

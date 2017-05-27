@@ -29,17 +29,24 @@ import java.io.Serializable;
 import model.CityResources;
 
 /**
- * Enable to welcome new inhabitants and consume energy units according to the
- * number of inhabitants.
+ * Create money while consuming products if they are workers and energy
  */
 public class CommercialTile extends BuildableTile implements Serializable {
+	// Constants
 
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	// Constants
+	
+	/**
+	 * Dimension x of the tile {@link #getDimensionX()}
+	 */
 	public final static int DIMENSION_WIDTH = 2;
+	
+	/**
+	 * Dimension y of the tile {@link #getDimensionY()}
+	 */
 	public final static int DIMENSION_HEIGHT = 2;
 
     /**
@@ -73,9 +80,6 @@ public class CommercialTile extends BuildableTile implements Serializable {
     // Implementation
     
     /**
-     * Maximum number of newcomers for each update.
-     */
-    /**
      * {@link #getMaxNeededEnergy()}
      */
     private final int maxNeededEnergy;
@@ -96,21 +100,28 @@ public class CommercialTile extends BuildableTile implements Serializable {
     protected int productsConsumption;
     /**
      * Number of workers
+     * {@link #getWorkers()}
      */
     protected int workers;
     
     /**
      * Evolution state
+     * {@link #isDestroyed()}
      */
     protected boolean isDestroyed;
 
+    /**
+     * {@link #getIsEnergyMissing()}
+     */
     private boolean isEnergyMissing;
     
     // Creation
     /**
      * @param capacity
      *            - {@link #getProductionCapacity()}
+     * @param topLeftCornerX
      *            - {@link #getTopLeftCornerX()}
+     * @param topLeftCornerY
      *            - {@link #getTopLeftCornerY()}
      */
     public CommercialTile(int productionCapacity, int topLeftCornerX ,int topLeftCornerY) {
@@ -172,16 +183,19 @@ public class CommercialTile extends BuildableTile implements Serializable {
         return o instanceof CommercialTile && this.equals((CommercialTile) o);
     }
 
-    /**
-     * @param o
-     * @return Is {@value o} equals to this?
-     */
-    public boolean equals(CommercialTile o) {
-    	 return this == o || o.workers == this.workers && o.moneyProduction == this.moneyProduction &&
+    @Override
+    public boolean equals(BuildingTile o1) {
+    	if (o1 instanceof CommercialTile){
+    		CommercialTile o = (CommercialTile) o1;
+    		return this == o || o.workers == this.workers && o.moneyProduction == this.moneyProduction &&
     			 o.productionCapacity == this.productionCapacity && o.isDestroyed == this.isDestroyed &&
     			 o.maxNeededEnergy == this.maxNeededEnergy && o.productsConsumption == this.productsConsumption;
+    	}
+    	else{
+    		return false;
+    	}
     }
-
+    
     @Override
     public boolean isDestroyed() {
         return this.isDestroyed;
@@ -245,10 +259,15 @@ public class CommercialTile extends BuildableTile implements Serializable {
         }
     }
     
+    /**
+     * @return Number of workers
+     */
     public int getWorkers(){
     	return this.workers;
     }
     
+
+    @Override
     public String[] getInformations(){
     	String[] res = new String[5];
     	res[0] = this.getClass().getSimpleName();

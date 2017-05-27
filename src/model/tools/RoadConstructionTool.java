@@ -13,8 +13,11 @@ public class RoadConstructionTool extends Tool implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-// Constant
-private final static int CURRENCY_COST = 5;
+	// Constant
+	/**
+	 * Price to build a piece of road.
+	 */
+	private final static int CURRENCY_COST = 5;
 
 
 	// Status

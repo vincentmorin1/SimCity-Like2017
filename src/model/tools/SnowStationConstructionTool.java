@@ -14,6 +14,9 @@ public class SnowStationConstructionTool extends Tool  implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	// Constant
+	/**
+	 * Price to build a station.
+	 */
     private final static int CURRENCY_COST = 250;
 
     // Status

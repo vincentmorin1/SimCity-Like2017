@@ -44,6 +44,9 @@ public final class BulldozerTool extends Tool implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	// Constant
+	/**
+	 * Price to destroy any building
+	 */
     private final static int CURRENCY_COST = 10;
 
     // Status

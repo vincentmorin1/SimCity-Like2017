@@ -35,12 +35,25 @@ public class PowerPlantTile extends BuildingTile implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private final int topLeftCornerX;
+    /**
+     * {@link #getTopLeftCornerX()}
+     */
+    private final int topLeftCornerX;
     
+    /**
+     * {@link #getTopLeftCornerY()}
+     */
     private final int topLeftCornerY;
     
     // Constant
+	/**
+	 * Dimension x of the tile 
+	 */
 	public final static int DIMENSION_WIDTH = 1;
+	
+	/**
+	 * Dimension y of the tile
+	 */
 	public final static int DIMENSION_HEIGHT = 1;
 	
     /**
@@ -73,9 +86,18 @@ public class PowerPlantTile extends BuildingTile implements Serializable {
     // Creation
     /**
      * @param capacity
-     *            - {@link #getProductionCapacity()}
-     *            - {@link #getTopLeftCornerX()}
-     *            - {@link #getTopLeftCornerY()}
+     *            
+     *            
+     *            
+    
+    /**
+     * 
+     * @param productionCapacity 
+     * 				- {@link #getProductionCapacity()}
+     * @param topLeftCornerX 
+     * 				- {@link #getTopLeftCornerX()}
+     * @param topLeftCornerY 
+     * 				- {@link #getTopLeftCornerY()}
      */
     public PowerPlantTile(int productionCapacity, int topLeftCornerX ,int topLeftCornerY) {
         super();
@@ -93,18 +115,22 @@ public class PowerPlantTile extends BuildingTile implements Serializable {
         this(PowerPlantTile.DEFAULT_PRODUCTION_CAPACITY, 0, 0);
     }
 
+    @Override
 	public int getDimensionX(){
 		return 1;
 	}
 
+    @Override
 	public int getDimensionY(){
 		return 1;
 	}
-	
+
+    @Override
 	public int getTopLeftCornerX(){
 		return this.topLeftCornerX;
 	}
-	
+
+    @Override
 	public int getTopLeftCornerY(){
 		return this.topLeftCornerY;
 	}
@@ -118,7 +144,7 @@ public class PowerPlantTile extends BuildingTile implements Serializable {
     }
 
     /**
-     * @return Maximum production.
+     * @return Stock maximum.
      */
     public int getProductionCapacity() {
         return this.productionCapacity;
@@ -138,14 +164,18 @@ public class PowerPlantTile extends BuildingTile implements Serializable {
     public boolean equals(Object o) {
         return o instanceof PowerPlantTile && this.equals((PowerPlantTile) o);
     }
-
-    /**
-     * @param o
-     * @return Is {@value o} equals to this?
-     */
-    public boolean equals(PowerPlantTile o) {
-        return this == o || o.production == this.production && o.productionCapacity == this.productionCapacity && o.isDestroyed == this.isDestroyed;
+    
+    @Override
+    public boolean equals(BuildingTile o1) {
+    	if (o1 instanceof PowerPlantTile){
+    		PowerPlantTile o = (PowerPlantTile) o1;
+    		return this == o || o.production == this.production && o.productionCapacity == this.productionCapacity && o.isDestroyed == this.isDestroyed;
+    	}
+    	else{
+    		return false;
+    	}
     }
+    
 
     @Override
     public boolean isDestroyed() {
@@ -185,7 +215,8 @@ public class PowerPlantTile extends BuildingTile implements Serializable {
 	public boolean getIsEnergyMissing() {
 		return false;
 	}
-	
+
+    @Override
     public String[] getInformations(){
     	String[] res = new String[3];
     	res[0] = this.getClass().getSimpleName();

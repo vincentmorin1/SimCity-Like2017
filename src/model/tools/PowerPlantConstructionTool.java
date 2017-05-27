@@ -38,6 +38,9 @@ public final class PowerPlantConstructionTool extends Tool implements Serializab
 	 */
 	private static final long serialVersionUID = 1L;
 	// Constant
+	/**
+	 * Price to build a power plant.
+	 */
     private final static int CURRENCY_COST = 40;
 
     // Status

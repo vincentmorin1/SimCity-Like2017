@@ -53,6 +53,7 @@ public abstract class BuildableTile extends BuildingTile implements Evolvable, S
      * {@link #getTopLeftCornerY()}
      */
     private final int topLeftCornerY;
+    
 	/**
      * {@link #getEvolutionEnergyConsumption()}
      */
@@ -94,45 +95,34 @@ public abstract class BuildableTile extends BuildingTile implements Evolvable, S
         this.topLeftCornerY = topLeftCornerY;
     }
 
-    /**
-     *  @return true if linked by road.
-     */
+
+    @Override
     public boolean getLinked(){
     	return this.linked;
     }
     
-    /**
-     * Change la valeur de linked
-     * @param b
-     */
+
+    @Override
     public void setLinked(boolean b){
     	this.linked = b;
     }
     
-    /**
-     * @return Dimension of X
-     */
+    @Override
 	public int getDimensionX(){
 		return 2;
 	}
 
-	/**
-	 * @return Dimension of Y
-	 */
+	@Override
 	public int getDimensionY(){
 		return 2;
 	}
 
-	/**
-	 * @return Value of topLeftCornerX
-	 */
+	@Override
 	public int getTopLeftCornerX(){
 		return this.topLeftCornerX;
 	}
 	
-	/**
-	 * @return Value of topLeftCornerY
-	 */
+	@Override
 	public int getTopLeftCornerY(){
 		return this.topLeftCornerY;
 	}
@@ -145,10 +135,6 @@ public abstract class BuildableTile extends BuildingTile implements Evolvable, S
         return this.inhabitantsCapacity;
     }
 
-    /**
-     * @return Maximum number of energy units to consume. This maximum is
-     *         consumed if the residence is full.
-     */
     /**
      * @return Consumed energy during an evolution.
      */
@@ -176,13 +162,10 @@ public abstract class BuildableTile extends BuildingTile implements Evolvable, S
         return result;
     }
 
-    // Status
-    /**
-     * @param o
-     * @return Is {@value o} equals to this?
-     */
-    public boolean equals(BuildableTile o) {
-        return o.evolutionEnergyConsumption == evolutionEnergyConsumption && o.state == state;
+    @Override
+    public boolean equals(BuildingTile o) {
+    	BuildableTile bt = (BuildableTile) o;
+        return bt.evolutionEnergyConsumption == evolutionEnergyConsumption && bt.state == state;
     }
 
     // Status
@@ -197,13 +180,6 @@ public abstract class BuildableTile extends BuildingTile implements Evolvable, S
         return this.getLinked();
     }
     
-    /**
-     * @return Is energy missing in order to evolve or to update?
-     */
-    public final boolean getisEnergyMissingEvolution() {
-        return this.isEnergyMissingEvolution;
-    }
-
     // Change
     @Override
     public void disassemble(CityResources res) {

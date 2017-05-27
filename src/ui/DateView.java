@@ -20,9 +20,24 @@ public class DateView extends JPanel implements Observer {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Number of the actual month.
+	 */
 	private int numberMois;
+	
+	/**
+	 * Actual year.
+	 */
 	private int annee;
-	private String[] tableauMois = {"Janvier","Fevrier","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Decembre"};
+	
+	/**
+	 * Array containing the months' name.
+	 */
+	private String[] tableauMois = {"January","February","March","April","May","June","July","August","September","October","November","December"};
+	
+	/**
+	 * Label containing the date.
+	 */
 	private Label date;
 	
 	public DateView (GameBoard w){
@@ -41,7 +56,10 @@ public class DateView extends JPanel implements Observer {
 		
 		this.add(date);			
 	}
-
+	
+	/**
+	 * Update the date (month and year) according to the round's number.
+	 */
 	public void update(Observable o, Object arg){
         assert o instanceof GameBoard;
         

@@ -14,6 +14,9 @@ public class PoliceOfficeConstructionTool extends Tool  implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	// Constant
+	/**
+	 * Price to build a police office.
+	 */
     private final static int CURRENCY_COST = 150;
 
     // Status

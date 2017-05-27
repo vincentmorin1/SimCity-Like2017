@@ -39,7 +39,14 @@ public class ResidentialTile extends BuildableTile implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	// Constants
+	/**
+	 * Dimension x of the tile 
+	 */
 	public final static int DIMENSION_WIDTH = 2;
+	
+	/**
+	 * Dimension y of the tile
+	 */
 	public final static int DIMENSION_HEIGHT = 2;
 	
     /**
@@ -83,18 +90,25 @@ public class ResidentialTile extends BuildableTile implements Serializable {
 
     /**
      * Evolution state
+     * {@link #isDestroyed()}
      */
     protected boolean isDestroyed;
 
+    /**
+     * {@link #getResidents()}
+     */
     private int residents;
     
+    /**
+     * {@link #getIsEnergyMissing()}
+     */
     private boolean isEnergyMissing;
 
     // Creation
     /**
-     * @param capacity
-     *            - {@link #getTopLeftCornerX()}
-     *            - {@link #getTopLeftCornerY()}
+     * 
+     * @param topLeftCornerX - {@link #getTopLeftCornerX()}
+     * @param topLeftCornerY - {@link #getTopLeftCornerY()}
      */
     public ResidentialTile(int topLeftCornerX ,int topLeftCornerY) {
         super(ResidentialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION,ResidentialTile.DEFAULT_INHABITANTS_CAPACITY, topLeftCornerX ,topLeftCornerY);
@@ -140,15 +154,18 @@ public class ResidentialTile extends BuildableTile implements Serializable {
         return o instanceof ResidentialTile && this.equals((ResidentialTile) o);
     }
 
-    /**
-     * @param o
-     * @return Is {@value o} equals to this?
-     */
-    public boolean equals(ResidentialTile o) {
-        return this == o || super.equals(o) &&  o.maxJoiningInhabitants == this.maxJoiningInhabitants
+    @Override
+    public boolean equals(BuildingTile o1) {
+    	if (o1 instanceof ResidentialTile){
+    		ResidentialTile o = (ResidentialTile) o1;
+    		return this == o || super.equals(o) &&  o.maxJoiningInhabitants == this.maxJoiningInhabitants
                 && o.maxLeavingInhabitants == this.maxLeavingInhabitants && o.maxNeededEnergy == this.maxNeededEnergy;
+    	}
+    	else{
+    		return false;
+    	}
     }
-
+    
     @Override
     public boolean isDestroyed() {
         return this.isDestroyed;
@@ -229,21 +246,15 @@ public class ResidentialTile extends BuildableTile implements Serializable {
         }
     }
 
-    // Implementation
-    /** FALSEEEEEE
-     * @param res
-     * @return Approximation of the number of inhabitants in the current
-     *         residence if the population is uniformly distributed.
-     *
-     *         e.g. if the residence capacity is X = 50, the city capacity is Y
-     *         = 100 (including X) and the population is Z = 20, then the
-     *         residence has (X / Y) * Z = 10 inhabitants.
-     */
 
+    /**
+     * @return Number of residents.
+     */
     public int getResidents(){
     	return this.residents;
     }
-    
+
+    @Override
     public String[] getInformations(){
     	String[] res = new String[4];
     	res[0] = this.getClass().getSimpleName();

@@ -39,7 +39,14 @@ public class IndustrialTile extends BuildableTile implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	// Constants
+	/**
+	 * Dimension x of the tile  {@link #getDimensionX()}
+	 */
 	public final static int DIMENSION_WIDTH = 2;
+	
+	/**
+	 * Dimension y of the tile {@link #getDimensionY()}
+	 */
 	public final static int DIMENSION_HEIGHT = 2;
 	
     /**
@@ -90,22 +97,30 @@ public class IndustrialTile extends BuildableTile implements Serializable {
 
     /**
      * Number of workers
+     * {@link #getWorkers()}
      */
     protected int workers;
     
     /**
      * Evolution state
+     * {@link #isDestroyed()}
      */
     protected boolean isDestroyed;
 
+    /**
+     * {@link #getIsEnergyMissing()} 
+     */
     private boolean isEnergyMissing;
     
-    // Creation
+    // Creation   
     /**
-     * @param capacity
-     *            - {@link #getProductionCapacity()}
-     *            - {@link #getTopLeftCornerX()}
-     *            - {@link #getTopLeftCornerY()}
+     * 
+     * @param productionCapacity
+     * 			  - {@link #getProductionCapacity()}
+     * @param topLeftCornerX
+     * 			  - {@link #getTopLeftCornerX()}
+     * @param topLeftCornerY
+     * 			  - {@link #getTopLeftCornerY()}
      */
     public IndustrialTile(int productionCapacity,int topLeftCornerX ,int topLeftCornerY) {
         super(IndustrialTile.DEFAULT_EVOLUTION_ENERGY_CONSUMPTION, IndustrialTile.DEFAULT_WORKERS_CAPACITY, topLeftCornerX , topLeftCornerY);     
@@ -164,14 +179,17 @@ public class IndustrialTile extends BuildableTile implements Serializable {
         return o instanceof IndustrialTile && this.equals((IndustrialTile) o);
     }
 
-    /**
-     * @param o
-     * @return Is {@value o} equals to this?
-     */
-    public boolean equals(IndustrialTile o) { // A compléter!!
-    	 return this == o || o.workers == this.workers && o.production == this.production && o.productionCapacity == this.productionCapacity && o.isDestroyed == this.isDestroyed && o.maxNeededEnergy == this.maxNeededEnergy;
+    @Override
+    public boolean equals(BuildingTile o1) {
+    	if (o1 instanceof IndustrialTile){
+    		IndustrialTile o = (IndustrialTile) o1;
+    		return this == o || o.workers == this.workers && o.production == this.production && o.productionCapacity == this.productionCapacity && o.isDestroyed == this.isDestroyed && o.maxNeededEnergy == this.maxNeededEnergy;
+    	}
+    	else{
+    		return false;
+    	}
     }
-
+    
     @Override
     public boolean isDestroyed() {
         return this.isDestroyed;
@@ -234,10 +252,14 @@ public class IndustrialTile extends BuildableTile implements Serializable {
         }
     }
     
+    /**
+     * @return Number of workers
+     */
     public int getWorkers(){
     	return this.workers;
     }
-    
+
+    @Override
     public String[] getInformations(){
     	String[] res = new String[5];
     	res[0] = this.getClass().getSimpleName();

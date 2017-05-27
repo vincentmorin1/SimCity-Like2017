@@ -53,7 +53,8 @@ public class RefreshView extends JPanel implements ActionListener{
     
     /**
      * RefreshView constructor
-     * 
+     * Configure the different button regarding the time speed.
+     * There are 3 speeds and the pause
      * @param w
      */
     public RefreshView(GameBoard w) {
@@ -135,6 +136,10 @@ public class RefreshView extends JPanel implements ActionListener{
         
     }
 
+    /**
+     * Configure the time speed.
+     * @param period
+     */
     public void timeNextState(int period){
     	this.canNext = false;
     	

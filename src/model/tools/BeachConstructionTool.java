@@ -15,6 +15,9 @@ public class BeachConstructionTool extends Tool  implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	// Constant
+	/**
+	 * Price to make a beach
+	 */
     private final static int CURRENCY_COST = 70;
 
     // Status
@@ -25,6 +28,13 @@ public class BeachConstructionTool extends Tool  implements Serializable{
         return aTarget instanceof GrassTile;
     }
     
+    /**
+     * 
+     * @param Coordinate X
+     * @param Coordinate Y
+     * @param Building array
+     * @return
+     */
     public boolean nextToWaterTile(int x, int y, Tile[][] tiles){
     	if (x>0 && tiles[x-1][y] instanceof WaterTile){
     		return true;
@@ -79,7 +89,7 @@ public class BeachConstructionTool extends Tool  implements Serializable{
 
         r.spend(BeachConstructionTool.CURRENCY_COST);
 
-        return new BeachTile(BeachTile.DEFAULT_ENERGY_CONSUMPTION, BeachTile.DEFAULT_NUMBER_TOURISTS_MAX, topLeftCornerX , topLeftCornerY);
+        return new BeachTile(BeachTile.DEFAULT_ENERGY_CONSUMPTION, topLeftCornerX , topLeftCornerY);
     }
 
     // Debugging

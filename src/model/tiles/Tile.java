@@ -33,17 +33,26 @@ import model.CityResources;
  */
 public abstract class Tile implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * @return Dimension x of the tile
+	 */
 	public abstract int getDimensionX();
 	
+	/**
+	 * @return Dimension y of the tile
+	 */
 	public abstract int getDimensionY();
 
+	/**
+	 * @return Coordinate X of the tile
+	 */
 	public abstract int getTopLeftCornerX();
 	
+	/**
+	 * @return Coordinate Y of the tile
+	 */
 	public abstract int getTopLeftCornerY();
 	
 
@@ -55,6 +64,9 @@ public abstract class Tile implements Serializable {
      */
     public abstract void update(CityResources res);
 
+    /**
+     * @return List of strings containing information
+     */
     public abstract String[] getInformations();
 
 }

@@ -10,7 +10,15 @@ public class MountainTile  extends Tile implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final int topLeftCornerX;
+	
+    /**
+     * {@link #getTopLeftCornerX()}
+     */
+    private final int topLeftCornerX;
+    
+    /**
+     * {@link #getTopLeftCornerY()}
+     */
     private final int topLeftCornerY;
     
     // Constant
@@ -37,18 +45,22 @@ public class MountainTile  extends Tile implements Serializable{
     	this.topLeftCornerY = 0;
     }
 
+    @Override
 	public int getDimensionX(){
 		return 1;
 	}
 
+    @Override
 	public int getDimensionY(){
 		return 1;
 	}
-	
+
+    @Override
 	public int getTopLeftCornerX(){
 		return this.topLeftCornerX;
 	}
-	
+
+    @Override
 	public int getTopLeftCornerY(){
 		return this.topLeftCornerY;
 	}
@@ -70,7 +82,8 @@ public class MountainTile  extends Tile implements Serializable{
     public void update(CityResources res) {
         // Do nothings.
     }
-    
+
+    @Override
     public String[] getInformations(){
     	String[] res = new String[1];
     	res[0] = this.getClass().getSimpleName();

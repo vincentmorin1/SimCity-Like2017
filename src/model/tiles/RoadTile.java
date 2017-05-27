@@ -10,7 +10,15 @@ public class RoadTile extends BuildingTile implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Dimension x of the tile 
+	 */
 	public final static int DIMENSION_WIDTH = 1;
+	
+	/**
+	 * Dimension y of the tile
+	 */
 	public final static int DIMENSION_HEIGHT = 1;
 	
 	/**
@@ -18,8 +26,14 @@ public class RoadTile extends BuildingTile implements Serializable{
 	 */
     protected boolean isDestroyed;
 
+    /**
+     * {@link #getTopLeftCornerX()}
+     */
     private final int topLeftCornerX;
     
+    /**
+     * {@link #getTopLeftCornerY()}
+     */
     private final int topLeftCornerY;
     
     /**
@@ -43,22 +57,27 @@ public class RoadTile extends BuildingTile implements Serializable{
     	this (0,0);
     }
 
+    @Override
 	public int getDimensionX(){
 		return 1;
 	}
 
+    @Override
 	public int getDimensionY(){
 		return 1;
 	}
-	
+
+    @Override
 	public int getTopLeftCornerX(){
 		return this.topLeftCornerX;
 	}
-	
+
+    @Override
 	public int getTopLeftCornerY(){
 		return this.topLeftCornerY;
 	}
-	
+
+    @Override
     public int hashCode() {
         return 1;
     }
@@ -69,14 +88,17 @@ public class RoadTile extends BuildingTile implements Serializable{
         return o instanceof RoadTile && this.equals((RoadTile) o);
     }
     
-    /**
-     * @param o
-     * @return Is {@value o} equals to this?
-     */
-    public boolean equals(RoadTile o) {
-        return this == o || o.linked == this.linked && o.isDestroyed == this.isDestroyed;
+    @Override
+    public boolean equals(BuildingTile o) {
+    	if (o instanceof RoadTile){
+    		RoadTile sc = (RoadTile) o;
+    		return this == sc || sc.linked == this.linked && sc.isDestroyed == this.isDestroyed;
+    	}
+    	else{
+    		return false;
+    	}
     }
-
+    
     @Override
     public boolean isDestroyed() {
         return this.isDestroyed;
@@ -90,18 +112,14 @@ public class RoadTile extends BuildingTile implements Serializable{
         }
     }
 
-    /**
-     *  @return true if linked by road.
-     */
+
+    @Override
     public boolean getLinked(){
     	return this.linked;
     }
     
-    /**
-     * Change the value of linked
-     * 
-     * @param b
-     */
+
+    @Override
     public void setLinked(boolean b){
     	this.linked = b;
     }
@@ -143,6 +161,7 @@ public class RoadTile extends BuildingTile implements Serializable{
 		return false;
 	}
 
+    @Override
     public String[] getInformations(){
     	String[] res = new String[3];
     	res[0] = this.getClass().getSimpleName();

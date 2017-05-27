@@ -9,17 +9,33 @@ public abstract class BuildingTile extends Tile implements Destroyable, Serializ
 	 */
 	private static final long serialVersionUID = 1L;
 
+    /**
+     * @param o
+     * @return Is {@value o} equals to this?
+     */
+    public abstract boolean equals(BuildingTile o) ;
 	/**
      * Set the link state
      * @param b
      */
     public abstract void setLinked(boolean b);
     
+    /**
+     * @return true if not enough energy, else false
+     */
 	public abstract boolean getIsEnergyMissing();
 	
+	/**
+	 * @return true if linked by road, else false
+	 */
     public abstract boolean getLinked();
-    
-    
+
+
+	/**
+	 * Help to know which picture is necessary
+	 * @param tiles
+	 * @return
+	 */
     public String getBuildingConnection(Tile[] tiles){
     	String res =  "";
 		if (tiles[0] == this){

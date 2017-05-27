@@ -19,10 +19,11 @@ public class EarthquakeEvent extends Event  {
         super(world);
 		this.message="";
     }
-
-    /**
-     * Apply no effects.
-     */
+	
+	/**
+	 * Determine the amplitude of the earthquake.
+	 * Apply the event to the concerned buildings (those around the epicenter) and if luck isn't on their side, destroy them!
+	 */
 	@Override
     public List<Event> applyEffects(CityResources resources) {
 		int amplitude = amplitude();
@@ -52,13 +53,20 @@ public class EarthquakeEvent extends Event  {
     }
 
     /**
-     * Return an empty message.
+     * Return the coordinates of the earthquake, the intensity and the list of building destroy.
      */
 	@Override
     public String getMessage(LocalizedTexts texts) {
         return this.message;
     }
 	
+	/**
+	 * 
+	 * @param Coordinate Y
+	 * @param Coordinate X
+	 * @param Earthquake amplitude
+	 * @return
+	 */
     private int destroyBuildingProba(int row, int column, int amplitude){
     	int epicentreX = this.startingTile.getRow();
     	int epicentreY = this.startingTile.getColumn();
@@ -71,6 +79,9 @@ public class EarthquakeEvent extends Event  {
     	return proba;
     }
 
+    /**
+     * @return Earthquake amplitude
+     */
     private int amplitude(){
     	int p = ThreadLocalRandom.current().nextInt(0, 100);
     	

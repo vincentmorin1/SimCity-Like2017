@@ -12,16 +12,17 @@ public class InformationTool extends Tool implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	// Constant
+	/**
+	 * Seeing the detailed information is free
+	 */
     private final static int CURRENCY_COST = 0;
         
+    
 	public InformationTool(Tile t){
 		this.tile = t;
 	}
 	
-    // Status
-    /**
-     * canEffect returns true if the given Tile is buildable, false otherwise.
-     */
+	@Override
     public boolean canEffect(Tile aTarget) {
         return true;
     }
@@ -29,9 +30,12 @@ public class InformationTool extends Tool implements Serializable{
     @Override
     public boolean equals(Object o) {
         return this == o || o instanceof InformationTool;
-
     }
 
+    /**
+     * Load the informations regarding a tile.
+     * @param Tile
+     */
     public void loadInformations(Tile t){
     	this.tile = t;
     }

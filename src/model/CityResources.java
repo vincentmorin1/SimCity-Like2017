@@ -101,11 +101,24 @@ public class CityResources implements Serializable {
      */
     private int unworkingSeniorPopulation;
 
+    /**
+     * {@link #getUnworkingStudentPopulation()
+     */
+    private int unworkingStudentPopulation;
+    
+    /**
+     * {@link #getSeniorPopulation()}
+     */
     private int seniorPopulation;
 
-    
+    /**
+     * {@link #getNumberStudentWithoutLeisure()
+     */
     private int numberStudentWithoutLeisure;
     
+    /**
+     * {@link #getNumberSeniorWithoutLeisure()}
+     */
     private int numberSeniorWithoutLeisure;
 
     /**
@@ -122,8 +135,6 @@ public class CityResources implements Serializable {
      * {@link #getNumberStudent()}
      */
     private int studentPopulation;
-    
-    private int unworkingStudentPopulation;
     
     // Implementation (Product)
     /**
@@ -198,7 +209,6 @@ public class CityResources implements Serializable {
      * @param o
      * @return Is {@value o} equals to this?
      */
-    
     public boolean equals(CityResources o) {
         return this == o || super.equals(o) && o.currency == this.currency && o.vat == this.vat && o.unconsumedEnergy == this.unconsumedEnergy && o.energyProduction == this.energyProduction && o.moneyProduction == this.moneyProduction
                 && o.unconsumedMoney == this.unconsumedMoney && o.unworkingSeniorPopulation == this.unworkingSeniorPopulation && o.population == this.population && o.populationCapacity == this.populationCapacity && o.productsCount == this.productsCount
@@ -231,7 +241,11 @@ public class CityResources implements Serializable {
         return result;
     }
 
-    
+    /**
+     * 
+     * @param Number of student wanted.
+     * @return Number of student available to go  (inferior or equal to the number wanted).
+     */
     public int enrolStudent(int maxEnrol){
     	int res =  Math.min(maxEnrol, this.unworkingStudentPopulation);
     	this.unworkingStudentPopulation -= res;
@@ -240,21 +254,29 @@ public class CityResources implements Serializable {
     
     // Access (Currency)
     /**
-     *
      * @return Accumulated currency.
      */
     public int getCurrency() {
         return this.currency;
     }
+    
+    /**
+     * @param c
+     */
     public void setCurrency(int c){
     	this.currency = c;
     }
+    
     /**
      * @return Value-Added-Tax in percentage.
      */
     public int getVat() {
         return this.vat;
     }
+    
+    /**
+     * @param v
+     */
     public void setVat(int v){
     	this.vat = v;
     }
@@ -304,10 +326,16 @@ public class CityResources implements Serializable {
         return this.unconsumedMoney;
     }
 
+    /**
+     * @return Number of students within the city
+     */
     public int getStudentPopulation(){
     	return this.studentPopulation;
     }
     
+    /**
+     * @return Number of students without school
+     */
     public int getUnworkingStudentPopulation(){
     	return this.unworkingStudentPopulation;
     }
@@ -327,14 +355,23 @@ public class CityResources implements Serializable {
         return this.population - this.unworkingSeniorPopulation;
     }
 
+    /**
+     * @return Number of seniors
+     */
     public int getSeniorPopulation(){
     	return this.seniorPopulation;
     }
 
+    /**
+     * @return Number of students who don't have leisure 
+     */
     public int getNumberStudentWithoutLeisure(){
     	return this.numberStudentWithoutLeisure;
     }
     
+    /**
+     * @return Number of seniors who don't have leisure 
+     */
     public int getNumberSeniorWithoutLeisure(){
     	return this.numberSeniorWithoutLeisure;
     }
@@ -575,6 +612,13 @@ public class CityResources implements Serializable {
         this.populationCapacity = this.populationCapacity - amount;
     }
 
+    /**
+     * 
+     * @param Number of places for tourists.
+     * @param Probability of student coming.
+     * @param Probability of senior coming.
+     * @return Number of people going to leisure.
+     */
     public int peopleToLeisure(int maxAmount, int probaStudent, int probaSenior){
     	int res = 0;
     	int i=0;

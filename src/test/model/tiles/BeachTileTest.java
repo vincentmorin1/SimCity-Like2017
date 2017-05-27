@@ -14,7 +14,7 @@ public class BeachTileTest {
         BeachTile bt = new BeachTile();
         Assert.assertEquals(BeachTile.DEFAULT_NUMBER_TOURISTS_MAX, bt.getNumberTouristsMax());
         Assert.assertEquals(BeachTile.DEFAULT_ENERGY_CONSUMPTION, bt.getEnergyConsumption());
-        bt = new BeachTile(10,10,0, 0);
+        bt = new BeachTile(10,0, 0);
         Assert.assertEquals(10, bt.getNumberTouristsMax());
         Assert.assertEquals(10, bt.getEnergyConsumption());
     }

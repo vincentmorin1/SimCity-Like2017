@@ -14,6 +14,9 @@ public class HospitalConstructionTool extends Tool implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	// Constant
+	/**
+	 * Price to build a hospital
+	 */
     private final static int CURRENCY_COST = 120;
 
     // Status

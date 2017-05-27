@@ -1,6 +1,5 @@
 package ui;
 
-import java.text.MessageFormat;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -8,7 +7,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import localization.LocalizedTexts;
 import model.GameBoard;
 import model.tools.InformationTool;
 
@@ -16,6 +14,9 @@ public class InformationView extends JPanel implements Observer {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * There are maximum 5 fields of information per building.
+     */
     private JLabel name;
     private JLabel info1;
     private JLabel info2;
@@ -49,7 +50,11 @@ public class InformationView extends JPanel implements Observer {
         this.add(this.info4);
     }
 
+
     @Override
+    /**
+     * Update the detailed information view.
+     */
     public void update(Observable o, Object arg) {
         assert o instanceof GameBoard;
         GameBoard world = (GameBoard) o;

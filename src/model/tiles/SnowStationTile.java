@@ -9,30 +9,64 @@ public class SnowStationTile extends BuildingTile{
 	 */
 	private static final long serialVersionUID = 1L;
 
+		/**
+		 *  Default energy consumption 
+		 */
 		public final static int DEFAULT_ENERGY_CONSUMPTION = 80;
 
+		/**
+		 * Default maximum capacity
+		 */
 	    public final static int DEFAULT_NUMBER_TOURISTS_MAX = 25;
 	    
+		/**
+		 * Dimension x of the tile 
+		 */
 		public final static int DIMENSION_WIDTH = 1;
 		
+		/**
+		 * Dimension y of the tile
+		 */
 		public final static int DIMENSION_HEIGHT = 1;
 		
+	    /**
+	     * {@link #getTopLeftCornerX()}
+	     */
 	    private final int topLeftCornerX;
 	    
+	    /**
+	     * {@link #getTopLeftCornerY()}
+	     */
 	    private final int topLeftCornerY;
 	    
+	    /**
+	     * {@link #getLinked()}
+	     */
 	    private boolean linked;
 	    
+	    /**
+	     * {@link #getIsEnergyMissing()}
+	     */
 	    private boolean isEnergyMissing;
 	    
+	    /**
+	     * {@link #getMaxNeededEnergy()}
+	     */
 	    private final int maxNeededEnergy;
 	    
+	    /**
+	     * {@link #getNumberTourists()}
+	     */
 	    private int numberTourists;
 
+	    /**
+	     * {@link #getNumberTouristsMax()}
+	     */
 	    private final int numberTouristsMax;
 
 	    /**
 	     * Evolution state
+	     * {@link #getLinked()}
 	     */
 	    protected boolean isDestroyed;
 
@@ -60,30 +94,43 @@ public class SnowStationTile extends BuildingTile{
 	        this(SnowStationTile.DEFAULT_ENERGY_CONSUMPTION, 0, 0);
 	    }
 
+		@Override
 		public int getDimensionX(){
 			return SnowStationTile.DIMENSION_WIDTH;
 		}
 		
+		/**
+		 * @return Maximum needed energy.
+		 */
 		public int getMaxNeededEnergy() {
 			return this.maxNeededEnergy;
 		}
 		
+		/**
+		 * @return Maximum number of tourists
+		 */
 		public int getNumberTouristsMax() {
 			return this.numberTouristsMax;
 		}
 
+		@Override
 		public int getDimensionY(){
 			return SnowStationTile.DIMENSION_HEIGHT;
 		}
-		
+
+		@Override
 		public int getTopLeftCornerX(){
 			return this.topLeftCornerX;
 		}
-		
+
+		@Override
 		public int getTopLeftCornerY(){
 			return this.topLeftCornerY;
 		}
 		
+		/**
+		 * @return Number of tourists.
+		 */
 		public int getNumberTourists() {
 			return this.numberTourists;
 		}
@@ -94,21 +141,17 @@ public class SnowStationTile extends BuildingTile{
 	    	
 	    }
 	    
-	    /**
-	     *  @return true if linked by road.
-	     */
+		@Override
 	    public boolean getLinked(){
 	    	return this.linked;
-	    }
-	    
-	    /**
-	     * @return Is energy missing in order to evolve or to update?
-	     */
+	    }	    
+
+		@Override
 	    public final boolean getIsEnergyMissing() {
 	        return this.isEnergyMissing;
 	    }
 
-	    
+		@Override
 	    public int hashCode() {
 	    	int result=1;
 	        result = result* 17 + this.numberTourists;
@@ -128,12 +171,15 @@ public class SnowStationTile extends BuildingTile{
 	        return o instanceof SnowStationTile && this.equals((SnowStationTile) o);
 	    }
 
-	    /**
-	     * @param sc
-	     * @return Is {@value sc} equals to this?
-	     */
-	    public boolean equals(SnowStationTile sc) {
-	        return this == sc || (sc.isDestroyed == this.isDestroyed && this.numberTourists == sc.numberTourists);
+	    @Override
+	    public boolean equals(BuildingTile o) {
+	    	if (o instanceof SnowStationTile){
+	    		SnowStationTile sc = (SnowStationTile) o;
+		        return this == sc || (sc.isDestroyed == this.isDestroyed && this.numberTourists == sc.numberTourists);
+	    	}
+	    	else{
+	    		return false;
+	    	}
 	    }
 
 	    @Override
@@ -166,6 +212,7 @@ public class SnowStationTile extends BuildingTile{
 	        }
 	    }
 	    
+	    @Override
 	    public String[] getInformations(){
 	    	String[] res = new String[4];
 	    	res[0] = this.getClass().getSimpleName();

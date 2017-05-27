@@ -42,8 +42,14 @@ public class TileUI extends JLabel {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Coordinate X
+     */
     private int row;
 
+    /**
+     * Coordinate Y
+     */
     private int column;
 
     private GameBoard model;
@@ -137,6 +143,7 @@ public class TileUI extends JLabel {
         this.setIcon(ii);
     }
     
+
     public boolean getUnderCursor() {
     	return this.isUnderCursor;
     }

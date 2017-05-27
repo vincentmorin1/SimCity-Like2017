@@ -13,36 +13,65 @@ public class PoliceOfficeTile extends BuildingTile{
 
 	    public final static int DEFAULT_NUMBER_WORKERS_MAX = 25;
 	    
+		/**
+		 * Dimension x of the tile 
+		 */
 		public final static int DIMENSION_WIDTH = 1;
 		
+		/**
+		 * Dimension y of the tile
+		 */
 		public final static int DIMENSION_HEIGHT = 2;
 		
+	    /**
+	     * {@link #getTopLeftCornerX()}
+	     */
 	    private final int topLeftCornerX;
 	    
+	    /**
+	     * {@link #getTopLeftCornerY()}
+	     */
 	    private final int topLeftCornerY;
 	    
+	    /**
+	     * {@link #getLinked()}
+	     */
 	    private boolean linked;
 	    
-	    private boolean isEnergyMissing;
-	    
+	    /**
+	     * {@link #getMaxNeededEnergy()}
+	     */
 	    private final int maxNeededEnergy;
 	    
+	    /**
+	     * {@link #getNumberWorkers()}
+	     */
 	    private int numberWorkers;
 
+	    /**
+	     * {@link #getNumberWorkersMax()}
+	     */
 	    private final int numberWorkersMax;
 	    
-
 	    /**
 	     * Evolution state
+	     * {@link #isDestroyed()}
 	     */
 	    protected boolean isDestroyed;
 
+	    /**
+	     * {@link #getIsEnergyMissing()} 
+	     */
+	    private boolean isEnergyMissing;
+
 	    // Creation
 	    /**
-	     * @param capacity
-	     *            - {@link #getProductionCapacity()}
+	     * @param energyConsumption
+	     * 			  - {@link #getProductionCapacity()}
+	     * @param topLeftCornerX
 	     *            - {@link #getTopLeftCornerX()}
-	     *            - {@link #getTopLeftCornerY()}
+	     * @param topLeftCornerY
+	     *             - {@link #getTopLeftCornerY()}
 	     */
 	    public PoliceOfficeTile(int energyConsumption, int topLeftCornerX ,int topLeftCornerY) {
 	        super();
@@ -62,31 +91,44 @@ public class PoliceOfficeTile extends BuildingTile{
 	    public PoliceOfficeTile() {
 	        this(PoliceOfficeTile.DEFAULT_ENERGY_CONSUMPTION, 0, 0);
 	    }
-
+	    
+	    /**
+	     * @return Maximum of needed energy
+	     */
 	    public int getMaxNeededEnergy() {
 	    	return this.maxNeededEnergy;
 	    }
 	    
+	    /**
+	     * @return Maximum number of workers
+	     */
 	    public int getNumberWorkersMax() {
 	    	return this.numberWorkersMax;
 	    }
 
+	    @Override
 	    public int getDimensionX(){
 			return PoliceOfficeTile.DIMENSION_WIDTH;
 		}
 
+	    @Override
 		public int getDimensionY(){
 			return PoliceOfficeTile.DIMENSION_HEIGHT;
 		}
-		
+
+	    @Override
 		public int getTopLeftCornerX(){
 			return this.topLeftCornerX;
 		}
-		
+
+	    @Override
 		public int getTopLeftCornerY(){
 			return this.topLeftCornerY;
 		}
 		
+	    /**
+	     * @return Number of workers
+	     */
 		public int getNumberWorkers() {
 			return this.numberWorkers;
 		}
@@ -94,24 +136,19 @@ public class PoliceOfficeTile extends BuildingTile{
 	    @Override
 	    public void setLinked(boolean b){
 	    	this.linked = b;
-	    	
 	    }
 	    
-	    /**
-	     *  @return true if linked by road.
-	     */
+	    @Override
 	    public boolean getLinked(){
 	    	return this.linked;
-	    }
-	    
-	    /**
-	     * @return Is energy missing in order to evolve or to update?
-	     */
+	    }	    
+
+	    @Override
 	    public final boolean getIsEnergyMissing() {
 	        return this.isEnergyMissing;
 	    }
 
-	    
+	    @Override
 	    public int hashCode() {
 	    	int result=1;
 	        result = result* 17 + this.numberWorkers;
@@ -131,14 +168,17 @@ public class PoliceOfficeTile extends BuildingTile{
 	        return o instanceof PoliceOfficeTile && this.equals((PoliceOfficeTile) o);
 	    }
 
-	    /**
-	     * @param sc
-	     * @return Is {@value sc} equals to this?
-	     */
-	    public boolean equals(PoliceOfficeTile sc) {
-	        return this == sc || (sc.isDestroyed == this.isDestroyed && this.numberWorkers == sc.numberWorkers);
+	    @Override
+	    public boolean equals(BuildingTile o) {
+	    	if (o instanceof PoliceOfficeTile){
+	    		PoliceOfficeTile sc = (PoliceOfficeTile) o;
+	    		return this == sc || (sc.isDestroyed == this.isDestroyed && this.numberWorkers == sc.numberWorkers);
+	    	}
+	    	else{
+	    		return false;
+	    	}
 	    }
-
+	    
 	    @Override
 	    public boolean isDestroyed() {
 	        return this.isDestroyed;
@@ -170,6 +210,7 @@ public class PoliceOfficeTile extends BuildingTile{
 	        }
 	    }
 
+	    @Override
 	    public String[] getInformations(){
 	    	String[] res = new String[4];
 	    	res[0] = this.getClass().getSimpleName();
