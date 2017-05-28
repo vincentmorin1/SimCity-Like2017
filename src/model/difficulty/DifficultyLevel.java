@@ -33,7 +33,7 @@ public class DifficultyLevel {
     /**
      * Initial currency of the standard difficulty.
      */
-    private final static int STANDARD_CURRENCY = 500;
+    private final static int STANDARD_CURRENCY = 500000;
 
     /**
      * Standard difficulty.

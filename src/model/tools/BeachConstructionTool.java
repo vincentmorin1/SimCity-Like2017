@@ -88,7 +88,7 @@ public class BeachConstructionTool extends Tool  implements Serializable{
         assert this.isAfordable(aTarget, r);
 
         r.spend(BeachConstructionTool.CURRENCY_COST);
-
+        r.beachesCount();
         return new BeachTile(BeachTile.DEFAULT_ENERGY_CONSUMPTION, topLeftCornerX , topLeftCornerY);
     }
 

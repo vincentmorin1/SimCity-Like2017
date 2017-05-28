@@ -45,7 +45,6 @@ import javax.swing.SwingUtilities;
 import localization.FRTexts;
 import localization.LocalizedTexts;
 import localization.UKTexts;
-import model.FactorsList;
 import model.GameBoard;
 import ui.ToolsView;
 import ui.MessagesView;
@@ -315,8 +314,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        jeu.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	        jeu.pack();
 	        
-	        FactorsList fact = new FactorsList();
-	        FactorsView fv = new FactorsView(fact, texts);
+	        FactorsView fv = new FactorsView(monde, texts);
 	        monde.addObserver(fv);
 
 	        jeu.add(fv, BorderLayout.NORTH);
@@ -411,8 +409,7 @@ public final class SimCityUI extends JFrame implements ActionListener{
 	        jeu.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	        jeu.pack();
 	        
-	        FactorsList fact = new FactorsList();
-	        FactorsView fv = new FactorsView(fact, texts);
+	        FactorsView fv = new FactorsView(monde, texts);
 	        monde.addObserver(fv);
 	        jeu.add(fv, BorderLayout.NORTH);
 	        

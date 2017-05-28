@@ -94,7 +94,8 @@ public final class CommercialZoneDelimiterTool extends Tool implements Serializa
 		assert isAfordable(aTarget, r);
 
 		r.spend(CommercialZoneDelimiterTool.CURRENCY_COST);
-
+		r.commercialsCount();
+		
 		return new CommercialTile(CommercialTile.DEFAULT_CONSUMPTION_CAPACITY, topLeftCornerX ,topLeftCornerY);
 	}
 

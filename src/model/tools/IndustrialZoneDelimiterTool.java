@@ -94,7 +94,8 @@ public final class IndustrialZoneDelimiterTool extends Tool implements Serializa
 		assert isAfordable(aTarget, r);
 
 		r.spend(IndustrialZoneDelimiterTool.CURRENCY_COST);
-
+		r.industrialsCount();
+		
 		return new IndustrialTile(IndustrialTile.DEFAULT_PRODUCTION_CAPACITY, topLeftCornerX ,topLeftCornerY);
 	}
 

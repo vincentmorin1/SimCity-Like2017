@@ -88,7 +88,8 @@ public final class PowerPlantConstructionTool extends Tool implements Serializab
         assert this.isAfordable(aTarget, r);
 
         r.spend(PowerPlantConstructionTool.CURRENCY_COST);
-
+        r.powerPlantsCount();
+        
         return new PowerPlantTile(PowerPlantTile.DEFAULT_PRODUCTION_CAPACITY, topLeftCornerX , topLeftCornerY);
     }
 

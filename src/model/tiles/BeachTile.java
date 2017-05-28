@@ -211,6 +211,7 @@ public class BeachTile extends BuildingTile{
 	    	
 	        if (!(this.isDestroyed) && this.getLinked()) {
 	        	this.numberTourists = res.peopleToLeisure(this.numberTouristsMax,40,20);
+	        	//System.out.println("hey!");
 	        }	        
 	    }
 	    

@@ -96,7 +96,8 @@ public final class ResidentialZoneDelimiterTool extends Tool implements Serializ
 		assert isAfordable(aTarget, r);
 
 		r.spend(ResidentialZoneDelimiterTool.CURRENCY_COST);
-
+		r.residentialsCount();
+		
 		return new ResidentialTile( topLeftCornerX , topLeftCornerY);
 	}
 

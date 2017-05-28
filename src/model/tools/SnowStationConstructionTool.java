@@ -64,7 +64,8 @@ public class SnowStationConstructionTool extends Tool  implements Serializable{
         assert this.isAfordable(aTarget, r);
 
         r.spend(SnowStationConstructionTool.CURRENCY_COST);
-
+        r.snowStationsCount();
+        
         return new SnowStationTile(SnowStationTile.DEFAULT_ENERGY_CONSUMPTION, topLeftCornerX , topLeftCornerY);
     }
 

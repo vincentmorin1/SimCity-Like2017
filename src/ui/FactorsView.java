@@ -40,21 +40,22 @@ public class FactorsView extends JPanel implements Observer {
 	 * @param w
 	 * @param texts
 	 */
-	public FactorsView(FactorsList w, LocalizedTexts texts) {
+	public FactorsView(GameBoard w, LocalizedTexts texts) {
 		super();
 		this.setLayout(new GridLayout(1,3));		
 		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 				
+		FactorsList fact = w.getFactors();
 		this.add(new JLabel(texts.getHappinessLabel()));
-		this.Happiness = new JLabel(Integer.toString(w.getHappiness()));
+		this.Happiness = new JLabel(Integer.toString(fact.getHappiness()));
 		this.add(this.Happiness);
 		
 		this.add(new JLabel(texts.getEfficiencyAtWorkLabel()));
-		this.EfficiencyAtWork = new JLabel(Integer.toString(w.getEfficiencyAtWork()));
+		this.EfficiencyAtWork = new JLabel(Integer.toString(fact.getEfficiencyAtWork()));
 		this.add(this.EfficiencyAtWork);
 		
 		this.add(new JLabel(texts.getEconomyLabel()));
-		this.Economy = new JLabel(Integer.toString(w.getEconomy()));
+		this.Economy = new JLabel(Integer.toString(fact.getEconomy()));
 		this.add(this.Economy);
 		
 		
@@ -67,11 +68,12 @@ public class FactorsView extends JPanel implements Observer {
 	 */
 	public void update(Observable o, Object arg) {
 		assert o instanceof GameBoard;
-        GameBoard world = (GameBoard) o;
-
-        this.Happiness.setText(world.getHappiness() + "%");
-        this.EfficiencyAtWork.setText(world.getEfficiencyAtWork() + "%"); 
-        this.Economy.setText(world.getEconomy() + "%");
+        GameBoard w = (GameBoard) o;
+		FactorsList fact = w.getFactors();
+        
+        this.Happiness.setText(fact.getHappiness() + "%");
+        this.EfficiencyAtWork.setText(fact.getEfficiencyAtWork() + "%"); 
+        this.Economy.setText(fact.getEconomy() + "%");
         
 	}
 	

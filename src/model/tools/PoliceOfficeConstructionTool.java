@@ -64,7 +64,8 @@ public class PoliceOfficeConstructionTool extends Tool  implements Serializable{
         assert this.isAfordable(aTarget, r);
 
         r.spend(PoliceOfficeConstructionTool.CURRENCY_COST);
-
+        r.policeOfficesCount();
+        
         return new PoliceOfficeTile(PoliceOfficeTile.DEFAULT_ENERGY_CONSUMPTION, topLeftCornerX , topLeftCornerY);
     }
 

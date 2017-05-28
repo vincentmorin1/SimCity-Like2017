@@ -64,7 +64,8 @@ public class HospitalConstructionTool extends Tool implements Serializable{
         assert this.isAfordable(aTarget, r);
 
         r.spend(HospitalConstructionTool.CURRENCY_COST);
-
+        r.hospitalsCount();
+        
         return new HospitalTile(HospitalTile.DEFAULT_ENERGY_CONSUMPTION, topLeftCornerX , topLeftCornerY);
     }
 

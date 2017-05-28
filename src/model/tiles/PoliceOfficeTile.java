@@ -13,6 +13,8 @@ public class PoliceOfficeTile extends BuildingTile{
 
 	    public final static int DEFAULT_NUMBER_WORKERS_MAX = 25;
 	    
+	    public final static int DEFAULT_NUMBER_INHABITANTS_CARED = 50;
+	    
 		/**
 		 * Dimension x of the tile 
 		 */

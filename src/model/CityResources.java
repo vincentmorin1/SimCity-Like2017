@@ -56,21 +56,7 @@ public class CityResources implements Serializable {
      * {@link #getVat()}
      */
     private int vat;
-    
-    /**
-     * {@link #getHappiness()}
-     */
-    private int happiness;
-    
-    /**
-     * {@link #getEfficiencyAtWork()}
-     */
-    private int efficiencyAtWork;
-    
-    /**
-     * {@link #getEconomy()}
-     */
-    private int economy;
+ 
 
     // Implementation (Energy)
     /**
@@ -101,24 +87,11 @@ public class CityResources implements Serializable {
      */
     private int unworkingSeniorPopulation;
 
-    /**
-     * {@link #getUnworkingStudentPopulation()
-     */
-    private int unworkingStudentPopulation;
-    
-    /**
-     * {@link #getSeniorPopulation()}
-     */
     private int seniorPopulation;
 
-    /**
-     * {@link #getNumberStudentWithoutLeisure()
-     */
+    
     private int numberStudentWithoutLeisure;
     
-    /**
-     * {@link #getNumberSeniorWithoutLeisure()}
-     */
     private int numberSeniorWithoutLeisure;
 
     /**
@@ -136,6 +109,8 @@ public class CityResources implements Serializable {
      */
     private int studentPopulation;
     
+    private int unworkingStudentPopulation;
+    
     // Implementation (Product)
     /**
      * {@link #getProductsCount()}
@@ -147,6 +122,51 @@ public class CityResources implements Serializable {
      */
     private int productsCapacity;
 
+    /**
+     * {@link #getNbBeaches()}
+     */
+    private int nbBeaches;
+
+    /**
+     * {@link #getNbCommercials()}
+     */
+    private int nbCommercials;
+    
+    /**
+     * {@link #getNbHospitals()}
+     */
+    private int nbHospitals;
+    
+    /**
+     * {@link #getNbIndustrials()}
+     */
+    private int nbIndustrials;
+    
+    /**
+     * {@link #getNbPoliceOffices()}
+     */
+    private int nbPoliceOffices;
+    
+    /**
+     * {@link #getNbPowerPlants()}
+     */
+    private int nbPowerPlants;
+    
+    /**
+     * {@link #getNbResidentials()}
+     */
+    private int nbResidentials;
+    
+    /**
+     * {@link #getNbSchools()}
+     */
+    private int nbSchools;
+    
+    /**
+     * {@link #getNbSnowStations()}
+     */
+    private int nbSnowStations;
+    
 
     // Creation
     
@@ -175,9 +195,6 @@ public class CityResources implements Serializable {
         this.populationCapacity = 0;
         this.productsCount = 0;
         this.productsCapacity = 0;
-        this.happiness = 50;
-        this.efficiencyAtWork = 50;
-        this.economy = 50;
     }
 
     /**
@@ -209,10 +226,11 @@ public class CityResources implements Serializable {
      * @param o
      * @return Is {@value o} equals to this?
      */
+    
     public boolean equals(CityResources o) {
         return this == o || super.equals(o) && o.currency == this.currency && o.vat == this.vat && o.unconsumedEnergy == this.unconsumedEnergy && o.energyProduction == this.energyProduction && o.moneyProduction == this.moneyProduction
                 && o.unconsumedMoney == this.unconsumedMoney && o.unworkingSeniorPopulation == this.unworkingSeniorPopulation && o.population == this.population && o.populationCapacity == this.populationCapacity && o.productsCount == this.productsCount
-                && o.productsCapacity == this.productsCapacity && o.economy == this.economy && o.efficiencyAtWork == this.efficiencyAtWork && o.happiness == this.happiness;
+                && o.productsCapacity == this.productsCapacity;
     }
 
     // Access
@@ -235,17 +253,10 @@ public class CityResources implements Serializable {
         result = result* 17 + this.populationCapacity;
         result = result* 17 + this.productsCount;
         result = result* 17 + this.productsCapacity;
-        result = result* 17 + this.economy;
-        result = result* 17 + this.efficiencyAtWork;
-        result = result* 17 + this.happiness;
         return result;
     }
 
-    /**
-     * 
-     * @param Number of student wanted.
-     * @return Number of student available to go  (inferior or equal to the number wanted).
-     */
+    
     public int enrolStudent(int maxEnrol){
     	int res =  Math.min(maxEnrol, this.unworkingStudentPopulation);
     	this.unworkingStudentPopulation -= res;
@@ -254,29 +265,21 @@ public class CityResources implements Serializable {
     
     // Access (Currency)
     /**
+     *
      * @return Accumulated currency.
      */
     public int getCurrency() {
         return this.currency;
     }
-    
-    /**
-     * @param c
-     */
     public void setCurrency(int c){
     	this.currency = c;
     }
-    
     /**
      * @return Value-Added-Tax in percentage.
      */
     public int getVat() {
         return this.vat;
     }
-    
-    /**
-     * @param v
-     */
     public void setVat(int v){
     	this.vat = v;
     }
@@ -326,16 +329,10 @@ public class CityResources implements Serializable {
         return this.unconsumedMoney;
     }
 
-    /**
-     * @return Number of students within the city
-     */
     public int getStudentPopulation(){
     	return this.studentPopulation;
     }
     
-    /**
-     * @return Number of students without school
-     */
     public int getUnworkingStudentPopulation(){
     	return this.unworkingStudentPopulation;
     }
@@ -355,23 +352,14 @@ public class CityResources implements Serializable {
         return this.population - this.unworkingSeniorPopulation;
     }
 
-    /**
-     * @return Number of seniors
-     */
     public int getSeniorPopulation(){
     	return this.seniorPopulation;
     }
 
-    /**
-     * @return Number of students who don't have leisure 
-     */
     public int getNumberStudentWithoutLeisure(){
     	return this.numberStudentWithoutLeisure;
     }
     
-    /**
-     * @return Number of seniors who don't have leisure 
-     */
     public int getNumberSeniorWithoutLeisure(){
     	return this.numberSeniorWithoutLeisure;
     }
@@ -405,31 +393,35 @@ public class CityResources implements Serializable {
     public int getProductsCapacity() {
         return this.productsCapacity;
     }
+    public int getNbBeaches(){
+    	return this.nbBeaches;
+    }
+    public int getNbCommercials(){
+		return this.nbCommercials;
+    }
+    public int getNbHospitals(){
+		return this.nbHospitals;
+    }
+    public int getNbIndustrials(){
+    	return this.nbIndustrials;
+    }	
+    public int getNbPoliceOffices(){
+		return this.nbPoliceOffices;
+    }	
+    public int getNbPowerPlants(){
+		return this.nbPowerPlants;
+    }	
+    public int getNbResidentials(){
+		return this.nbResidentials;
+    }	
+    public int getNbSchools(){
+		return this.nbSchools;
+    }	
+    public int getNbSnowStations(){
+		return this.nbSnowStations;
+    }	
+
     
-    /**
-     * 
-     * @return In percentage, the current happiness in game
-     */
-    public int getHappiness() {
-		return this.happiness;
-	}
-
-    /**
-     * 
-     * @return The efficiency at work in percentage
-     */
-	public int getEfficiencyAtWork() {
-		return this.efficiencyAtWork;
-	}
-
-	/**
-	 * 
-	 * @return The current economy in percentage
-	 */
-	public int getEconomy() {
-		return this.economy;
-	}
-
     // Change (Currency)
     /**
      * Decrease {@link #getCurrency()} by {@value amount}.
@@ -612,13 +604,6 @@ public class CityResources implements Serializable {
         this.populationCapacity = this.populationCapacity - amount;
     }
 
-    /**
-     * 
-     * @param Number of places for tourists.
-     * @param Probability of student coming.
-     * @param Probability of senior coming.
-     * @return Number of people going to leisure.
-     */
     public int peopleToLeisure(int maxAmount, int probaStudent, int probaSenior){
     	int res = 0;
     	int i=0;
@@ -666,6 +651,33 @@ public class CityResources implements Serializable {
         this.productsCount = Math.min(this.productsCapacity, this.productsCount + amount);
     }
 
+    public void beachesCount() {
+    	nbBeaches += 1;
+    }
+    public void commercialsCount() {
+    	nbCommercials += 1;
+    }
+    public void hospitalsCount() {
+    	nbHospitals += 1;
+    }
+    public void industrialsCount() {
+    	nbIndustrials += 1;
+    }
+    public void policeOfficesCount() {
+    	nbPoliceOffices += 1;
+    }
+    public void powerPlantsCount() {
+    	nbPowerPlants += 1;
+    }
+    public void residentialsCount() {
+    	nbResidentials += 1;
+    }
+    public void schoolsCount() {
+    	nbSchools += 1;
+    }
+    public void snowStationsCount() {
+    	nbSnowStations += 1;
+    }
     /**
      * Decrease {@link #getProductsCapacity()} by {@value amount}.
      *
@@ -696,7 +708,6 @@ public class CityResources implements Serializable {
     public void resetEphemerals() {
     	this.creditWithTaxes(this.unconsumedMoney); ;
     	
-    	
     	this.studentPopulation = this.population/2;
     	this.seniorPopulation = this.population - this.studentPopulation;
         this.unworkingSeniorPopulation = this.seniorPopulation;
@@ -706,9 +717,7 @@ public class CityResources implements Serializable {
         
         this.unconsumedEnergy = this.energyProduction;
         this.unconsumedMoney = this.moneyProduction;
-        this.moneyProduction = 0;
     }
-
 
 
 }

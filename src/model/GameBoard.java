@@ -47,6 +47,7 @@ import model.event.EventFactory;
 import model.tiles.Evolvable;
 import model.tiles.GrassTile;
 import model.tiles.MountainTile;
+import model.tiles.ResidentialTile;
 import model.tiles.RoadTile;
 import model.tiles.Tile;
 import model.tiles.WaterTile;
@@ -126,18 +127,17 @@ public class GameBoard extends Observable implements Serializable {
     private String message;
 
     /**
+     * Factors associated.
+     */
+    private FactorsList fact;    
+    
+    /**
      * {@link #getTexts()}
      */
     private LocalizedTexts texts;
-    
-    /**
-     * {@link #getInformationTool()}
-     */
+
     private InformationTool informationTool;
     
-    /**
-     * Number of water and mountain case on the terrain 
-     */
     private int numberWaterCase;
     private int numberMountainCase;
     private int numberWaterCaseMax;
@@ -159,6 +159,7 @@ public class GameBoard extends Observable implements Serializable {
     public GameBoard(int height, int width, DifficultyLevel difficulty, LocalizedTexts texts) {
         assert width > 0 && height > 0 : "Dimensions incorrectes";
 
+        this.fact = new FactorsList();
         this.numberMountainCase = 0;
         this.numberWaterCase = 0;
         this.numberWaterCaseMax = height * width / 10;
@@ -197,6 +198,7 @@ public class GameBoard extends Observable implements Serializable {
         this.pendingEventsList = new LinkedList<>();
         this.resources = new CityResources(difficulty.getInitialCurrency());
       
+
         this.message = GameBoard.NOTHING_MESSAGE;
         this.texts = texts;
     }
@@ -272,17 +274,10 @@ public class GameBoard extends Observable implements Serializable {
         this(length, length, texts);
     }
 
-    /**
-     * @return Last information tool selected
-     */
     public InformationTool getInformationTool(){
     	return this.informationTool;
     }
-    
     // Access
-    /**
-     * @return localized texts
-     */
     public LocalizedTexts getTexts() {
         return this.texts;
     }
@@ -362,9 +357,6 @@ public class GameBoard extends Observable implements Serializable {
     	return this.resources;
     }
     
-    /**
-     * @return Number of seniors in the city
-     */
     public int getSeniorPopulation(){
     	return this.resources.getSeniorPopulation();
     }
@@ -376,41 +368,23 @@ public class GameBoard extends Observable implements Serializable {
         return this.resources.getUnworkingSeniorPopulation();
     }
     
-    /**
-     * @return Number of students in the city
-     */
     public int getStudentPopulation(){
     	return this.resources.getStudentPopulation();
     }
     /**
-     * @return The number of students without school
+     * @return The number of unstudying student
      */
     public int getUnworkingStudentPopulation() {
         return this.resources.getUnworkingStudentPopulation();
     }
 
-    /**
-     * 
-     * @return Value of happiness in game, in percentage
-     */
-    public int getHappiness() {
-		return this.resources.getHappiness();
-	}
-
-    /**
-     * 
-     * @return Value of current efficiency at work, in percentage
-     */
-	public int getEfficiencyAtWork() {
-		return this.resources.getEfficiencyAtWork();
-	}
-
 	/**
 	 * 
-	 * @return Value of current economy in game, in percentage
+	 * @return The different factors
 	 */
-	public int getEconomy() {
-		return this.resources.getEconomy();
+	public FactorsList getFactors() {
+		this.fact.update(this.resources);
+		return this.fact;
 	}
 	
     /**
@@ -651,7 +625,7 @@ public class GameBoard extends Observable implements Serializable {
      * 
      * @param i
      * @param j
-     * @return new tile
+     * @return
      */
     public Tile createMap(int i, int j){
 		int proba = ThreadLocalRandom.current().nextInt(0, 100);

@@ -46,6 +46,16 @@ public class Factor {
 	}
 	
 	//Change
+	public void setValue(int v) {
+		this.value = v;
+		if (v < 0)
+			this.value = 0;
+		if (v > 100)
+			this.value = 100;
+	}
+	
+
+	
 	public void evolve(int impact) {
 		impact = (impact+100)/2;
 		assert impact >= 0 && impact <= 100;

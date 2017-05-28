@@ -64,7 +64,8 @@ public class SchoolConstructionTool extends Tool implements Serializable{
         assert this.isAfordable(aTarget, r);
 
         r.spend(SchoolConstructionTool.CURRENCY_COST);
-
+        r.schoolsCount();
+        
         return new SchoolTile(SchoolTile.DEFAULT_ENERGY_CONSUMPTION, topLeftCornerX , topLeftCornerY);
     }
 
